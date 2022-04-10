@@ -31,7 +31,7 @@
   <noscript><p>This is a calculator, and if you had JavaScript enabled, you could use it too!</p></noscript>
 
   <form>
-    <table>
+    <table class="input">
       <thead>
         <tr>
           <MedalHeader />
@@ -94,17 +94,16 @@
   @import "../../lib/style/theme.scss";
 
   input {
-    width: 60px;
-    height: 30px;
-    border-radius: 8px;
-
     text-align: center;
-    margin: 0;
-
-    background: $color-secondary-container;
-    color: $color-on-secondary-container;
     border: none;
     appearance: none;
+  }
+
+  input,
+  td,
+  th {
+    padding: 0;
+    margin: 0;
   }
 
   input::-webkit-outer-spin-button,
@@ -113,25 +112,31 @@
     margin: 0;
   }
 
-  .output {
-    td {
-      background: $color-surface-variant;
-      color: $color-on-surface-variant;
-      width: 64px;
-      height: 32px;
-    }
+  .input input {
+    background: $color-secondary-container;
+    color: $color-on-secondary-container;
+  }
 
-    td:first-child {
-      border-radius: 8px 0 0 8px;
-    }
+  .output td {
+    background: $color-surface-variant;
+    color: $color-on-surface-variant;
+  }
 
-    td:last-child {
-      border-radius: 0 8px 8px 0;
-    }
+  td,
+  input {
+    width: 66px;
+    height: 32px;
+    text-align: center;
+  }
 
-    th {
-      padding: 4px;
-    }
+  td:first-child,
+  td:first-child > input {
+    border-radius: $border-radius-left;
+  }
+
+  td:last-child,
+  td:last-child > input {
+    border-radius: $border-radius-right;
   }
 
   caption {
@@ -142,21 +147,17 @@
     color: $color-secondary;
   }
 
-  td {
-    text-align: center;
-  }
-
   table {
     margin: 16px auto;
+    border-spacing: 2px;
   }
 
   h2 {
     padding: 8px 32px;
 
     border-radius: 20px;
-    border: 10px solid $color-primary;
-    border-bottom-style: double;
-    border-top-style: double;
+    border: 10px $color-primary;
+    border-style: double solid;
 
     box-shadow: $color-primary 0 0 20px;
 

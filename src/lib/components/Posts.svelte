@@ -39,4 +39,7 @@
   hr {
     width: 50px;
   }
+  li:last-child hr {
+    display: none;
+  }
 </style>

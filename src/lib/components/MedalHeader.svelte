@@ -12,21 +12,22 @@
   @import "../assets/images.scss";
 
   .gold-medal {
-    background-image: url($gold_medal_64w);
+    background-image: url($gold_medal_66h);
   }
   .silver-medal {
-    background-image: url($silver_medal_64w);
+    background-image: url($silver_medal_66h);
   }
   .bronze-medal {
-    background-image: url($bronze_medal_64w);
+    background-image: url($bronze_medal_66h);
   }
   .black-medal {
-    background-image: url($black_medal_64w);
+    background-image: url($black_medal_66h);
   }
 
   td {
-    width: 48px;
-    height: 64px;
+    width: 44px;
+    height: 66px;
+    padding: 0;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

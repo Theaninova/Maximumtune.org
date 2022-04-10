@@ -30,3 +30,9 @@ $text-bold-ital: "ital" 1, "wdth" 100, "wght" 600;
 $text-wide: "wdth" 150, "wght" 280;
 
 $ease-default: 0.2s ease;
+
+$border-radius: 8px;
+$border-radius-left: $border-radius 0 0 $border-radius;
+$border-radius-right: 0 $border-radius $border-radius 0;
+
+$item-gap: 2px;

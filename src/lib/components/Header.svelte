@@ -24,7 +24,6 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .home {
     background-image: url($logo_square_48w);
     width: 48px;
@@ -33,16 +32,17 @@
   }
 
   ul {
-    // horizontal
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    gap: $item-gap;
+
     list-style: none;
+    margin: 0;
 
     a {
-      padding: 4px 8px;
-      margin: 1px;
+      padding: 5px 12px;
       background: $color-surface-variant;
       color: $color-on-surface-variant;
 
@@ -59,11 +59,11 @@
     }
 
     li:first-child a {
-      border-radius: 4px 0 0 4px;
+      border-radius: $border-radius-left;
     }
 
     li:last-child a {
-      border-radius: 0 4px 4px 0;
+      border-radius: $border-radius-right;
     }
   }
 </style>
