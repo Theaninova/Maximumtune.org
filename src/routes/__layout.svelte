@@ -1,0 +1,74 @@
+<script>
+  import Header from "$lib/components/Header.svelte"
+</script>
+
+<Header />
+
+<slot />
+
+<style global lang="scss">
+  @import "../lib/style/theme.scss";
+
+  //noinspection ALL
+  @font-face {
+    font-family: "Roboto Flex";
+    src: url("/fonts/RobotoFlex.ttf") format("woff2 supports variations"),
+      url("/fonts/RobotoFlex.ttf") format("woff2-variations");
+    font-weight: 100 1000;
+    font-stretch: 25% 151%;
+    font-display: swap;
+  }
+
+  main {
+    // center
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    > * {
+      width: min(16.5cm, 100%);
+      margin: 0 16px;
+    }
+  }
+
+  body {
+    font-family: "Roboto Flex", sans-serif;
+
+    background: $color-background;
+    color: $color-on-background;
+  }
+
+  hr {
+    border-color: $color-tertiary;
+    box-shadow: $color-tertiary 0 0 20px 3px;
+    margin: 32px auto;
+  }
+
+  h2 {
+    color: $color-secondary;
+    text-shadow: $color-secondary-container 0 0 5px;
+    transition: text-shadow 0.2s ease-in-out;
+  }
+  h2:hover {
+    text-shadow: $color-secondary 0 0 20px;
+  }
+
+  h1 {
+    color: $color-tertiary;
+    text-shadow: $color-tertiary 0 0 30px;
+    transition: text-shadow 0.2s ease-in-out;
+
+    font-stretch: 120%;
+  }
+  h1:hover {
+    text-shadow: $color-tertiary 0 0 20px;
+  }
+
+  h2 > a,
+  h1 > a {
+    transition: color 0.2s ease-in-out;
+    text-decoration: none;
+    color: unset;
+  }
+</style>
