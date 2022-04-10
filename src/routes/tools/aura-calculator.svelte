@@ -24,6 +24,14 @@
   })
 </script>
 
+<svelte:head>
+  <title>Medal, Strength Aura & Grade Calculator</title>
+  <meta
+    name="description"
+    content="Medal, Strength Aura & Grade Calculator for Wangan Midnight Maximum Tune"
+  />
+</svelte:head>
+
 <main>
   <h1>Medal, Strength Aura, & Grade Calculator</h1>
 

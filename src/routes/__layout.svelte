@@ -9,7 +9,18 @@
 <style global lang="scss">
   @import "../lib/style/theme.scss";
 
-  //noinspection ALL
+  //noinspection CssUnknownTarget
+  @font-face {
+    font-family: "Roboto Flex";
+    src: url("/fonts/roboto-flex.min.ttf") format("woff2 supports variations"),
+      url("/fonts/roboto-flex.min.ttf") format("woff2-variations");
+    font-weight: 100 1000;
+    font-stretch: 25% 151%;
+    font-display: swap;
+    unicode-range: U+20-7E;
+  }
+
+  //noinspection CssUnknownTarget
   @font-face {
     font-family: "Roboto Flex";
     src: url("/fonts/RobotoFlex.ttf") format("woff2 supports variations"),
@@ -17,6 +28,7 @@
     font-weight: 100 1000;
     font-stretch: 25% 151%;
     font-display: swap;
+    unicode-range: U+00A0-FB04;
   }
 
   a {

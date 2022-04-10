@@ -8,4 +8,9 @@
   export let posts
 </script>
 
+<svelte:head>
+  <title>Posts</title>
+  <meta name="description" content="Posts about Wangan Midnight Maximum Tune" />
+</svelte:head>
+
 <Posts {posts} />
