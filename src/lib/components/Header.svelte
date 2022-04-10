@@ -51,7 +51,7 @@
         color: $color-on-surface-variant;
       }
 
-      transition: all 0.2s ease-in-out;
+      transition: all $ease-default;
     }
 
     li:hover {
@@ -73,8 +73,9 @@
     }
 
     a {
-      transition: color 0.2s ease-in-out;
+      transition: color $ease-default;
       text-decoration: none;
+      text-shadow: none;
     }
   }
 </style>

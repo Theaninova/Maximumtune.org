@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import {calculateRank} from "$lib/aura-calculator"
 
   import GoldMedal from "$lib/assets/gold_medal_64w.base64.txt?raw"
@@ -13,9 +13,9 @@
     "Black Medals": BlackMedal,
   }
 
-  export let grades: [number, string][]
-  export let medals: Record<string, number>
-  let input: Record<string, number> = Object.fromEntries(Object.entries(medals).map(([key]) => [key, 0]))
+  export let grades = []
+  export let medals = {}
+  let input = Object.fromEntries(Object.entries(medals).map(([key]) => [key, 0]))
 
   $: result = calculateRank({
     grades: grades,
@@ -56,7 +56,7 @@
 
   <hr />
 
-  <section>
+  <section class="center">
     <h2>{result.rankName}</h2>
     <table class="output">
       <caption>Total</caption>
@@ -95,13 +95,6 @@
 
 <style lang="scss">
   @import "../../lib/style/theme.scss";
-
-  section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
 
   input {
     width: 60px;

@@ -19,17 +19,19 @@
     font-display: swap;
   }
 
-  main {
-    // center
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  a {
+    color: $color-tertiary;
+    text-shadow: $color-tertiary 0 0 2px;
+    transition: text-shadow 0.2s ease-in-out;
+  }
 
-    > * {
-      width: min(16.5cm, 100%);
-      margin: 0 16px;
-    }
+  a:hover {
+    text-shadow: $color-tertiary 0 0 10px;
+  }
+
+  main > * {
+    width: min(16.5cm, 100%);
+    margin: 0 16px;
   }
 
   body {
@@ -48,8 +50,9 @@
   h2 {
     color: $color-secondary;
     text-shadow: $color-secondary-container 0 0 5px;
-    transition: text-shadow 0.2s ease-in-out;
+    transition: text-shadow $ease-default;
   }
+
   h2:hover {
     text-shadow: $color-secondary 0 0 20px;
   }
@@ -57,18 +60,27 @@
   h1 {
     color: $color-tertiary;
     text-shadow: $color-tertiary 0 0 30px;
-    transition: text-shadow 0.2s ease-in-out;
+    transition: text-shadow $ease-default;
 
     font-stretch: 120%;
   }
+
   h1:hover {
     text-shadow: $color-tertiary 0 0 20px;
   }
 
   h2 > a,
   h1 > a {
-    transition: color 0.2s ease-in-out;
+    transition: color $ease-default;
     text-decoration: none;
     color: unset;
+  }
+
+  main,
+  .center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 </style>

@@ -33,6 +33,7 @@
   a {
     color: unset;
     text-decoration: none;
+    text-shadow: none;
   }
 
   hr {

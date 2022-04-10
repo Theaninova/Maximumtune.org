@@ -16,6 +16,3 @@
 
   <Posts {posts} />
 </main>
-
-<style lang="scss">
-</style>
