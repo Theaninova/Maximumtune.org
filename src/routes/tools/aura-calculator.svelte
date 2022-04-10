@@ -1,17 +1,10 @@
+<script context="module">
+  export let prerender = true
+</script>
+
 <script>
   import {calculateRank} from "$lib/aura-calculator"
-
-  import GoldMedal from "$lib/assets/gold_medal_64w.base64.txt?raw"
-  import SilverMedal from "$lib/assets/silver_medal_64w.base64.txt?raw"
-  import BronzeMedal from "$lib/assets/bronze_medal_64w.base64.txt?raw"
-  import BlackMedal from "$lib/assets/black_medal_64w.base64.txt?raw"
-
-  let images = {
-    "Gold Medals": GoldMedal,
-    "Silver Medals": SilverMedal,
-    "Bronze Medals": BronzeMedal,
-    "Black Medals": BlackMedal,
-  }
+  import MedalHeader from "../../lib/components/MedalHeader.svelte"
 
   export let grades = []
   export let medals = {}
@@ -35,15 +28,13 @@
 <main>
   <h1>Medal, Strength Aura, & Grade Calculator</h1>
 
+  <noscript><p>This is a calculator, and if you had JavaScript enabled, you could use it too!</p></noscript>
+
   <form>
     <table>
       <thead>
         <tr>
-          {#each Object.entries(medals) as [medalName]}
-            <td>
-              <img src={images[medalName]} alt={medalName} />
-            </td>
-          {/each}
+          <MedalHeader />
         </tr>
       </thead>
       <tr>
@@ -85,9 +76,7 @@
         <thead>
           <tr>
             <th>Total</th>
-            {#each result.nextRank.differences as [name, value]}
-              <th><img src={images[name]} alt={name} /></th>
-            {/each}
+            <MedalHeader />
           </tr>
         </thead>
         <tr>
@@ -131,9 +120,11 @@
       width: 64px;
       height: 32px;
     }
+
     td:first-child {
       border-radius: 8px 0 0 8px;
     }
+
     td:last-child {
       border-radius: 0 8px 8px 0;
     }
@@ -157,10 +148,6 @@
 
   table {
     margin: 16px auto;
-  }
-
-  img {
-    width: 48px;
   }
 
   h2 {

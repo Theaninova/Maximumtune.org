@@ -22,12 +22,12 @@ function encodeImage(path) {
     ],
   })
 
-  for (const file of fs.readdirSync(assetPath)) {
-    if (!file.endsWith(".webp")) continue
-
-    fs.writeFileSync(
-      `${assetPath}/${file.replace(/webp$/, "base64.txt")}`,
-      encodeImage(`${assetPath}/${file}`),
-    )
-  }
+  fs.writeFileSync(
+    `${assetPath}/images.scss`,
+    fs
+      .readdirSync(assetPath)
+      .filter(it => it.endsWith(".webp"))
+      .map(it => `$${it.replace(/\.webp$/, "")}: "${encodeImage(`${assetPath}/${it}`)}"`)
+      .join(";\n"),
+  )
 })()

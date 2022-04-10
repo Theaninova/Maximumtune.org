@@ -15,6 +15,7 @@ node_modules
 /static/page/**/*.csv
 /static/fonts/*.ttf
 /static/*.csv
+images.scss
 *.base64.txt
 *.jpg
 *.png

@@ -3,12 +3,8 @@
   export const hydrate = false
 </script>
 
-<script>
-  import Logo from "$lib/assets/logo_square_48w.base64.txt?raw"
-</script>
-
 <nav>
-  <a href="/"><img src={Logo} alt="Home" /></a>
+  <a href="/" class="home"><span class="a11y-hidden">Home</span></a>
   <ul>
     <li>
       <a href="/tools">Tools</a>
@@ -20,6 +16,7 @@
 
 <style lang="scss">
   @import "../style/theme.scss";
+  @import "../assets/images.scss";
 
   nav {
     display: flex;
@@ -28,7 +25,8 @@
     align-items: center;
   }
 
-  img {
+  .home {
+    background-image: url($logo_square_48w);
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -42,40 +40,30 @@
     align-items: center;
     list-style: none;
 
-    li {
+    a {
       padding: 4px 8px;
       margin: 1px;
       background: $color-surface-variant;
-
-      a {
-        color: $color-on-surface-variant;
-      }
+      color: $color-on-surface-variant;
 
       transition: all $ease-default;
+      text-decoration: none;
+      text-shadow: none;
     }
 
-    li:hover {
+    a:hover {
       background: $color-tertiary;
-
-      a {
-        color: $color-on-tertiary;
-      }
+      color: $color-on-tertiary;
 
       box-shadow: 0 0 10px 1px $color-tertiary;
     }
 
-    li:first-child {
+    li:first-child a {
       border-radius: 4px 0 0 4px;
     }
 
-    li:last-child {
+    li:last-child a {
       border-radius: 0 4px 4px 0;
-    }
-
-    a {
-      transition: color $ease-default;
-      text-decoration: none;
-      text-shadow: none;
     }
   }
 </style>
