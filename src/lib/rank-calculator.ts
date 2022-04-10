@@ -44,7 +44,5 @@ export function calculateStoryRank(input: RankInput, config: RankConfig): Rank {
   const ghostBattleScore = calculateInitialIncrement(input.ghostBattle, config.ghostBattle)
   const storyEpisodesScore = calculateInitialIncrement(input.storyLoops, config.storyLoops)
 
-  console.log(input)
-
-  return ranks[battleStarScore + ghostBattleScore + storyEpisodesScore]
+  return ranks[Math.min(battleStarScore + ghostBattleScore + storyEpisodesScore, ranks.length - 1)]
 }
