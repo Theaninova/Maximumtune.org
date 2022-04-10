@@ -13,6 +13,7 @@ node_modules
 
 /static/page/**/*.md
 /static/page/**/*.csv
+/static/page/**/*.json
 /static/fonts/*.ttf
 /static/*.csv
 images.scss

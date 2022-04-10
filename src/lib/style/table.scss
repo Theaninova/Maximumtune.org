@@ -1,0 +1,60 @@
+@import "theme.scss";
+
+input {
+  text-align: center;
+  border: none;
+  appearance: none;
+}
+
+input,
+td,
+th {
+  padding: 0;
+  margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input input {
+  background: $color-secondary-container;
+  color: $color-on-secondary-container;
+}
+
+.output td {
+  background: $color-surface-variant;
+  color: $color-on-surface-variant;
+}
+
+td,
+input {
+  width: 66px;
+  height: 32px;
+  text-align: center;
+}
+
+td:first-child,
+td:first-child > input {
+  border-radius: $border-radius-left;
+}
+
+td:last-child,
+td:last-child > input {
+  border-radius: $border-radius-right;
+}
+
+caption {
+  font-size: 20px;
+  margin: 8px;
+  font-weight: 600;
+  font-stretch: 140%;
+  color: $color-secondary;
+}
+
+table {
+  margin: 16px auto;
+  border-spacing: 2px;
+}

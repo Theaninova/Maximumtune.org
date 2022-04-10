@@ -5,6 +5,8 @@
 <script>
   import {calculateRank} from "$lib/aura-calculator"
   import MedalHeader from "../../lib/components/MedalHeader.svelte"
+  import RankTitle from "../../lib/components/RankTitle.svelte"
+  import "../../lib/style/table.scss"
 
   export let grades = []
   export let medals = {}
@@ -56,7 +58,7 @@
   <hr />
 
   <section class="center">
-    <h2>{result.rankName}</h2>
+    <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
     <table class="output">
       <caption>Total</caption>
       <thead>
@@ -89,81 +91,3 @@
     {/if}
   </section>
 </main>
-
-<style lang="scss">
-  @import "../../lib/style/theme.scss";
-
-  input {
-    text-align: center;
-    border: none;
-    appearance: none;
-  }
-
-  input,
-  td,
-  th {
-    padding: 0;
-    margin: 0;
-  }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .input input {
-    background: $color-secondary-container;
-    color: $color-on-secondary-container;
-  }
-
-  .output td {
-    background: $color-surface-variant;
-    color: $color-on-surface-variant;
-  }
-
-  td,
-  input {
-    width: 66px;
-    height: 32px;
-    text-align: center;
-  }
-
-  td:first-child,
-  td:first-child > input {
-    border-radius: $border-radius-left;
-  }
-
-  td:last-child,
-  td:last-child > input {
-    border-radius: $border-radius-right;
-  }
-
-  caption {
-    font-size: 20px;
-    margin: 8px;
-    font-weight: 600;
-    font-stretch: 140%;
-    color: $color-secondary;
-  }
-
-  table {
-    margin: 16px auto;
-    border-spacing: 2px;
-  }
-
-  h2 {
-    padding: 8px 32px;
-
-    border-radius: 20px;
-    border: 10px $color-primary;
-    border-style: double solid;
-
-    box-shadow: $color-primary 0 0 20px;
-
-    background: $color-primary-container;
-    color: $color-on-primary-container;
-
-    font-stretch: 150%;
-  }
-</style>

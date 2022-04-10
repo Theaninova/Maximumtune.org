@@ -1,0 +1,15 @@
+<h2 {...$$props}><slot /></h2>
+
+<style lang="scss">
+  @import "../style/theme.scss";
+
+  h2 {
+    padding: 8px 32px;
+
+    border-radius: 20px;
+    border-width: 10px;
+    border-style: double solid;
+
+    font-stretch: 150%;
+  }
+</style>

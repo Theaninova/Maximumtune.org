@@ -3,10 +3,10 @@
   export const hydrate = false
 </script>
 
-<td class="gold-medal"><span class="a11y-hidden">Gold Medal</span></td>
-<td class="silver-medal"><span class="a11y-hidden">Silver Medal</span></td>
-<td class="bronze-medal"><span class="a11y-hidden">Bronze Medal</span></td>
-<td class="black-medal"><span class="a11y-hidden">Black Medal</span></td>
+<th class="gold-medal"><span class="a11y-hidden">Gold Medal</span></th>
+<th class="silver-medal"><span class="a11y-hidden">Silver Medal</span></th>
+<th class="bronze-medal"><span class="a11y-hidden">Bronze Medal</span></th>
+<th class="black-medal"><span class="a11y-hidden">Black Medal</span></th>
 
 <style lang="scss">
   @import "../assets/images.scss";
@@ -24,7 +24,7 @@
     background-image: url($black_medal_66h);
   }
 
-  td {
+  th {
     width: 44px;
     height: 66px;
     padding: 0;

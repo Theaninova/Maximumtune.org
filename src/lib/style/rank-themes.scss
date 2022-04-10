@@ -1,0 +1,71 @@
+$purple: #d6baff;
+$blue: #02dddd;
+$green: #00e600;
+$yellow: #cdcd00;
+$orange: #ffb958;
+$red: #ffb4a6;
+$pink: #ffaaf6;
+$gold: #eac400;
+
+.rank-theme-blue {
+  box-shadow: $blue 0 0 20px;
+  border-color: $blue;
+  background: #004f50;
+  color: #02fbfb;
+}
+
+.rank-theme-green {
+  box-shadow: $green 0 0 20px;
+  border-color: $green;
+  background: #005300;
+  color: #73ff5b;
+}
+
+.rank-theme-yellow {
+  box-shadow: $yellow 0 0 20px;
+  border-color: $yellow;
+  background: #4a4900;
+  color: #eaea00;
+}
+
+.rank-theme-orange {
+  box-shadow: $orange 0 0 20px;
+  border-color: $orange;
+  background: #653e00;
+  color: #ffddb4;
+}
+
+.rank-theme-red {
+  box-shadow: $red 0 0 20px;
+  border-color: $red;
+  background: #940000;
+  color: #ffdad3;
+}
+
+.rank-theme-pink {
+  box-shadow: $pink 0 0 20px;
+  border-color: $pink;
+  background: #810083;
+  color: #ffd6f7;
+}
+
+.rank-theme-gold {
+  box-shadow: $gold 0 0 20px;
+  border-color: $gold;
+  background: #554600;
+  color: #ffe15e;
+}
+
+.rank-theme-rainbow {
+  box-shadow: #fff 0 0 20px;
+  border-color: #181818;
+  background: linear-gradient(to right, $purple, $blue, $green, $yellow, $orange, $red, $pink);
+  color: #000
+}
+
+.rank-theme-leather {
+  box-shadow: #ffb2bd 0 0 20px;
+  border-color: #ffb2bd;
+  background: #7c2939;
+  color: #ffdade;
+}
