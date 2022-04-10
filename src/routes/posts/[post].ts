@@ -1,3 +1,3 @@
-import {markdownRequestHandler} from "../../lib/markdown/markdown/markdown-request-handler"
+import {markdownRequestHandler} from "../../lib/markdown/markdown-request-handler"
 
 export const get = markdownRequestHandler("posts/")

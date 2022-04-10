@@ -12,6 +12,8 @@
 <main>
   {@html content}
 
+  <hr />
+
   <Posts {posts} />
 </main>
 

@@ -1,4 +1,4 @@
-import {postsIndex} from "$lib/markdown/markdown/posts-index"
+import {postsIndex} from "../../lib/markdown/posts-index"
 
 export function get() {
   return {
