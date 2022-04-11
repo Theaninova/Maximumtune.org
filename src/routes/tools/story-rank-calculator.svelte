@@ -6,8 +6,8 @@
   import {calculateStoryRank} from "$lib/rank-calculator.ts"
   import "$lib/style/table.scss"
   import "$lib/style/rank-themes.scss"
-  import BattleStar from "$lib/assets/battle_star.svg?raw"
   import RankHeader from "../../lib/components/RankHeader.svelte"
+  import CalculatorHeader from "../../lib/components/CalculatorHeader.svelte"
 
   export let rankConfig
   export let input = Object.fromEntries(Object.entries(rankConfig).map(([key]) => [key, 0]))
@@ -31,7 +31,7 @@
 <main>
   <h1>Story Rank Calculator</h1>
 
-  <noscript><p>This is a calculator, and if you had JavaScript enabled, you could use it too!</p></noscript>
+  <CalculatorHeader />
 
   <form>
     <table class="input">

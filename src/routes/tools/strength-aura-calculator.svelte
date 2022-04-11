@@ -7,6 +7,7 @@
   import MedalHeader from "../../lib/components/MedalHeader.svelte"
   import RankTitle from "../../lib/components/RankTitle.svelte"
   import "../../lib/style/table.scss"
+  import CalculatorHeader from "../../lib/components/CalculatorHeader.svelte"
 
   export let grades = []
   export let medals = {}
@@ -30,7 +31,7 @@
 <main>
   <h1>Medal, Strength Aura, & Grade Calculator</h1>
 
-  <noscript><p>This is a calculator, and if you had JavaScript enabled, you could use it too!</p></noscript>
+  <CalculatorHeader />
 
   <form>
     <table class="input">
