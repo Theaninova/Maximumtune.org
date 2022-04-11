@@ -19,6 +19,7 @@ node_modules
 images.scss
 *.base64.txt
 *.jpg
+*.svg
 *.png
 *.webp
 *.afphoto

@@ -4,14 +4,16 @@
 
 <script>
   import {calculateStoryRank} from "$lib/rank-calculator.ts"
-  import RankTitle from "$lib/components/RankTitle.svelte"
   import "$lib/style/table.scss"
   import "$lib/style/rank-themes.scss"
+  import BattleStar from "$lib/assets/battle_star.svg?raw"
+  import RankHeader from "../../lib/components/RankHeader.svelte"
 
   export let rankConfig
   export let input = Object.fromEntries(Object.entries(rankConfig).map(([key]) => [key, 0]))
 
   const themes = {
+    N: "neutral",
     C: "blue",
     B: "green",
     A: "yellow",
@@ -30,11 +32,7 @@
   <form>
     <table class="input">
       <thead>
-        <tr>
-          {#each Object.values(rankConfig) as { name }}
-            <th>{name}</th>
-          {/each}
-        </tr>
+        <RankHeader />
       </thead>
       <tr>
         {#each Object.keys(rankConfig) as medalName}
@@ -53,6 +51,17 @@
   </form>
 
   <section class="center">
-    <RankTitle class="rank-theme-{themes[result.name]}">{result.name}{result.number ?? ""}</RankTitle>
+    <h2 class="rank-theme-{themes[result.name]}">{result.name}{result.number ?? ""}</h2>
   </section>
 </main>
+
+<style lang="scss">
+  @import "../../lib/style/theme.scss";
+
+  h2 {
+    border-radius: 16px;
+    font-stretch: 150%;
+    padding: 0 60px;
+    box-shadow: none;
+  }
+</style>
