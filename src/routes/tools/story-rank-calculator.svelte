@@ -29,6 +29,10 @@
 </script>
 
 <main>
+  <h1>Story Rank Calculator</h1>
+
+  <noscript><p>This is a calculator, and if you had JavaScript enabled, you could use it too!</p></noscript>
+
   <form>
     <table class="input">
       <thead>

@@ -74,6 +74,8 @@
     text-shadow: $color-tertiary 0 0 30px;
     transition: text-shadow $ease-default;
 
+    margin: 16px 0;
+
     font-stretch: 120%;
   }
 
