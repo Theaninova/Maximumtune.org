@@ -29,9 +29,7 @@
 </svelte:head>
 
 <main>
-  <h1>Medal, Strength Aura, & Grade Calculator</h1>
-
-  <CalculatorHeader />
+  <h1 style="min-height: 86px">Medal, Strength Aura, & Grade Calculator</h1>
 
   <form>
     <table class="input">
@@ -64,8 +62,8 @@
       <caption>Total</caption>
       <thead>
         <tr>
-          <th>Score</th>
-          <th>Medals</th>
+          <th style="height: 21px">Score</th>
+          <th style="height: 21px">Medals</th>
         </tr>
       </thead>
       <tr>
@@ -91,4 +89,12 @@
       </table>
     {/if}
   </section>
+
+  <CalculatorHeader />
 </main>
+
+<style>
+  caption {
+    min-height: 26px;
+  }
+</style>

@@ -4,6 +4,7 @@
   @import "../style/theme.scss";
 
   h2 {
+    min-height: 32px;
     padding: 8px 32px;
 
     border-radius: 20px;

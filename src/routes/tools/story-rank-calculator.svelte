@@ -28,10 +28,13 @@
   $: result = calculateStoryRank(input, rankConfig)
 </script>
 
-<main>
-  <h1>Story Rank Calculator</h1>
+<svelte:head>
+  <title>Story Rank Calculator</title>
+  <meta name="description" content="Story Rank Calculator for Wangan Midnight Maximum Tune" />
+</svelte:head>
 
-  <CalculatorHeader />
+<main>
+  <h1 style="min-height: 43px">Story Rank Calculator</h1>
 
   <form>
     <table class="input">
@@ -55,14 +58,20 @@
   </form>
 
   <section class="center">
-    <h2 class="rank-theme-{themes[result.name]}">{result.name}{result.number ?? ""}</h2>
+    <h2 class="rank-theme-{themes[result.name]}">
+      {result.name}{result.number ?? ""}
+    </h2>
   </section>
+
+  <CalculatorHeader />
 </main>
 
 <style lang="scss">
   @import "../../lib/style/theme.scss";
 
   h2 {
+    min-height: 32px;
+
     border-radius: 16px;
     font-stretch: 150%;
     padding: 0 60px;

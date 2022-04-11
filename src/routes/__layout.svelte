@@ -16,7 +16,7 @@
       url("/fonts/roboto-flex.min.ttf") format("woff2-variations");
     font-weight: 100 1000;
     font-stretch: 25% 151%;
-    font-display: swap;
+    font-display: fallback;
     unicode-range: U+20-7E;
   }
 
@@ -47,7 +47,7 @@
   }
 
   body {
-    font-family: "Roboto Flex", sans-serif;
+    font-family: "Roboto Flex", "Roboto", sans-serif;
 
     background: $color-background;
     color: $color-on-background;

@@ -9,7 +9,7 @@ const config = {
 
   kit: {
     adapter: adapter(),
-    inlineStyleThreshold: 4096,
+    inlineStyleThreshold: 16_384,
   },
 }
 
