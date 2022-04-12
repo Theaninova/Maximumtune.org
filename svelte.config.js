@@ -10,8 +10,9 @@ const config = {
     mdsvex({
       extension: ".svx",
       layout: {
-        post: "src/routes/post/_post.svelte",
-        _: "src/lib/components/SvxLayout.svelte",
+        index: "src/lib/components/layouts/Index.svelte",
+        post: "src/lib/components/layouts/Post.svelte",
+        _: "src/lib/components/layouts/Default.svelte",
       },
     }),
     preprocess(),

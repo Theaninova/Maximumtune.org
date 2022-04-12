@@ -20,8 +20,10 @@
 
 <main>
   <article>
-    <h1>{title}</h1>
-    <time datetime={date}>{new Date(date).toDateString()}</time>
+    <header>
+      <h1>{title}</h1>
+      <time datetime={date}>{new Date(date).toDateString()}</time>
+    </header>
     <br />
 
     <slot />

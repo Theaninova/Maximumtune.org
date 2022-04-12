@@ -1,0 +1,11 @@
+---
+layout: index
+title: Maximumtune.org
+description: The No.1 Maximum Tune Resource
+---
+
+# Maximumtune.org
+
+The No.1 Maximum Tune Resource *(sorta)*
+
+*If you install this page ("Add to home page"), tools will work <u>offline</u>!*

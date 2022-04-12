@@ -37,6 +37,12 @@
     transition: text-shadow 0.2s ease-in-out;
   }
 
+  u {
+    text-decoration-color: $color-tertiary;
+    text-decoration-style: wavy;
+    text-decoration-thickness: 2px;
+  }
+
   a:hover {
     text-shadow: $color-tertiary 0 0 10px;
   }

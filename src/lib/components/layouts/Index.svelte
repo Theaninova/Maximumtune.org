@@ -4,20 +4,23 @@
 
   export let posts
   export let online = browser ? window.navigator.onLine : true
+
+  export let title
+  export let description
 </script>
 
 <svelte:head>
-  <title>Maximumtune.org</title>
-  <meta name="description" content="The No.1 Resource for Wangan Midnight Maximum Tune" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
 </svelte:head>
 
 <svelte:window on:offline={(online = false)} on:online={(online = true)} />
 
 <main>
-  <h1>Maximumtune.org</h1>
-  <p>The No.1 Maximum Tune Resource <em>(sorta)</em></p>
+  <section>
+    <slot />
+  </section>
   <hr />
-
   <section>
     <h2>Calculators</h2>
     <hr />
@@ -50,15 +53,13 @@
   </section>
 </main>
 
-<style lang="scss">
-  section {
-    h2 {
-      margin-bottom: 8px;
-    }
+<style>
+  section h2 {
+    margin-bottom: 8px;
+  }
 
-    hr {
-      width: 60px;
-      margin: 0;
-    }
+  section hr {
+    width: 60px;
+    margin: 0;
   }
 </style>
