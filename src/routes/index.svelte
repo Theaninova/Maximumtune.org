@@ -6,7 +6,6 @@
   import Posts from "$lib/components/Posts.svelte"
 
   export let posts
-  export let content
 </script>
 
 <svelte:head>
@@ -15,7 +14,13 @@
 </svelte:head>
 
 <main>
-  {@html content}
+  <h1>Maximumtune.org</h1>
+
+  <p>The No.1 Maximum Tune Resource <em>(sorta)</em></p>
+
+  <hr />
+
+  <h3><a href="/tools/strength-aura-calculator">The Aura Calculator Is Here</a></h3>
 
   <hr />
 

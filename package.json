@@ -12,11 +12,11 @@
     "optimize": "node optimize-images.js",
     "package": "svelte-kit package",
     "prepare": "svelte-kit sync",
+    "deploy": "node ./build/index.js",
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
-    "@sveltejs/adapter-node": "next",
-    "@sveltejs/kit": "next",
+    "@sveltejs/adapter-static": "next",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "eslint": "^8.12.0",
@@ -24,18 +24,19 @@
     "eslint-plugin-svelte3": "^3.2.1",
     "eslint-plugin-unicorn": "^42.0.0",
     "imagemin": "^8.0.1",
-    "mdsvex": "^0.10.5",
     "imagemin-webp": "^7.0.0",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
-    "svelte": "^3.44.0",
-    "svelte-check": "^2.2.6",
-    "svelte-preprocess": "^4.10.1",
     "tslib": "^2.3.1",
     "typescript": "~4.6.2"
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/kit": "next",
+    "svelte": "^3.44.0",
+    "svelte-check": "^2.2.6",
+    "mdsvex": "^0.10.5",
+    "svelte-preprocess": "^4.10.1",
     "sass": "^1.49.11"
   }
 }

@@ -1,0 +1,69 @@
+---
+title: WMMT5 Maximum Tune 5 June Update New Belt Line Extreme Bug Demonstration
+author: Myth✰
+date: 2015-06-22
+description:
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6vPB3BBBhMs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+This video explains and shows a bug in the June 2015 update of the English version of Wangan
+Midnight Maximum Tune 5. Enjoy!
+
+Transcript: "Hey guys. Today I'll be making a quick video documenting a bug in the newest
+Maximum Tune 5 update for the English version; update 6 (June Update). The update added New Belt
+Line extreme as well as the Audi RS4 wagon, and the Dodge Charger SRT-8. Now, the cars aren't
+the problem here, they work fine. The problem is with the addition of New Belt Line extreme.
+
+For those who don't know, extreme courses were added into Maximum Tune 5 at launch, and are
+essentially just reversed from their normal counterparts. The easiest example I can think of
+is Nagoya extreme, which in its original form was a clockwise circuit, but the extreme version
+goes counterclockwise.
+
+New belt line extreme is unique in a few ways.It can actually branch off to yokohane, c1, and
+wangan reverse, unlike other extreme courses like C1 extreme, where you are forced to go through
+C1 loop. And herein lies our problem and the bug i'll be talking about and explaining. First off,
+the bug only triggers if Ariake line is chosen as the starting point. For some odd reason, starting
+at Kiba line does not trigger the bug.
+
+When you start on Ariake line, you start on Wangan Line westbound, heading towards a branch to
+Yokohane upward on the right, or continuing down Wangan west. It'll be a while before you
+get there, but on the way you'll notice some weird changes to how cars interact with walls, and
+the boost mechanics between players.
+
+The most notable change is the speed penalty incurred when you make contact with a wall. Notice
+how the celsior quickly loses speed as I push him into the wall. Right here I make shallow
+contact with the left wall and go from 300 kilometres per hour to about 220. Normally, the speed
+lost would be nowhere near as much.
+
+Now, I'm going to fast-forward the race to get to the most interesting part of the bug; the branch
+to yokohane. This is where the course really starts to break. The speed loss when hitting walls
+was initially off-putting, but it made for a lot of fun on what is normally a fairly mundane course.
+
+So straight away we see the normal sign that comes up whenever there is a branching option.
+But normally there is a gate that you pass through on the road itself, showing which side of the
+road you should be on in order to choose that path. This is missing. So watch what happens
+when I choose to go to Yokohane up on the right. Notice that even though I clearly chose Yokohane
+Line, the road to Wangan West is still open.
+
+Normally, there would be a big barrier here that appears when you choose your direction. Don't be
+fooled though, the invisible wall is still there, and you will come to a dead stop if you hit it.
+I unfortunately didn't capture my first experience with this bug on camera, but the sudden narrowing
+of the road caught a lot of people out.
+
+Depending on the amount of players, and the random distance given, you can also reach a second
+branch where the same bug happens. My best guess as to why this bug occurs is simply an
+oversight when programming branches. It is the first extreme course to be able to branch to
+other reversed courses, so perhaps certain branches were given markers, and some weren't.
+
+As for the wall physics changes, I have absolutely no clue what would cause that. Definitely one of
+the more prominent and weird bugs to surface in Maximum Tune. I hope this video was informative
+and cleared up any questions people may have have.
+
+This video and others like it will appear on my website [www.maximumtune.org](/).
+It's still a work in progress, but if you wanna see similar videos to this, plus more detailed
+information on maximum tune,please subscribe to this channel, and i'll keep you updated on when
+the site is updated with more info.
+
+Thanks for watching!

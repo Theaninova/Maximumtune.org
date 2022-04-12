@@ -1,12 +1,13 @@
-import {postsIndex} from "../lib/markdown/posts-index"
-import {getMarkdownPost} from "../lib/markdown/markdown-request-handler"
+export function get() {
+  const posts = import.meta.globEager("./post/*.svx")
 
-export async function get() {
   return {
     status: 200,
     body: {
-      posts: postsIndex(),
-      content: (await getMarkdownPost("index")).html,
+      posts: Object.entries(posts).map(([key, value]) => ({
+        path: key.replace(/\.svx$/, ""),
+        ...value.metadata,
+      })),
     },
   }
 }

@@ -9,11 +9,11 @@
 <ul>
   {#each posts as { path, title, date, description }}
     <li>
-      <a href="/posts/{path}">
+      <a href={path}>
         <article>
           <h2>{title}</h2>
           <time datetime={date}>{new Date(date).toDateString()}</time>
-          <p>{@html description}</p>
+          {#if description}<p>{@html description}</p>{/if}
         </article>
         <hr />
       </a>

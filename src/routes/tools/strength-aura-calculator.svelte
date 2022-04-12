@@ -1,23 +1,17 @@
-<script context="module">
-  export let prerender = true
-</script>
-
 <script>
-  import {calculateRank} from "$lib/aura-calculator"
-  import MedalHeader from "../../lib/components/MedalHeader.svelte"
-  import RankTitle from "../../lib/components/RankTitle.svelte"
-  import "../../lib/style/table.scss"
-  import CalculatorHeader from "../../lib/components/CalculatorHeader.svelte"
+  import "$lib/style/table.scss"
+  import "$lib/style/rank-themes.scss"
 
-  export let grades = []
-  export let medals = {}
-  let input = Object.fromEntries(Object.entries(medals).map(([key]) => [key, 0]))
+  import CalculatorHeader from "$lib/components/CalculatorHeader.svelte"
+  import MedalHeader from "$lib/components/MedalHeader.svelte"
+  import RankTitle from "$lib/components/RankTitle.svelte"
 
-  $: result = calculateRank({
-    grades: grades,
-    medalValues: medals,
-    input: input,
-  })
+  import {calculateRank} from "$lib/tools/aura-calculator.ts"
+  import {medalValues} from "$lib/tools/data/medal-values.ts"
+
+  let input = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
+
+  $: result = calculateRank(input)
 </script>
 
 <svelte:head>
@@ -39,7 +33,7 @@
         </tr>
       </thead>
       <tr>
-        {#each Object.entries(medals) as [medalName]}
+        {#each Object.entries(medalValues) as [medalName]}
           <td
             ><input
               on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}

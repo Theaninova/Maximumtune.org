@@ -1,16 +1,14 @@
-<script context="module">
-  export let prerender = true
-</script>
-
 <script>
-  import {calculateStoryRank} from "$lib/rank-calculator.ts"
   import "$lib/style/table.scss"
   import "$lib/style/rank-themes.scss"
-  import RankHeader from "../../lib/components/RankHeader.svelte"
-  import CalculatorHeader from "../../lib/components/CalculatorHeader.svelte"
 
-  export let rankConfig
-  export let input = Object.fromEntries(Object.entries(rankConfig).map(([key]) => [key, 0]))
+  import RankHeader from "$lib/components/RankHeader.svelte"
+  import CalculatorHeader from "$lib/components/CalculatorHeader.svelte"
+
+  import {calculateStoryRank} from "$lib/tools/rank-calculator.ts"
+  import {rankNames} from "$lib/tools/data/story-rank.ts"
+
+  export let input = Object.fromEntries(rankNames.map(key => [key, 0]))
 
   const themes = {
     N: "neutral",
@@ -25,7 +23,7 @@
     SSSSSS: "leather",
   }
 
-  $: result = calculateStoryRank(input, rankConfig)
+  $: result = calculateStoryRank(input)
 </script>
 
 <svelte:head>
@@ -42,7 +40,7 @@
         <RankHeader />
       </thead>
       <tr>
-        {#each Object.keys(rankConfig) as medalName}
+        {#each rankNames as medalName}
           <td
             ><input
               on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}

@@ -1,3 +1,6 @@
+import {grades} from "./data/grades"
+import {medalValues} from "./data/medal-values"
+
 export interface Ranks {
   totalScore: number
   rankName: string
@@ -8,13 +11,7 @@ export interface Ranks {
   }
 }
 
-export interface Input {
-  grades: [number, string][]
-  medalValues: Record<string, number>
-  input: Record<string, number>
-}
-
-export function calculateRank({grades, medalValues, input}: Input): Ranks {
+export function calculateRank(input: Record<string, number>): Ranks {
   const totalScore = Object.entries(input).reduce((a, [id, value]) => a + medalValues[id] * value, 0)
 
   const nextRankIndex = grades.findIndex(([rankThreshold]) => totalScore < rankThreshold)

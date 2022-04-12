@@ -1,0 +1,55 @@
+---
+title: FAQ
+description: FAQ for maximumtune.org and Wangan Midnight Maximum Tune
+---
+
+# Frequently Asked Questions
+
+These are some (very) frequently asked questions I get about WMMT in general
+as well as some small bits of trivia about the game.
+
+## How do I get flames around my car? (Aura)
+
+How do I get flames around my car? (Aura)
+An aura is earned on a car after it has been driven a total of 5000km. The aura
+gets bigger when you reach certain total distances:
+
+* 5,000km
+* 10,000km
+* 30,000km
+* 100,000km
+* 500,000km
+
+The colour of the aura darkens as the mileage gets higher.
+
+Currently, only in the Japanese version, any car with 1 million kilometers will
+have an aura that emits lightning, which looks pretty cool. I will post a video
+here once I've found a decent quality one.
+
+**Reference Video:**
+
+
+For some reason, certain cars like the 180SX and R35 have a taller aura than other cars.
+
+
+## Why does the screen flash red in certain courses while in Time Attack mode?
+
+The red flashes in time attack are speed traps that trigger when you enter above a certain
+speed. They are meant to mimic the flash of a fixed speed camera.
+
+In the game files, they are referenced by their colloquial name Orvis (オービス) , which is
+a common manufacturer of speed cameras in Japan.
+
+Not all courses have red flashes. Some courses have speed traps that trigger an environmental
+change, such as shooting stars on Hakone at night, or flocks of birds in the morning.
+
+## What determines the colour of my flame aura?
+
+The colour of the aura is determined by how you drive in versus mode.
+
+Green Aura:
+Purple Aura:
+Blue Aura:
+Red Aura:
+Purple Aura:
+White Aura:

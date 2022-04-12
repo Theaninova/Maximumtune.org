@@ -1,0 +1,30 @@
+---
+title: New Site!
+date: 2022-04-10
+author: Theaninova
+description: A complete from the ground up, new and reworked site.
+---
+
+Hi there! It's Myth✰'s girlfriend here!
+
+After an absolute eternity of time, we've decided to completely
+rebuild the site from scratch. Ditching WordPress and going for
+a fully custom solution.
+
+This means better looks, a more responsive experience, and way
+less headache for us.
+
+Unfortunately, this big transition also means we have to manually
+migrate all the posts, which for now means only a few of them
+are available.
+
+For those more interested in the technical details, we're using
+[SvelteKit](https://https://svelte.dev/) and the static adapter
+to build the site giving us an immensely more flexible and
+performant solution. The site is now also using custom CSS only
+with no pre-built themes, as well as using [`mdsvex`](https://mdsvex.com/)
+to build the site's individual pages.
+
+As a bonus,
+the source code (minus posts and image resources) is available
+on [GitHub](https://github.com/Theaninova/mmtorg).

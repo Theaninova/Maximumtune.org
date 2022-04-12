@@ -7,7 +7,6 @@
   export let author
   export let date
   export let description
-  export let html
 </script>
 
 <svelte:head>
@@ -25,6 +24,6 @@
     <time datetime={date}>{new Date(date).toDateString()}</time>
     <br />
 
-    {@html html}
+    <slot />
   </article>
 </main>
