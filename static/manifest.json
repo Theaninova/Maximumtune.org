@@ -1,0 +1,28 @@
+{
+  "name": "Maximumtune.org",
+  "short_name": "Maximumtune",
+  "start_url": "/",
+  "theme_color": "#ffacef",
+  "background_color": "#1C1B1F",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

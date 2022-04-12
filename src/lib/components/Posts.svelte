@@ -4,6 +4,7 @@
 
 <script>
   export let posts
+  export let separator = true
 </script>
 
 <ul>
@@ -11,11 +12,13 @@
     <li>
       <a href={path}>
         <article>
-          <h2>{title}</h2>
-          <time datetime={date}>{new Date(date).toDateString()}</time>
+          <h3>{title}</h3>
+          {#if date}
+            <time datetime={date}>{new Date(date).toDateString()}</time>
+          {/if}
           {#if description}<p>{@html description}</p>{/if}
         </article>
-        <hr />
+        {#if separator}<hr />{/if}
       </a>
     </li>
   {/each}
@@ -39,6 +42,7 @@
   hr {
     width: 50px;
   }
+
   li:last-child hr {
     display: none;
   }

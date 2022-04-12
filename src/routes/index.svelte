@@ -16,14 +16,42 @@
 <main>
   <h1>Maximumtune.org</h1>
   <p>The No.1 Maximum Tune Resource <em>(sorta)</em></p>
-
-  <hr />
-  <strong><a href="/tools/strength-aura-calculator">The Aura Calculator Is Here</a></strong>
   <hr />
 
-  <div>
-    <h2 style="margin-bottom: 8px">Posts</h2>
-    <hr style="width: 60px; margin: 0" />
-  </div>
-  <Posts {posts} />
+  <section>
+    <h2>Calculators</h2>
+    <hr />
+    <Posts
+      separator={false}
+      posts={[
+        {
+          title: "Medals, Strength Aura, & Grade",
+          path: "/tools/strength-aura-calculator",
+        },
+        {
+          title: "Story Rank",
+          path: "/tools/story-rank-calculator",
+        },
+      ]}
+    />
+  </section>
+
+  <section>
+    <h2>Posts</h2>
+    <hr />
+    <Posts {posts} />
+  </section>
 </main>
+
+<style lang="scss">
+  section {
+    h2 {
+      margin-bottom: 8px;
+    }
+
+    hr {
+      width: 60px;
+      margin: 0;
+    }
+  }
+</style>

@@ -59,13 +59,15 @@
     margin: 32px auto;
   }
 
-  h2 {
+  h2,
+  h3 {
     color: $color-secondary;
     text-shadow: $color-secondary-container 0 0 5px;
     transition: text-shadow $ease-default;
   }
 
-  h2:hover {
+  h2:hover,
+  h3:hover {
     text-shadow: $color-secondary 0 0 20px;
   }
 
@@ -83,6 +85,7 @@
     text-shadow: $color-tertiary 0 0 20px;
   }
 
+  h3 > a,
   h2 > a,
   h1 > a {
     transition: color $ease-default;

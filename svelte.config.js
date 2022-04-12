@@ -16,12 +16,12 @@ const config = {
     }),
     preprocess(),
   ],
-
   extensions: [".svelte", ".svx"],
 
   kit: {
     adapter: adapter(),
     inlineStyleThreshold: 16_384,
+    trailingSlash: "always",
     prerender: {
       default: true,
     },
