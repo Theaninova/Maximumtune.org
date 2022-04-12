@@ -3,13 +3,13 @@
 </script>
 
 <nav>
-  <a href="/" class="home"><span class="a11y-hidden">Home</span></a>
+  <a sveltekit:prefetch href="/" class="home"><span class="a11y-hidden">Home</span></a>
   <ul>
     <li>
-      <a href="/tools">Tools</a>
+      <a sveltekit:prefetch href="/tools">Tools</a>
     </li>
-    <li><a href="/faq">FAQ</a></li>
-    <li><a href="/about">About</a></li>
+    <li><a sveltekit:prefetch href="/faq">FAQ</a></li>
+    <li><a sveltekit:prefetch href="/about">About</a></li>
   </ul>
 </nav>
 

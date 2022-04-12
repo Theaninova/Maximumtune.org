@@ -5,12 +5,13 @@
 <script>
   export let posts
   export let separator = true
+  export let prefetch = false
 </script>
 
 <ul>
   {#each posts as { path, title, date, description }}
     <li>
-      <a href={path}>
+      <a sveltekit:prefetch={prefetch} href={path}>
         <article>
           <h3>{title}</h3>
           {#if date}
