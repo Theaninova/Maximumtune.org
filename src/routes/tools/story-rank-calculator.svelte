@@ -3,7 +3,7 @@
   import "$lib/style/rank-themes.scss"
 
   import RankHeader from "$lib/components/RankHeader.svelte"
-  import CalculatorHeader from "$lib/components/CalculatorHeader.svelte"
+  import CalculatorHeader from "$lib/components/CalculatorFooter.svelte"
 
   import {calculateStoryRank} from "$lib/tools/rank-calculator.ts"
   import {rankNames} from "$lib/tools/data/story-rank.ts"

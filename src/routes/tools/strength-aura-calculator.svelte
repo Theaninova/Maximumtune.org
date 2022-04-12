@@ -2,7 +2,7 @@
   import "$lib/style/table.scss"
   import "$lib/style/rank-themes.scss"
 
-  import CalculatorHeader from "$lib/components/CalculatorHeader.svelte"
+  import CalculatorFooter from "$lib/components/CalculatorFooter.svelte"
   import MedalHeader from "$lib/components/MedalHeader.svelte"
   import RankTitle from "$lib/components/RankTitle.svelte"
 
@@ -51,7 +51,9 @@
   <hr />
 
   <section class="center">
-    <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
+    <div style="cursor: pointer">
+      <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
+    </div>
     <table class="output">
       <caption>Total</caption>
       <thead>
@@ -83,8 +85,7 @@
       </table>
     {/if}
   </section>
-
-  <CalculatorHeader />
+  <CalculatorFooter />
 </main>
 
 <style>
