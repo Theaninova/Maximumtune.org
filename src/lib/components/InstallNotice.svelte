@@ -1,10 +1,10 @@
-<p>
+<div class="install-notice">
   <slot />
-</p>
+</div>
 
 <style>
-  @media (display-mode: standalone) {
-    p {
+  @media (display-mode: standalone), (min-width: 481px) {
+    .install-notice {
       display: none;
     }
   }
