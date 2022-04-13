@@ -73,6 +73,6 @@
     border-radius: 16px;
     font-stretch: 150%;
     padding: 0 60px;
-    box-shadow: none;
+    box-shadow: $inset-shadow;
   }
 </style>

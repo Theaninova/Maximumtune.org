@@ -31,8 +31,10 @@ $text-wide: "wdth" 150, "wght" 280;
 
 $ease-default: 0.2s ease;
 
-$border-radius: 8px;
+$border-radius: 12px;
 $border-radius-left: $border-radius 0 0 $border-radius;
 $border-radius-right: 0 $border-radius $border-radius 0;
 
-$item-gap: 2px;
+$item-gap: 4px;
+
+$inset-shadow: inset #000 0 0 5px 2px;

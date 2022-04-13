@@ -22,10 +22,12 @@ input::-webkit-inner-spin-button {
 .input input {
   background: $color-secondary-container;
   color: $color-on-secondary-container;
+  box-shadow: $inset-shadow;
 }
 
 .output td {
-  background: $color-surface-variant;
+  background: linear-gradient($color-surface-variant, #000);
+  box-shadow: darken($color-on-surface-variant, 60%) 0 0 3px 1px inset;
   color: $color-on-surface-variant;
 }
 

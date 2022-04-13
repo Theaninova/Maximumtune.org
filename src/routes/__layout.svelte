@@ -32,8 +32,7 @@
   }
 
   a {
-    color: $color-tertiary;
-    text-shadow: $color-tertiary 0 0 2px;
+    color: $color-secondary;
     transition: text-shadow 0.2s ease-in-out;
   }
 
@@ -44,24 +43,36 @@
   }
 
   a:hover {
-    text-shadow: $color-tertiary 0 0 10px;
+    text-shadow: $color-secondary 0 0 10px;
+  }
+
+  main {
+    margin: 0 8px;
   }
 
   main > * {
     width: min(16.5cm, 100%);
-    margin: 0 16px;
   }
 
   body {
     font-family: "Roboto Flex", "Roboto", sans-serif;
 
-    background: $color-background;
+    background: radial-gradient($color-background, #080808);
     color: $color-on-background;
+    margin: 0;
+    min-height: 100vh;
   }
 
   hr {
-    border-color: $color-tertiary;
-    box-shadow: $color-tertiary 0 0 20px 3px;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      $color-tertiary-container,
+      $color-tertiary 80%,
+      $color-tertiary-container
+    );
+    box-shadow: $color-tertiary 0 0 20px;
+    border: none;
     margin: 32px auto;
   }
 
@@ -78,8 +89,20 @@
   }
 
   h1 {
-    color: $color-tertiary;
-    text-shadow: $color-tertiary 0 0 30px;
+    // color: $color-tertiary;
+    background-color: #f3ec78;
+    background-image: linear-gradient(
+      0deg,
+      lighten($color-tertiary-container, 10%),
+      lighten($color-tertiary, 0%),
+      lighten($color-tertiary-container, 10%)
+    );
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    text-shadow: darken($color-tertiary, 5%) 0 0 30px;
     transition: text-shadow $ease-default;
 
     margin: 16px 0;

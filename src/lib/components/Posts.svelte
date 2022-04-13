@@ -39,6 +39,9 @@
     text-decoration: none;
     text-shadow: none;
   }
+  a:hover h3 {
+    text-shadow: $color-secondary 0 0 20px;
+  }
 
   hr {
     width: 50px;

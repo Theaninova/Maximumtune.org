@@ -3,25 +3,38 @@
 </script>
 
 <nav>
-  <a sveltekit:prefetch href="/" class="home"><span class="a11y-hidden">Home</span></a>
-  <ul>
-    <li>
-      <a sveltekit:prefetch href="/tools">Tools</a>
-    </li>
-    <li><a sveltekit:prefetch href="/faq">FAQ</a></li>
-    <li><a sveltekit:prefetch href="/about">About</a></li>
-  </ul>
+  <div class="space-between">
+    <a sveltekit:prefetch href="/" class="home"><span class="a11y-hidden">Home</span></a>
+    <ul>
+      <li>
+        <a sveltekit:prefetch href="/tools">Tools</a>
+      </li>
+      <li><a sveltekit:prefetch href="/faq">FAQ</a></li>
+      <li><a sveltekit:prefetch href="/about">About</a></li>
+    </ul>
+  </div>
+  <hr />
 </nav>
 
 <style lang="scss">
   @import "../style/theme.scss";
   @import "../assets/images.scss";
 
-  nav {
+  .space-between {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+  nav {
+    padding: 8px;
+    background: linear-gradient($color-surface-variant, #000, #000);
+    background-clip: border-box;
+  }
+  hr {
+    display: block;
+    margin: 6px 0;
+    box-shadow: $color-tertiary 0 0 8px;
   }
   .home {
     background-image: url($logo_square_48w);
@@ -44,6 +57,7 @@
       padding: 5px 12px;
       background: $color-surface-variant;
       color: $color-on-surface-variant;
+      box-shadow: $inset-shadow;
 
       transition: all $ease-default;
       text-decoration: none;
@@ -51,10 +65,10 @@
     }
 
     a:hover {
-      background: $color-tertiary;
-      color: $color-on-tertiary;
+      background: $color-tertiary-container;
+      color: $color-on-tertiary-container;
 
-      box-shadow: 0 0 10px 1px $color-tertiary;
+      box-shadow: 0 0 8px 2px $color-tertiary inset;
     }
 
     li:first-child a {
