@@ -7,7 +7,7 @@ export const rankNames = ["C", "B", "A", "S", "SS", "SSS", "SSSS"]
 export const ranks: Rank[] = [
   {name: "N"},
   ...rankNames.flatMap(name => rankNumbers.map(number => ({name, number}))),
-  {name: "SSSSS"},
+  ...rankNumbers.map(() => ({name: "SSSSS"})),
   {name: "SSSSSS"},
 ]
 

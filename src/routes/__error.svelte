@@ -20,10 +20,8 @@
   <meta name="description" content={error.message} />
 </svelte:head>
 
-<main>
-  <article>
-    <h1>{status}</h1>
+<article>
+  <h1>{status}</h1>
 
-    <p>{error}</p>
-  </article>
-</main>
+  <p>{error}</p>
+</article>

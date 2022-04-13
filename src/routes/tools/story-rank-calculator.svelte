@@ -27,42 +27,42 @@
 </script>
 
 <svelte:head>
-  <title>Story Rank Calculator</title>
+  <title>Story RankCalculator</title>
   <meta name="description" content="Story Rank Calculator for Wangan Midnight Maximum Tune" />
 </svelte:head>
 
-<main>
-  <h1 style="min-height: 43px">Story Rank Calculator</h1>
+<div class="subtitle">
+  <h1>Story Rank Calculator</h1>
+</div>
 
-  <form>
-    <table class="input">
-      <thead>
-        <RankHeader />
-      </thead>
-      <tr>
-        {#each rankNames as medalName}
-          <td
-            ><input
-              on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
-              id={medalName}
-              type="number"
-              placeholder="0"
-              name={medalName}
-            /></td
-          >
-        {/each}
-      </tr>
-    </table>
-  </form>
+<form>
+  <table class="input">
+    <thead>
+      <RankHeader />
+    </thead>
+    <tr>
+      {#each rankNames as medalName}
+        <td
+          ><input
+            on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
+            id={medalName}
+            type="number"
+            placeholder="0"
+            name={medalName}
+          /></td
+        >
+      {/each}
+    </tr>
+  </table>
+</form>
 
-  <section class="center">
-    <h2 class="rank-theme-{themes[result.name]}">
-      {result.name}{result.number ?? ""}
-    </h2>
-  </section>
+<section class="center">
+  <h2 class="rank-theme-{themes[result.name]}">
+    {result.name}{result.number ?? ""}
+  </h2>
+</section>
 
-  <CalculatorHeader />
-</main>
+<CalculatorHeader />
 
 <style lang="scss">
   @import "../../lib/style/theme.scss";
@@ -74,5 +74,17 @@
     font-stretch: 150%;
     padding: 0 60px;
     box-shadow: $inset-shadow;
+  }
+
+  @media (min-width: 398px) {
+    .subtitle > h1 {
+      min-height: 43px;
+    }
+  }
+
+  @media (max-width: 397px) {
+    .subtitle > h1 {
+      min-height: 86px;
+    }
   }
 </style>

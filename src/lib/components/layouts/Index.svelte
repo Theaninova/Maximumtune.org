@@ -16,42 +16,40 @@
 
 <svelte:window on:offline={(online = false)} on:online={(online = true)} />
 
-<main>
-  <section>
-    <slot />
-  </section>
+<section>
+  <slot />
+</section>
+<hr />
+<section>
+  <h2>Calculators</h2>
   <hr />
-  <section>
-    <h2>Calculators</h2>
-    <hr />
-    <Posts
-      separator={false}
-      prefetch={true}
-      posts={[
-        {
-          title: "Medals, Strength Aura, & Grade",
-          path: "/tools/strength-aura-calculator",
-        },
-        {
-          title: "Story Rank",
-          path: "/tools/story-rank-calculator",
-        },
-      ]}
-    />
-  </section>
+  <Posts
+    separator={false}
+    prefetch={true}
+    posts={[
+      {
+        title: "Battle Grade",
+        path: "/tools/battle-grade-calculator",
+      },
+      {
+        title: "Story Rank",
+        path: "/tools/story-rank-calculator",
+      },
+    ]}
+  />
+</section>
 
-  <section>
-    {#if online}
-      <h2>Posts</h2>
-      <hr />
-      <Posts {posts} />
-    {:else}
-      <h2>You're offline!</h2>
-      <hr />
-      <p>Posts aren't available while you're offline :(</p>
-    {/if}
-  </section>
-</main>
+<section>
+  {#if online}
+    <h2>Posts</h2>
+    <hr />
+    <Posts {posts} />
+  {:else}
+    <h2>You're offline!</h2>
+    <hr />
+    <p>Posts aren't available while you're offline :(</p>
+  {/if}
+</section>
 
 <style>
   section h2 {

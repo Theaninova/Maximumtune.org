@@ -18,14 +18,12 @@
   <meta name="og:article:published_time" content={date} />
 </svelte:head>
 
-<main>
-  <article>
-    <header>
-      <h1>{title}</h1>
-      <time datetime={date}>{new Date(date).toDateString()}</time>
-    </header>
-    <br />
+<article>
+  <header>
+    <h1>{title}</h1>
+    <time datetime={date}>{new Date(date).toDateString()}</time>
+  </header>
+  <br />
 
-    <slot />
-  </article>
-</main>
+  <slot />
+</article>

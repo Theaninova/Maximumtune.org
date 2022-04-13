@@ -1,10 +1,23 @@
-<script>
-  import Header from "$lib/components/Header.svelte"
+<script context="module">
+  export const load = ({url}) => ({
+    props: {
+      activeRoute: url.pathname,
+    },
+  })
 </script>
 
-<Header />
+<script>
+  import Header from "$lib/components/Header.svelte"
+  import PageTransition from "../lib/components/PageTransition.svelte"
 
-<slot />
+  export let activeRoute
+</script>
+
+<Header {activeRoute} />
+
+<PageTransition {activeRoute}>
+  <slot />
+</PageTransition>
 
 <style global lang="scss">
   @import "../lib/style/theme.scss";
@@ -48,10 +61,26 @@
 
   main {
     margin: 0 8px;
+    z-index: -1;
   }
 
   main > * {
     width: min(16.5cm, 100%);
+  }
+
+  main > .subtitle {
+    background: darken($color-surface-variant, 25%);
+    border: $color-surface-variant ridge 4px;
+    border-top-style: none;
+    border-bottom-right-radius: $border-radius;
+    padding: 0 8px 4px 24px;
+    width: min(16.5cm, 90%);
+    align-self: start;
+    transform: translate(-24px) skew(-12deg);
+
+    h1 {
+      margin: 0;
+    }
   }
 
   body {
@@ -99,8 +128,10 @@
     );
     background-size: 100%;
     -webkit-background-clip: text;
+    //noinspection CssInvalidPropertyValue
     -moz-background-clip: text;
     -webkit-text-fill-color: transparent;
+    //noinspection CssUnknownProperty
     -moz-text-fill-color: transparent;
     text-shadow: darken($color-tertiary, 5%) 0 0 30px;
     transition: text-shadow $ease-default;

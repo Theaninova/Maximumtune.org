@@ -12,8 +12,6 @@
   <meta name="description" content={description} />
 </svelte:head>
 
-<main>
-  <article>
-    <slot />
-  </article>
-</main>
+<article>
+  <slot />
+</article>

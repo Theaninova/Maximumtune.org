@@ -10,7 +10,7 @@
 
 <main>
   <ul>
-    <li><h2><a href="/tools/strength-aura-calculator">Aura Calculator</a></h2></li>
+    <li><h2><a href="/tools/battle-grade-calculator">Battle Grade Calculator</a></h2></li>
     <li><h2><a href="/tools/story-rank-calculator">Story Rank Calculator</a></h2></li>
   </ul>
 </main>

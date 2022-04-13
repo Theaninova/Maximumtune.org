@@ -1,16 +1,18 @@
-<script context="module">
-  export const hydrate = false
+<script>
+  export let activeRoute
 </script>
 
 <nav>
   <div class="space-between">
     <a sveltekit:prefetch href="/" class="home"><span class="a11y-hidden">Home</span></a>
     <ul>
-      <li>
-        <a sveltekit:prefetch href="/tools">Tools</a>
-      </li>
-      <li><a sveltekit:prefetch href="/faq">FAQ</a></li>
-      <li><a sveltekit:prefetch href="/about">About</a></li>
+      {#each ["tools", "faq", "about"] as route}
+        <li>
+          <a class:active={activeRoute.startsWith(`/${route}`)} sveltekit:prefetch href={`/${route}`}
+            >{route.toUpperCase()}</a
+          >
+        </li>
+      {/each}
     </ul>
   </div>
   <hr />
@@ -26,16 +28,24 @@
     justify-content: space-between;
     align-items: center;
   }
+
   nav {
     padding: 8px;
-    background: linear-gradient($color-surface-variant, #000, #000);
+    background: linear-gradient(
+      lighten($color-surface-variant, 10%),
+      darken($color-surface-variant, 50%) 50%,
+      #000 51%,
+      #000
+    );
     background-clip: border-box;
   }
+
   hr {
     display: block;
     margin: 6px 0;
     box-shadow: $color-tertiary 0 0 8px;
   }
+
   .home {
     background-image: url($logo_square_48w);
     width: 48px;
@@ -64,6 +74,7 @@
       text-shadow: none;
     }
 
+    .active,
     a:hover {
       background: $color-tertiary-container;
       color: $color-on-tertiary-container;
