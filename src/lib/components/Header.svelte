@@ -64,6 +64,21 @@
     margin: 0;
 
     a {
+      @include hover() {
+        background: $color-tertiary-container;
+        color: $color-on-tertiary-container;
+
+        box-shadow: 0 0 8px 2px $color-tertiary inset;
+      }
+    }
+    .active {
+      background: $color-tertiary-container;
+      color: $color-on-tertiary-container;
+
+      box-shadow: 0 0 8px 2px $color-tertiary inset;
+    }
+
+    a {
       padding: 5px 12px;
       background: $color-surface-variant;
       color: $color-on-surface-variant;
@@ -72,14 +87,6 @@
       transition: all $ease-default;
       text-decoration: none;
       text-shadow: none;
-    }
-
-    .active,
-    a:hover {
-      background: $color-tertiary-container;
-      color: $color-on-tertiary-container;
-
-      box-shadow: 0 0 8px 2px $color-tertiary inset;
     }
 
     li:first-child a {

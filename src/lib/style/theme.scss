@@ -38,3 +38,16 @@ $border-radius-right: 0 $border-radius $border-radius 0;
 $item-gap: 4px;
 
 $inset-shadow: inset #000 0 0 5px 2px;
+
+@mixin hover() {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}

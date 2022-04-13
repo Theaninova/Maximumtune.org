@@ -44,19 +44,25 @@
     unicode-range: U+00A0-FB04;
   }
 
+  //noinspection CssInvalidAtRule
+  @layer base {
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+
   a {
     color: $color-secondary;
     transition: text-shadow 0.2s ease-in-out;
+    @include hover() {
+      text-shadow: $color-secondary 0 0 10px;
+    }
   }
 
   u {
     text-decoration-color: $color-tertiary;
     text-decoration-style: wavy;
     text-decoration-thickness: 2px;
-  }
-
-  a:hover {
-    text-shadow: $color-secondary 0 0 10px;
   }
 
   main {
@@ -110,11 +116,10 @@
     color: $color-secondary;
     text-shadow: $color-secondary-container 0 0 5px;
     transition: text-shadow $ease-default;
-  }
 
-  h2:hover,
-  h3:hover {
-    text-shadow: $color-secondary 0 0 20px;
+    @include hover() {
+      text-shadow: $color-secondary 0 0 20px;
+    }
   }
 
   h1 {
@@ -139,10 +144,10 @@
     margin: 16px 0;
 
     font-stretch: 120%;
-  }
 
-  h1:hover {
-    text-shadow: $color-tertiary 0 0 20px;
+    @include hover() {
+      text-shadow: $color-tertiary 0 0 20px;
+    }
   }
 
   h3 > a,
