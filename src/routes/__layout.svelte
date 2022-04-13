@@ -98,17 +98,37 @@
     min-height: 100vh;
   }
 
+  @keyframes light-bar {
+    0% {
+      background-position: -100% 0;
+    }
+    80% {
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
+
+  @keyframes light-bar-vertical {
+    0% {
+      background-position: 0 100%;
+    }
+    80% {
+    }
+    100% {
+      background-position: 0 -100%;
+    }
+  }
+
   hr {
-    height: 2px;
-    background: linear-gradient(
-      90deg,
-      $color-tertiary-container,
-      $color-tertiary 80%,
-      $color-tertiary-container
-    );
-    box-shadow: $color-tertiary 0 0 20px;
+    height: 4px;
+    background-size: 200% 100%;
+    border-radius: 2px;
+    background-image: light-bar(90deg, 20%, 40%);
+    box-shadow: $color-tertiary-container 0 0 20px;
     border: none;
     margin: 32px auto;
+    animation: light-bar 5s ease infinite;
   }
 
   h2,
@@ -116,9 +136,21 @@
     color: $color-secondary;
     text-shadow: $color-secondary-container 0 0 5px;
     transition: text-shadow $ease-default;
+  }
 
+  a > h2,
+  a > h2 {
     @include hover() {
       text-shadow: $color-secondary 0 0 20px;
+    }
+  }
+
+  @keyframes hover {
+    from {
+      text-shadow: darken($color-tertiary, 5%) 0 0 30px;
+    }
+    to {
+      text-shadow: $color-tertiary 0 0 20px;
     }
   }
 
@@ -138,16 +170,12 @@
     -webkit-text-fill-color: transparent;
     //noinspection CssUnknownProperty
     -moz-text-fill-color: transparent;
-    text-shadow: darken($color-tertiary, 5%) 0 0 30px;
+    animation: hover 1s linear alternate infinite;
     transition: text-shadow $ease-default;
 
     margin: 16px 0;
 
     font-stretch: 120%;
-
-    @include hover() {
-      text-shadow: $color-tertiary 0 0 20px;
-    }
   }
 
   h3 > a,

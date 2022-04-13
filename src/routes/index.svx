@@ -7,8 +7,6 @@ description: The No.1 Maximum Tune Resource
   import InstallNotice from "$lib/components/InstallNotice.svelte"
 </script>
 
-# Maximumtune.org
-
 The No.1 Maximum Tune Resource *(sorta)*
 
 <InstallNotice>

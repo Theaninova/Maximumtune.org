@@ -49,9 +49,8 @@
 <hr />
 
 <section class="center">
-  <div style="cursor: pointer">
-    <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
-  </div>
+  <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
+
   <table class="output">
     <caption>Total</caption>
     <thead>

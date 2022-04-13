@@ -39,6 +39,13 @@ $item-gap: 4px;
 
 $inset-shadow: inset #000 0 0 5px 2px;
 
+$black-3d-panel: linear-gradient(
+    lighten($color-surface-variant, 10%),
+    darken($color-surface-variant, 50%) 50%,
+    #000 51%,
+    #000
+);
+
 @mixin hover() {
   @media (hover: hover) {
     &:hover {
@@ -50,4 +57,24 @@ $inset-shadow: inset #000 0 0 5px 2px;
       @content;
     }
   }
+}
+
+@function light-bar($rotation, $a, $b, $darken: 30%) {
+  @return linear-gradient(
+      $rotation,
+      mix($color-tertiary-container, $color-surface-variant, $darken),
+      mix($color-tertiary-container, $color-surface-variant, $darken) $a,
+      $color-tertiary $b,
+      mix($color-tertiary-container, $color-surface-variant, $darken) 50%,
+      mix($color-tertiary-container, $color-surface-variant, $darken)
+  );
+}
+
+@function panel-3d($color, $lighten, $rotation) {
+  @return linear-gradient(
+      $rotation,
+      lighten($color, $lighten),
+      lighten($color, 0%),
+      lighten($color, $lighten)
+  )
 }

@@ -25,10 +25,17 @@ input::-webkit-inner-spin-button {
   box-shadow: $inset-shadow;
 }
 
-.output td {
-  background: linear-gradient($color-surface-variant, #000);
+.output > tr > td {
+  background-image: $black-3d-panel;
   box-shadow: darken($color-on-surface-variant, 60%) 0 0 3px 1px inset;
   color: $color-on-surface-variant;
+}
+
+.output > tr:after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 td,
@@ -38,12 +45,28 @@ input {
   text-align: center;
 }
 
-td:first-child,
+.output td:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 3px;
+  height: 24px;
+  transform: translate(-50%, -22px);
+  animation: light-bar-vertical 1.5s ease infinite;
+  background-image: light-bar(180deg, 1%, 25%, 10%);
+  background-size: 100% 200%;
+}
+
+.output td:first-child:after {
+  display: none;
+}
+
+.output td:first-child,
 td:first-child > input {
   border-radius: $border-radius-left;
 }
 
-td:last-child,
+.output td:last-child,
 td:last-child > input {
   border-radius: $border-radius-right;
 }
@@ -58,5 +81,5 @@ caption {
 
 table {
   margin: 16px auto;
-  border-spacing: 2px;
+  border-spacing: 0 2px;
 }

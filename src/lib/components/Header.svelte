@@ -31,19 +31,14 @@
 
   nav {
     padding: 8px;
-    background: linear-gradient(
-      lighten($color-surface-variant, 10%),
-      darken($color-surface-variant, 50%) 50%,
-      #000 51%,
-      #000
-    );
+    background: $black-3d-panel;
     background-clip: border-box;
   }
 
   hr {
+    animation: light-bar 1s ease infinite;
     display: block;
     margin: 6px 0;
-    box-shadow: $color-tertiary 0 0 8px;
   }
 
   .home {
@@ -67,10 +62,23 @@
       @include hover() {
         background: $color-tertiary-container;
         color: $color-on-tertiary-container;
+        animation: glow 1s ease infinite;
 
         box-shadow: 0 0 8px 2px $color-tertiary inset;
       }
     }
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 8px 2px $color-tertiary inset;
+      }
+      50% {
+        box-shadow: 0 0 16px 2px $color-tertiary inset;
+      }
+      100% {
+        box-shadow: 0 0 8px 2px $color-tertiary inset;
+      }
+    }
+
     .active {
       background: $color-tertiary-container;
       color: $color-on-tertiary-container;

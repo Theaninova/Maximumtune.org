@@ -17,9 +17,10 @@
 <svelte:window on:offline={(online = false)} on:online={(online = true)} />
 
 <section>
+  <h1>Maximumtune.org</h1>
+
   <slot />
 </section>
-<hr />
 <section>
   <h2>Calculators</h2>
   <hr />
@@ -52,8 +53,16 @@
 </section>
 
 <style>
+  h1 {
+    font-size: 30px;
+    font-weight: 900;
+    font-stretch: 150%;
+  }
+
   section h2 {
     margin-bottom: 8px;
+
+    transform: skew(-10deg);
   }
 
   section hr {
