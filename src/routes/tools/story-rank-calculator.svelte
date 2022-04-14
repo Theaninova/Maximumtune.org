@@ -1,28 +1,15 @@
 <script>
-  import "$lib/style/table.scss"
-  import "$lib/style/rank-themes.scss"
+  import "../../lib/style/table.scss"
 
-  import RankHeader from "$lib/components/RankHeader.svelte"
-  import CalculatorHeader from "$lib/components/CalculatorFooter.svelte"
+  import RankHeader from "../../lib/components/RankHeader.svelte"
+  import CalculatorHeader from "../../lib/components/CalculatorFooter.svelte"
 
-  import {calculateStoryRank} from "$lib/tools/rank-calculator.ts"
-  import {rankNames} from "$lib/tools/data/story-rank.ts"
+  import {calculateStoryRank} from "../../lib/tools/rank-calculator.ts"
+  import {rankNames} from "../../lib/tools/data/story-rank.ts"
   import Input from "../../lib/components/table/Input.svelte"
+  import StoryRank from "../../lib/components/StoryRank.svelte"
 
   export let input = Object.fromEntries(rankNames.map(key => [key, 0]))
-
-  const themes = {
-    N: "neutral",
-    C: "blue",
-    B: "green",
-    A: "yellow",
-    S: "orange",
-    SS: "red",
-    SSS: "pink",
-    SSSS: "gold",
-    SSSSS: "rainbow",
-    SSSSSS: "leather",
-  }
 
   $: result = calculateStoryRank(input)
 </script>
@@ -56,24 +43,15 @@
 </form>
 
 <section class="center">
-  <h2 class="rank-theme-{themes[result.name]}">
-    {result.name}{result.number ?? ""}
-  </h2>
+  <StoryRank rank={result} />
+
+  <p><a href="/tools/story-rank-info">See how we calculate your rank</a></p>
 </section>
 
 <CalculatorHeader />
 
 <style lang="scss">
   @import "../../lib/style/theme.scss";
-
-  h2 {
-    min-height: 32px;
-
-    border-radius: 16px;
-    font-stretch: 150%;
-    padding: 0 60px;
-    box-shadow: $inset-shadow;
-  }
 
   @media (min-width: 398px) {
     .subtitle > h1 {

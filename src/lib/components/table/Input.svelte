@@ -1,5 +1,5 @@
 <td>
-  <input {...$$props} />
+  <input {...$$props} on:change />
 </td>
 
 <style lang="scss">

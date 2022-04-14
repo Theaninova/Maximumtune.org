@@ -1,13 +1,13 @@
 <script>
-  import "$lib/style/table.scss"
-  import "$lib/style/rank-themes.scss"
+  import "../../lib/style/table.scss"
+  import "../../lib/style/rank-themes.scss"
 
-  import CalculatorFooter from "$lib/components/CalculatorFooter.svelte"
-  import MedalHeader from "$lib/components/MedalHeader.svelte"
-  import RankTitle from "$lib/components/RankTitle.svelte"
+  import CalculatorFooter from "../../lib/components/CalculatorFooter.svelte"
+  import MedalHeader from "../../lib/components/MedalHeader.svelte"
+  import RankTitle from "../../lib/components/RankTitle.svelte"
 
-  import {calculateRank} from "$lib/tools/aura-calculator.ts"
-  import {medalValues} from "$lib/tools/data/medal-values.ts"
+  import {calculateRank} from "../../lib/tools/aura-calculator.ts"
+  import {medalValues} from "../../lib/tools/data/medal-values.ts"
   import Output from "../../lib/components/table/Output.svelte"
   import Input from "../../lib/components/table/Input.svelte"
 
@@ -81,7 +81,10 @@
       </tr>
     </table>
   {/if}
+
+  <p><a href="/tools/battle-grade-info">See how we calculate your rank</a></p>
 </section>
+
 <CalculatorFooter />
 
 <style>
