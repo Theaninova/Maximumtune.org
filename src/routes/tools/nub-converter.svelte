@@ -21,11 +21,11 @@
 </script>
 
 <svelte:head>
-  <title>.NUB Viewer</title>
+  <title>.NUB Converter</title>
   <meta name="description" content="File viewer and converter for the .nub image file format" />
 </svelte:head>
 
-<h1>.NUB Viewer</h1>
+<h1>.NUB Converter</h1>
 
 <p>This tool is capable of playing and converting (some) .nub files</p>
 
