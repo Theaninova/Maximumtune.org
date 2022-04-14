@@ -25,13 +25,13 @@ input::-webkit-inner-spin-button {
   box-shadow: $inset-shadow;
 }
 
-.output > tr > td {
+.output td {
   background-image: $black-3d-panel;
   box-shadow: darken($color-on-surface-variant, 60%) 0 0 3px 1px inset;
   color: $color-on-surface-variant;
 }
 
-.output > tr:after {
+.output td:after {
   display: block;
   position: absolute;
   width: 100%;
