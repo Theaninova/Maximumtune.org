@@ -39,7 +39,7 @@
     text-decoration: none;
     text-shadow: none;
   }
-  a:hover h3 {
+  a:hover > article > h3 {
     text-shadow: $color-secondary 0 0 20px;
   }
 

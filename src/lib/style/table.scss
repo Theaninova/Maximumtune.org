@@ -1,75 +1,10 @@
 @import "theme.scss";
 
-input {
-  text-align: center;
-  border: none;
-  appearance: none;
-}
-
-input,
-td,
 th {
   padding: 0;
   margin: 0;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.input input {
-  background: $color-secondary-container;
-  color: $color-on-secondary-container;
-  box-shadow: $inset-shadow;
-}
-
-.output td {
-  background-image: $black-3d-panel;
-  box-shadow: darken($color-on-surface-variant, 60%) 0 0 3px 1px inset;
-  color: $color-on-surface-variant;
-}
-
-.output td:after {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-td,
-input {
-  width: 66px;
-  height: 32px;
-  text-align: center;
-}
-
-.output td:after {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 3px;
-  height: 24px;
-  transform: translate(-50%, -22px);
-  animation: light-bar-vertical 1.5s ease infinite;
-  background-image: light-bar(180deg, 1%, 25%, 10%);
-  background-size: 100% 200%;
-}
-
-.output td:first-child:after {
-  display: none;
-}
-
-.output td:first-child,
-td:first-child > input {
-  border-radius: $border-radius-left;
-}
-
-.output td:last-child,
-td:last-child > input {
-  border-radius: $border-radius-right;
-}
 
 caption {
   font-size: 20px;

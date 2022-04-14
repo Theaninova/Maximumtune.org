@@ -60,13 +60,13 @@
     font-stretch: 150%;
   }
 
-  section h2 {
+  section > h2 {
     margin-bottom: 8px;
 
     transform: skew(-10deg);
   }
 
-  section hr {
+  section > hr {
     width: 60px;
     margin: 0;
   }

@@ -58,7 +58,7 @@
     list-style: none;
     margin: 0;
 
-    a {
+    > li > a {
       @include hover() {
         background: $color-tertiary-container;
         color: $color-on-tertiary-container;
@@ -79,14 +79,14 @@
       }
     }
 
-    .active {
+    > li > .active {
       background: $color-tertiary-container;
       color: $color-on-tertiary-container;
 
       box-shadow: 0 0 8px 2px $color-tertiary inset;
     }
 
-    a {
+    > li > a {
       padding: 5px 12px;
       background: $color-surface-variant;
       color: $color-on-surface-variant;
@@ -97,11 +97,11 @@
       text-shadow: none;
     }
 
-    li:first-child a {
+    > li:first-child a {
       border-radius: $border-radius-left;
     }
 
-    li:last-child a {
+    > li:last-child a {
       border-radius: $border-radius-right;
     }
   }

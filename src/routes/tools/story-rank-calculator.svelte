@@ -7,6 +7,7 @@
 
   import {calculateStoryRank} from "$lib/tools/rank-calculator.ts"
   import {rankNames} from "$lib/tools/data/story-rank.ts"
+  import Input from "../../lib/components/table/Input.svelte"
 
   export let input = Object.fromEntries(rankNames.map(key => [key, 0]))
 
@@ -36,21 +37,19 @@
 </div>
 
 <form>
-  <table class="input">
+  <table>
     <thead>
       <RankHeader />
     </thead>
     <tr>
       {#each rankNames as medalName}
-        <td
-          ><input
-            on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
-            id={medalName}
-            type="number"
-            placeholder="0"
-            name={medalName}
-          /></td
-        >
+        <Input
+          on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
+          id={medalName}
+          type="number"
+          placeholder="0"
+          name={medalName}
+        />
       {/each}
     </tr>
   </table>

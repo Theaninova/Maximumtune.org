@@ -8,6 +8,8 @@
 
   import {calculateRank} from "$lib/tools/aura-calculator.ts"
   import {medalValues} from "$lib/tools/data/medal-values.ts"
+  import Output from "../../lib/components/table/Output.svelte"
+  import Input from "../../lib/components/table/Input.svelte"
 
   let input = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
 
@@ -24,7 +26,7 @@
 </div>
 
 <form>
-  <table class="input">
+  <table>
     <thead>
       <tr>
         <MedalHeader />
@@ -32,15 +34,13 @@
     </thead>
     <tr>
       {#each Object.entries(medalValues) as [medalName]}
-        <td
-          ><input
-            on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
-            id={medalName}
-            type="number"
-            placeholder="0"
-            name={medalName}
-          /></td
-        >
+        <Input
+          on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
+          id={medalName}
+          type="number"
+          placeholder="0"
+          name={medalName}
+        />
       {/each}
     </tr>
   </table>
@@ -51,7 +51,7 @@
 <section class="center">
   <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
 
-  <table class="output">
+  <table>
     <caption>Total</caption>
     <thead>
       <tr>
@@ -60,12 +60,12 @@
       </tr>
     </thead>
     <tr>
-      <td>{result.totalScore}</td>
-      <td>{result.totalMedals}</td>
+      <Output>{result.totalScore}</Output>
+      <Output>{result.totalMedals}</Output>
     </tr>
   </table>
   {#if result.nextRank}
-    <table class="output">
+    <table>
       <caption>Score until next rank</caption>
       <thead>
         <tr>
@@ -74,9 +74,9 @@
         </tr>
       </thead>
       <tr>
-        <td>{result.nextRank.nextRankDifference}</td>
+        <Output>{result.nextRank.nextRankDifference}</Output>
         {#each result.nextRank.differences as [name, value]}
-          <td>{value}</td>
+          <Output>{value}</Output>
         {/each}
       </tr>
     </table>

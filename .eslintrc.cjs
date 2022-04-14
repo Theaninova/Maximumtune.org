@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     "unicorn/filename-case": "off",
     "unicorn/no-array-reduce": "off",
+    "unicorn/number-literal-case": "off",
     "unicorn/no-array-callback-reference": "off",
     "unicorn/no-await-expression-member": "off",
     "unicorn/prefer-object-from-entries": "off",

@@ -145,15 +145,6 @@
     }
   }
 
-  @keyframes hover {
-    from {
-      text-shadow: darken($color-tertiary, 5%) 0 0 30px;
-    }
-    to {
-      text-shadow: $color-tertiary 0 0 20px;
-    }
-  }
-
   h1 {
     // color: $color-tertiary;
     background-color: #f3ec78;
@@ -170,8 +161,7 @@
     -webkit-text-fill-color: transparent;
     //noinspection CssUnknownProperty
     -moz-text-fill-color: transparent;
-    animation: hover 1s linear alternate infinite;
-    transition: text-shadow $ease-default;
+    text-shadow: $color-tertiary 0 0 20px;
 
     margin: 16px 0;
 
