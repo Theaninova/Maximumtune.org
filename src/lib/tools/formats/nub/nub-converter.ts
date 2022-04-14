@@ -40,7 +40,6 @@ export function getHeaders(nub: ArrayBuffer): WavHeader[] {
   // find all signatures
   const view = new DataView(nub)
   const signatures = []
-  console.log(view.getUint32(0xa0, true).toString(16))
   for (let i = 0; i < nub.byteLength - 4; i++) {
     if (view.getUint32(i, true) === 0x00_76_61_77) {
       signatures.push(i)
@@ -67,22 +66,21 @@ export function getData(
     numberOfChannels: header.channels,
     length: header.dataSize,
   })
-  console.log(header.bitsPerSample)
   const bytesPerSample = header.bitsPerSample / 8
-  const samples = header.dataSize / header.channels / bytesPerSample // TODO: 16 for now
+  const samples = header.dataSize / header.channels / bytesPerSample
   const channels = Array.from({length: header.channels}, () => new Float32Array(samples))
   const view = new DataView(nub, header.offset + wavHeaderSize + bufferAfterHeader)
-  console.log(header.offset + wavHeaderSize + bufferAfterHeader)
-  console.log(view.byteLength, header.dataSize)
-  console.log(header.maxValue)
+
+  if (![8, 16, 32].includes(header.bitsPerSample)) {
+    throw new Error(`Unsupported bits per sample: ${header.bitsPerSample}`)
+  }
 
   for (let sample = 0; sample < samples; sample++) {
     for (let channelIndex = 0; channelIndex < header.channels; channelIndex++) {
       const offset = (sample * header.channels + channelIndex) * bytesPerSample
-      channels[channelIndex][sample] = view.getInt16(offset, false) / header.maxValue // TODO
+      channels[channelIndex][sample] = view[`getInt${header.bitsPerSample}`](offset, false) / header.maxValue
     }
   }
-  console.log(channels)
 
   for (const [channelIndex, channel] of channels.entries()) {
     buffer.copyToChannel(channel, channelIndex)

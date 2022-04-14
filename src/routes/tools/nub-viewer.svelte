@@ -37,5 +37,10 @@
 <audio src={blobUrl} controls />
 
 <footer>
-  <p>As always, the source code is available on <a>GitHub</a></p>
+  <p>
+    As always, the source code is available on <a
+      href="https://github.com/Theaninova/mmtorg/blob/master/src/lib/tools/formats/nub/nub-converter.ts"
+      >GitHub</a
+    >
+  </p>
 </footer>
