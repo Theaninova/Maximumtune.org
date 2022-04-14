@@ -5,27 +5,18 @@
   async function fileChange() {
     const file = await input.files.item(0).arrayBuffer()
     const headers = getHeaders(file)
-    console.log(headers)
-
-    const context = new AudioContext()
-    const node = context.createBufferSource()
-    node.buffer = getData(file, headers).buffer
-    node.connect(context.destination)
-    node.start()
+    const data = getData(file, headers)
+    blobUrl = URL.createObjectURL(bufferToWave(data.buffer, data.size))
   }
 
-  async function convert() {
-    const file = await input.files.item(0).arrayBuffer()
-    const headers = getHeaders(file)
-    const data = getData(file, headers)
-    const blob = bufferToWave(data.buffer, data.size)
-    const url = URL.createObjectURL(blob)
+  async function download() {
     const a = document.createElement("a")
-    a.href = url
-    a.download = "output.wav"
+    a.href = blobUrl
+    a.download = input.files[0].name.replace(/nub$/, "wav")
     a.click()
   }
 
+  let blobUrl: string
   let input: HTMLInputElement
 </script>
 
@@ -36,7 +27,15 @@
 
 <h1>.NUB Viewer</h1>
 
+<p>This tool is capable of playing and converting (some) .nub files</p>
+
 <form>
   <input bind:this={input} on:change={fileChange} accept=".nub" type="file" name="filename" />
-  <input type="submit" value="Convert to wav" on:click={convert} />
+  <input type="submit" value="Download WAV" on:click={download} />
 </form>
+
+<audio src={blobUrl} controls />
+
+<footer>
+  <p>As always, the source code is available on <a>GitHub</a></p>
+</footer>

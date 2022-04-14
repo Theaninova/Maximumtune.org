@@ -7,6 +7,7 @@ export interface WavHeader {
   bytesPerSecond: number
   blockAlign: number
   bitsPerSample: number
+  maxValue: number
 }
 
 export enum WavFormat {
@@ -24,6 +25,7 @@ function parseWavHeader(header: ArrayBuffer, offset: number): WavHeader {
   return {
     offset: offset,
     dataSize: view.getUint32(0x14, true),
+    maxValue: view.getUint32(0xa8, false),
     format: view.getUint8(wavDataHeaderOffset) as WavFormat,
     channels: view.getUint8(wavDataHeaderOffset + 0x02),
     sampleRate: view.getUint32(wavDataHeaderOffset + 0x04, true),
@@ -72,20 +74,12 @@ export function getData(
   const view = new DataView(nub, header.offset + wavHeaderSize + bufferAfterHeader)
   console.log(header.offset + wavHeaderSize + bufferAfterHeader)
   console.log(view.byteLength, header.dataSize)
+  console.log(header.maxValue)
 
   for (let sample = 0; sample < samples; sample++) {
     for (let channelIndex = 0; channelIndex < header.channels; channelIndex++) {
-      // const offset = (sample + channelIndex) * (header.bitsPerSample / 8)
       const offset = (sample * header.channels + channelIndex) * bytesPerSample
-      /*if (!channels[channelIndex][sample]) {
-        console.log(channels[channelIndex], channels[channelIndex][sample])
-        console.warn(
-          `Channel ${channelIndex} ${samples} ${sample} ${sample === samples} ${offset * 2} is undefined`,
-        )
-        sample = samples
-        continue
-      }*/
-      channels[channelIndex][sample] = view.getInt16(offset, false) // TODO
+      channels[channelIndex][sample] = view.getInt16(offset, false) / header.maxValue // TODO
     }
   }
   console.log(channels)
