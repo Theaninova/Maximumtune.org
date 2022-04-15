@@ -1,10 +1,13 @@
 <script lang="ts">
-  import {getData, getHeaders} from "../../lib/tools/formats/nub/nub-converter"
+  import {applyWavHeader, getData, getHeaders} from "../../lib/tools/formats/nub/nub-converter"
+  import type {WavHeader} from "../../lib/tools/formats/nub/nub-converter"
   import {bufferToWave} from "../../lib/tools/formats/nub/wav"
+  import "../../lib/style/table.scss"
+  import HeaderEditor from "../../lib/components/nub-editor/HeaderEditor.svelte"
 
   async function fileChange() {
-    const file = await input.files.item(0).arrayBuffer()
-    const headers = getHeaders(file)
+    file = await input.files.item(0).arrayBuffer()
+    headers = getHeaders(file)
     const data = getData(file, headers)
     blobUrl = URL.createObjectURL(bufferToWave(data.buffer, data.size))
   }
@@ -16,8 +19,34 @@
     a.click()
   }
 
+  function alter() {
+    const headers = [...form.querySelectorAll("table")].map(table =>
+      Object.fromEntries(
+        [...table.querySelectorAll("input[type=number]")].map(it => [
+          it.name,
+          Number(it.value || it.placeholder),
+        ]),
+      ),
+    )
+
+    const buffer = new ArrayBuffer(file.byteLength)
+    new Uint8Array(buffer).set(new Uint8Array(file))
+    for (const header of headers) {
+      applyWavHeader(header, buffer)
+    }
+    const blob = new Blob([buffer], {type: ".nub"})
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = input.files[0].name
+    a.click()
+  }
+
+  let file: ArrayBuffer
+  let headers: WavHeader[] = []
   let blobUrl: string
   let input: HTMLInputElement
+  let form: HTMLFormElement
 </script>
 
 <svelte:head>
@@ -35,6 +64,15 @@
 </form>
 
 <audio src={blobUrl} controls />
+
+{#if headers.length > 0}
+  <form bind:this={form}>
+    <button on:click|preventDefault={alter}>Download Changes</button>
+    {#each headers as header, i}
+      <HeaderEditor {header} title="Header {i}" />
+    {/each}
+  </form>
+{/if}
 
 <footer>
   <p>

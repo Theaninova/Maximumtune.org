@@ -1,6 +1,6 @@
 export interface WavHeader {
   offset: number
-  format: WavFormat
+  format: number
   channels: number
   dataSize: number
   sampleRate: number
@@ -8,31 +8,67 @@ export interface WavHeader {
   blockAlign: number
   bitsPerSample: number
   maxValue: number
+  loopStart: number
+  loopLength: number
 }
 
-export enum WavFormat {
-  PCM = 1,
+const wavDataHeaderOffset = 0xbc
+
+export type BinaryNumber = {
+  offset: number
+  type: `${"Uint" | "Int"}${8 | 16 | 32}`
+  endian: "big" | "little"
+}
+
+export const userEditable: Record<keyof WavHeader, boolean> = {
+  offset: false,
+  format: false,
+  channels: false,
+  dataSize: false,
+  sampleRate: false,
+  bytesPerSecond: false,
+  blockAlign: false,
+  bitsPerSample: false,
+  maxValue: false,
+  loopStart: true,
+  loopLength: true,
+}
+
+export const offsets: Record<Exclude<keyof WavHeader, "offset">, BinaryNumber> = {
+  bitsPerSample: {offset: wavDataHeaderOffset + 0x0e, type: "Uint16", endian: "little"},
+  blockAlign: {offset: wavDataHeaderOffset + 0x0c, type: "Uint16", endian: "little"},
+  bytesPerSecond: {offset: wavDataHeaderOffset + 0x08, type: "Uint32", endian: "little"},
+  channels: {offset: wavDataHeaderOffset + 0x02, type: "Uint8", endian: "little"},
+  dataSize: {offset: 0x14, type: "Uint32", endian: "little"},
+  format: {offset: wavDataHeaderOffset, type: "Uint8", endian: "little"},
+  loopLength: {offset: 0x24, type: "Uint32", endian: "little"},
+  loopStart: {offset: 0x20, type: "Uint32", endian: "little"},
+  maxValue: {offset: 0xa8, type: "Uint32", endian: "big"},
+  sampleRate: {offset: wavDataHeaderOffset + 0x04, type: "Uint32", endian: "little"},
 }
 
 function parseWavHeader(header: ArrayBuffer, offset: number): WavHeader {
   const view = new DataView(header, offset)
-  const wavDataHeaderOffset = 0xbc
   const wavSignature = view.getUint32(0, true)
   if (wavSignature !== 0x00_76_61_77) {
     throw new Error(`Not a WAV file (${wavSignature.toString(16)})`)
   }
 
   return {
-    offset: offset,
-    dataSize: view.getUint32(0x14, true),
-    maxValue: view.getUint32(0xa8, false),
-    format: view.getUint8(wavDataHeaderOffset) as WavFormat,
-    channels: view.getUint8(wavDataHeaderOffset + 0x02),
-    sampleRate: view.getUint32(wavDataHeaderOffset + 0x04, true),
-    bytesPerSecond: view.getUint32(wavDataHeaderOffset + 0x08, true),
-    blockAlign: view.getUint16(wavDataHeaderOffset + 0x0c, true),
-    bitsPerSample: view.getUint16(wavDataHeaderOffset + 0x0e, true),
+    offset,
+    ...Object.entries(offsets).reduce((accumulator, [key, {type, offset, endian}]) => {
+      accumulator[key] = view[`get${type}`](offset, endian === "little")
+      return accumulator
+    }, {} as WavHeader),
   }
+}
+
+export function applyWavHeader(header: WavHeader, data: ArrayBuffer) {
+  const view = new DataView(data, header.offset)
+  for (const [key, value] of Object.entries(offsets)) {
+    view[`set${value.type}`](value.offset, header[key], value.endian === "little")
+  }
+  return data
 }
 
 export function getHeaders(nub: ArrayBuffer): WavHeader[] {
@@ -91,12 +127,3 @@ export function getData(
     size: samples,
   }
 }
-
-/*function nubToAudioBuffer(nub: ArrayBuffer): AudioBuffer {
-  const header = new DataView(nub, 0, 0xff)
-  const fileSize = header.getUint32(0x14, true)
-
-  return new AudioBuffer({
-    sampleRate: 44_100, // TODO header.getUint16(0xf0, true),
-  })
-}*/
