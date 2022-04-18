@@ -2,6 +2,8 @@
   import {GRADES} from "../../lib/tools/data/grades-data"
   import {grades} from "../../lib/tools/data/grades"
   import transform from "../../lib/tools/data/grades.ts?raw"
+  import MedalHeader from "../../lib/components/MedalHeader.svelte"
+  import {medalValues} from "../../lib/tools/data/medal-values"
 </script>
 
 <svelte:head>
@@ -21,15 +23,31 @@
   >
 </p>
 
+<section>
+  <table style="border-spacing: 8px">
+    <caption>Medal Values</caption>
+    <thead>
+      <tr>
+        <MedalHeader />
+      </tr>
+    </thead>
+    <tr>
+      {#each Object.entries(medalValues) as [_, value]}
+        <td>{value}</td>
+      {/each}
+    </tr>
+  </table>
+</section>
+
 <table>
   <caption>Grade Data (<a href="https://wikiwiki.jp/wmmt">Source</a>)</caption>
   <thead>
     <tr>
       <th>Grade</th>
       <th>Title</th>
-      <th>Initial</th>
-      <th>Pro</th>
+      <th>VS</th>
       <th>Ace</th>
+      <th>Pro</th>
     </tr>
   </thead>
   {#each Object.entries(GRADES) as [grade, points], i}

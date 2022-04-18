@@ -50,6 +50,7 @@
 
 <section class="center">
   <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
+  <p><a href="/tools/battle-grade-info">See how we calculate your rank</a></p>
 
   <table>
     <caption>Total</caption>
@@ -81,8 +82,6 @@
       </tr>
     </table>
   {/if}
-
-  <p><a href="/tools/battle-grade-info">See how we calculate your rank</a></p>
 </section>
 
 <CalculatorFooter />
