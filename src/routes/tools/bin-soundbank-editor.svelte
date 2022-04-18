@@ -55,6 +55,13 @@
   </table>
 {/if}
 
+<footer>
+  <p>
+    More info <a href="/file-formats/info/bin-soundbank">soundbank</a> and
+    <a href="/file-formats/info/bin-tonemap">Tone map</a>
+  </p>
+</footer>
+
 <style>
   td {
     text-align: center;

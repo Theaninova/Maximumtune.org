@@ -75,6 +75,8 @@
 {/if}
 
 <footer>
+  <p>More info <a href="/file-formats/info/nub">here</a></p>
+
   <p>
     As always, the source code is available on <a
       href="https://github.com/Theaninova/mmtorg/blob/master/src/lib/tools/formats/nub/nub-converter.ts"
