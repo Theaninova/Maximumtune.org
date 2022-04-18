@@ -5,7 +5,7 @@ export const grades = [
   ...Object.entries(GRADES).flatMap(([name, steps], grade) =>
     steps.map<[number, string]>((step, index) => [
       step,
-      `${grade + 1}${grade === 0 ? "st" : "th"} Grade${
+      `${index === 0 ? "VS " : ""}${grade + 1}${grade === 0 ? "st" : grade === 1 ? "nd" : "th"} Grade${
         index === 0 ? "" : index === 1 ? " Pro" : " Ace"
       } (${name} ${index + 1})`,
     ]),

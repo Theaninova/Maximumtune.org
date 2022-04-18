@@ -55,7 +55,7 @@
     <caption>Total</caption>
     <thead>
       <tr>
-        <th style="height: 21px">Score</th>
+        <th style="height: 21px">Points</th>
         <th style="height: 21px">Medals</th>
       </tr>
     </thead>
@@ -66,7 +66,7 @@
   </table>
   {#if result.nextRank}
     <table>
-      <caption>Score until next rank</caption>
+      <caption>Points until next rank</caption>
       <thead>
         <tr>
           <th>Total</th>
