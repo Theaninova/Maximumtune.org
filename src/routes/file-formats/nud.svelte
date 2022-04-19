@@ -39,31 +39,33 @@
       )
     }
 
-    let indices = []
-    for (let i = 0x2_90; i < 0x2a_20; i += 0xa) {
-      indices.push(
-        view.getUint16(i, true),
-        view.getUint16(i + 0x2, true),
-        view.getUint16(i + 0x4, true),
-        view.getUint16(i + 0x2, true),
-        view.getUint16(i + 0x4, true),
-        view.getUint16(i + 0x6, true),
-      )
+    let indices = [[]]
+    for (let i = 0x2_90; i < 0x2a_20; i += 0x2) {
+      const value = view.getUint16(i, true)
+      if (value === 0xff_ff) {
+        indices.push([])
+      } else {
+        indices[indices.length - 1].push(value)
+      }
     }
+    // triangulate ngons
+    const tris = indices.flatMap(poly => {
+      const n = poly.length
+      const tri = []
+      for (let i = 2; i < n; i++) {
+        tri.push(poly[i], poly[i - 1], poly[i - 2])
+      }
+      return tri
+    })
+
     console.log(vertices.length, vertices.length / 3)
-    console.log(indices.length, indices.length / 3)
+    console.log(tris.length, tris.length / 3)
 
     const geometry = new BufferGeometry()
-    geometry.setAttribute(
-      "position",
-      new Float32BufferAttribute(
-        vertices.map(it => it / 1),
-        3,
-      ),
-    )
+    geometry.setAttribute("position", new Float32BufferAttribute(vertices, 3))
 
-    geometry.setIndex(indices.map(it => it + 0))
-    const material = new MeshPhongMaterial({color: 0xff_ff_ff, wireframe: true})
+    geometry.setIndex(tris)
+    const material = new MeshBasicMaterial({color: 0xff_ff_ff, wireframe: true})
     const points = new Mesh(geometry, material)
     scene.add(points)
 
@@ -76,7 +78,7 @@
     const renderer = new WebGLRenderer()
     document.body.append(renderer.domElement)
     const controls = new OrbitControls(camera, renderer.domElement)
-    renderer.setClearColor(0xff_ff_ff)
+    renderer.setClearColor(0x00_00_00)
     renderer.setSize(window.innerWidth, window.innerHeight)
     camera.position.set(0, 20, 100)
     controls.update()
@@ -93,6 +95,7 @@
       controls.update()
       renderer.render(scene, camera)
     }
+
     animate()
   })
 </script>

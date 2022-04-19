@@ -168,10 +168,10 @@
     <tr>
       <td>.nud</td>
       <td>Model </td>
-      <td unknown />
-      <td no />
-      <td no />
-      <td no />
+      <td>Model file</td>
+      <td yes />
+      <td wip />
+      <td wip />
       <td binary />
     </tr>
     <tr>
@@ -214,9 +214,9 @@
       <td>.bin (XMD.001)</td>
       <td>Model</td>
       <td>Multiple packed .nud models</td>
-      <td partial />
-      <td no />
-      <td no />
+      <td yes />
+      <td wip />
+      <td wip />
       <td binary />
     </tr>
     <tr>
