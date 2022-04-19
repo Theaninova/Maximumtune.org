@@ -62,6 +62,15 @@
       <td binary />
     </tr>
     <tr>
+      <td><a href="/file-formats/path-bin">.bin (path)</a></td>
+      <td>3D Path</td>
+      <td>3D Paths for tracks</td>
+      <td yes />
+      <td yes />
+      <td wip />
+      <td binary />
+    </tr>
+    <tr>
       <td>.tbl</td>
       <td>Sound</td>
       <td unknown />
@@ -166,12 +175,12 @@
       <td binary />
     </tr>
     <tr>
-      <td>.mdl</td>
-      <td>Car Model</td>
-      <td unknown />
-      <td no />
-      <td no />
-      <td no />
+      <td><a href="https://www.gnu.org/software/gzip/">.mdl</a></td>
+      <td>Model</td>
+      <td>Gzip compressed XMD.001 file</td>
+      <td yes />
+      <td yes />
+      <td yes />
       <td binary />
     </tr>
     <tr>
@@ -203,9 +212,9 @@
     </tr>
     <tr>
       <td>.bin (XMD.001)</td>
-      <td unknown />
-      <td unknown />
-      <td no />
+      <td>Model</td>
+      <td>Multiple packed .nud models</td>
+      <td partial />
       <td no />
       <td no />
       <td binary />
