@@ -1,0 +1,18 @@
+# Sunrise Engine Reimplementation
+
+The sunrise engine is a heavily WIP reimplementation of the original Enma engine
+in Unreal Engine 5.
+
+An engine reimplementation means, that there is no original engine code and can
+be used as a drop-in replacement, and doesn't ship any copyrighted material from
+the game.
+
+That also means it is and always will be completely useless without a copy of the
+original game.
+
+## Proof-of-Concept
+
+* [x] Solve XMD.001 files
+* [ ] Solve Model files
+* [ ] Solve Texture files
+* [ ] Implement loading of a specific map

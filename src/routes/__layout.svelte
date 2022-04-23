@@ -71,7 +71,7 @@
   }
 
   main > * {
-    width: min(16.5cm, 100%);
+    width: $content-width;
   }
 
   main > .subtitle {
@@ -80,7 +80,7 @@
     border-top-style: none;
     border-bottom-right-radius: $border-radius;
     padding: 0 8px 4px 24px;
-    width: min(16.5cm, 90%);
+    width: $subtitle-width;
     align-self: start;
     transform: translate(-24px) skew(-12deg);
 

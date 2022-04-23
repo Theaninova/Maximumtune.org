@@ -1,0 +1,79 @@
+# WMMT Technical Overview
+
+This gives you a technical overview of the WMMT (specifically 5DX).
+
+## Engine
+
+WMMT runs on the Namco internal Enma Engine.
+
+It notably does not support physically based rendering.
+
+## Packaging
+
+Before talking about file formats, there are two very important other formats
+that are being used in WMMT, often without even a changed name. You might get
+a file that has the `.nud` model extension, but is actually packaged as a gzipped
+`.nud` file.
+
+There are two ways Namco has packaged files in WMMT:
+
+* **Gzip**, to save space. This is an open format, and can be decompressed with
+  any standard gzip program like 7zip or WinRAR (if you have a valid license for that).
+  If you can't open a file, it's probably just gzipped, so try to open it with any
+  of the standard decompression tools. It rarely actually has a `.gz` extension.
+* **XMD.001** (`.bin`), a proprietary format. This in contrary is not used to save space, but
+  is used to pack multiple files into a single file. It usually has a `.bin` extension,
+  but always has an `XMD.001` file signature.
+
+** A few important notes about `.bin` files:**
+
+The `.bin` file extension is thrown around a lot in multiple places, and can never be used
+as an indicator of the file format.
+
+## Menus
+
+The menu and UI systems are build using Project "Lumen", a flash-based
+framework.
+
+A tool named [Hugflash](https://mikasaphp.net/hugflash.html) is used to split
+the resulting SWF into multiple files and then convert those to the Namco
+internal formats.
+
+Specifically
+
+* `.lmd`, the compiled ActionScript source
+* `.nut`, the Namco internal image format
+* `.med`, the namco internal movie format
+
+## Models
+
+All models use a form of the Namco internal `.nud` format, with accompanying
+`nut` textures. You'll often find them packaged using either Gzip or XMD.001,
+like with the `.mdl` files.
+
+There are also a few other formats, that serve more specific purposed.
+
+There is the `.bin` path format, which is just a straight collection of 3d points.
+
+## Textures
+
+Almost all textures use the Namco internal `.nut` format, although you might find
+some wrapped as a `.tex`, which uses Gzip and XMD.001, but otherwise is exactly
+the same.
+
+Only some textures provide an accompanying reflection map.
+
+## Sound
+
+All sound use the wav-based internal `.nub` format, which supports looping and
+packaging multiple sounds into a single file, acting as a sound-bank.
+
+A lot of the sounds also come with accompanying `.bin` descriptor files. These
+map the sound names to the internal sound names, and have to be handled with care,
+since there is at least two different formats with no way to tell them apart,
+unless you hard-code the full file names.
+
+## Scripts
+
+Simple LUA scripts are used for various small purposes, mostly for configuration
+tasks. Nowadays, you'd probably use something like JSON for this instead.
