@@ -50,6 +50,8 @@ $black-3d-panel: linear-gradient(
     #000
 );
 
+$mt-interpolation: cubic-bezier(0.1, 0.75, 0.23, 1.77);
+
 @mixin hover() {
   @media (hover: hover) {
     &:hover {

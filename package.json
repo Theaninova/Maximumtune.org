@@ -37,6 +37,7 @@
     "@types/three": "^0.139.0",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
+    "swiper": "^8.1.4",
     "mdsvex": "^0.10.5",
     "svelte-preprocess": "^4.10.1",
     "sass": "^1.49.11"

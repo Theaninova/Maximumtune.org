@@ -13,7 +13,7 @@
 
   a {
     transform: scale(1);
-    transition: transform 0.2s cubic-bezier(0.1, 0.75, 0.23, 1.77);
+    transition: transform 0.2s $mt-interpolation;
 
     @include hover() {
       transform: scale(1.2);
