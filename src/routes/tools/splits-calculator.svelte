@@ -1,5 +1,4 @@
 <script>
-  import Input from "../../lib/components/table/Input.svelte"
   import {Stages} from "../../lib/tools/splits-calculator"
   import {Swiper, SwiperSlide} from "swiper/svelte"
   import {Mousewheel, Navigation, Lazy, Controller} from "swiper"
@@ -47,7 +46,6 @@
           >
             <p>{name}</p>
             <img src="/map_{imageIndex}.webp" alt="TODO" class="swiper-lazy" />
-            <div class:active={isActive} class:inactive={!isActive} />
             {#if variation}
               <p>{variation}</p>
             {/if}
@@ -58,18 +56,33 @@
   </div>
 
   <div class="main">
-    <Swiper bind:this={mainSwiper} modules={[Navigation, Controller]} navigation={true} style="height: 100%">
+    <Swiper
+      bind:this={mainSwiper}
+      modules={[Mousewheel, Navigation, Controller]}
+      navigation={true}
+      mousewheel
+    >
       {#each Stages as { sections }}
         <SwiperSlide>
           <form>
-            <table>
+            <div class="table">
+              <em class="green">Personal Best</em>
+              <div>02' 57" 216</div>
+              <em class="purple">Theory Time</em>
+              <div>02' 57" 216</div>
+              <em class="orange">Difference</em>
+              <div>02' 57" 216</div>
+              <hr />
+              <hr />
               {#each Array.from({length: sections}) as _, section}
-                <tr>
-                  <th>Section {section + 1}</th>
-                  <Input type="number" placeholder="0" name="Section {section + 1}" />
-                </tr>
+                <div>Section {section + 1}</div>
+                <div>00' 47" 000</div>
               {/each}
-            </table>
+              <hr />
+              <hr />
+              <em class="grey">Total Time</em>
+              <div>02' 57" 216</div>
+            </div>
           </form>
         </SwiperSlide>
       {/each}
@@ -81,6 +94,59 @@
 <style lang="scss">
   @import "../../lib/assets/images";
   @import "../../lib/style/theme";
+
+  .table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 4px 0;
+    align-items: center;
+    justify-items: center;
+
+    > * {
+      font-weight: bold;
+      font-style: italic;
+      text-shadow: 0 0 4px black;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    > div {
+      font-size: 20px;
+    }
+  }
+
+  .table > hr {
+    width: 100%;
+    height: 1px;
+    background: $color-outline;
+    margin-block: 16px;
+    box-shadow: unset;
+  }
+
+  em {
+    height: 28px;
+    width: 192px;
+    border-radius: 14px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 0 2px black inset;
+  }
+
+  .orange {
+    background: #934b00 $shine-3d;
+  }
+  .green {
+    background: #0a5a0c $shine-3d;
+  }
+  .purple {
+    background: #502f8a $shine-3d;
+  }
+  .grey {
+    background: #484546 $shine-3d;
+  }
 
   @keyframes active-animation {
     0% {
@@ -94,11 +160,15 @@
   section {
     width: 100%;
     height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   form {
     max-width: 16.5cm;
-    margin-inline: auto;
+    height: 100%;
+    margin: auto;
 
     // center
     display: flex;
@@ -153,12 +223,6 @@
       width: calc(100% * (256 / 280));
       aspect-ratio: 1;
     }
-
-    div {
-      background-image: url($course-select-selected);
-      z-index: -1;
-      filter: invert(91%) sepia(76%) saturate(7247%) hue-rotate(276deg) brightness(180%) contrast(101%);
-    }
   }
 
   .header {
@@ -175,6 +239,8 @@
   }
 
   .main {
+    flex-grow: 1;
+
     :global(.swiper-button-next)::after,
     :global(.swiper-button-prev)::after {
       content: "";

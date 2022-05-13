@@ -50,6 +50,8 @@ $black-3d-panel: linear-gradient(
     #000
 );
 
+$shine-3d: linear-gradient(to bottom, #fff5, #fff5 50%, #0000 60%, #0000);
+
 $mt-interpolation: cubic-bezier(0.1, 0.75, 0.23, 1.77);
 
 @mixin hover() {

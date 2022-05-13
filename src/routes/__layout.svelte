@@ -67,7 +67,11 @@
 
   main {
     margin: 0 8px;
-    z-index: -1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
   }
 
   main > * {
@@ -96,6 +100,9 @@
     color: $color-on-background;
     margin: 0;
     min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
   }
 
   @keyframes light-bar {
@@ -176,7 +183,6 @@
     color: unset;
   }
 
-  main,
   .center {
     display: flex;
     flex-direction: column;

@@ -5,7 +5,7 @@
 </script>
 
 {#key activeRoute}
-  <main in:fly={{duration: 250, delay: 200, x: -150}} out:fade={{duration: 200}} style="z-index: -1">
+  <main in:fly={{duration: 250, delay: 200, x: -150}} out:fade={{duration: 200}}>
     <slot />
   </main>
 {/key}
