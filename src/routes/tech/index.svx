@@ -8,6 +8,15 @@ WMMT runs on the Namco internal Enma Engine.
 
 It notably does not support physically based rendering.
 
+### Libraries (WMMT5)
+
+* [Boost 1.55.0](https://www.boost.org/users/history/version_1_55_0.html)
+* Lumen (Proprietary Flash-based UI toolkit)
+* Lua
+* Gzip
+* Protobuf
+* OpenSSL
+
 ## Packaging
 
 Before talking about file formats, there are two very important other formats
