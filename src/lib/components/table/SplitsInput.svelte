@@ -2,7 +2,7 @@
   import TimeInput from "./TimeInput.svelte"
   import type {Stage, StageSaveState, TimeSplit} from "../../tools/splits-calculator"
   import {onMount} from "svelte"
-  import {formatTimeSplit, latest} from "../../tools/splits-calculator"
+  import {formatTimeSplit, latest, sumTimes, timeDifference} from "../../tools/splits-calculator"
 
   export let stage: Stage
   let saveState: StageSaveState | undefined
@@ -39,6 +39,9 @@
 
     localStorage.setItem(stage.key, JSON.stringify(saveState))
   }
+
+  $: theoryTime = sumTimes(saveState?.sections?.map(latest))
+  $: timeDiff = timeDifference(theoryTime, latest(saveState?.pb))
 </script>
 
 <form>
@@ -46,9 +49,9 @@
     <em class="green">Personal Best</em>
     <TimeInput value={latest(saveState?.pb)} on:submit={event => savePb(event.detail)} />
     <em class="purple">Theory Time</em>
-    <div>{formatTimeSplit()}</div>
+    <div>{formatTimeSplit(theoryTime)}</div>
     <em class="orange">Difference</em>
-    <div>{formatTimeSplit()}</div>
+    <div>{formatTimeSplit(timeDiff)}</div>
     <hr />
     <hr />
     {#each Array.from({length: stage.sections}) as _, section}
@@ -61,7 +64,7 @@
     <hr />
     <hr />
     <em class="grey">Total Time</em>
-    <div>{formatTimeSplit()}</div>
+    <div>{formatTimeSplit(theoryTime)}</div>
   </div>
 </form>
 

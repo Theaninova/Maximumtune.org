@@ -32,6 +32,43 @@ export function formatTimeSplit(split?: TimeSplit) {
   return `${formatTimePart(minutes)}' ${formatTimePart(seconds)}" ${formatTimePart(milliseconds, 3)}`
 }
 
+export function combineTimeSplit(split?: TimeSplit): number {
+  if (!split) {
+    return undefined
+  }
+
+  const [minutes, seconds, milliseconds] = split
+  return minutes * 60 * 1000 + seconds * 1000 + milliseconds
+}
+
+export function separateTimeSplit(time: number): TimeSplit {
+  const minutes = Math.floor(time / (60 * 1000))
+  const seconds = Math.floor((time - minutes * 60 * 1000) / 1000)
+  const milliseconds = time - minutes * 60 * 1000 - seconds * 1000
+  return [minutes, seconds, milliseconds]
+}
+
+export function timeDifference(a: TimeSplit, b: TimeSplit): TimeSplit {
+  if (!a || !b) {
+    return undefined
+  }
+
+  return separateTimeSplit(combineTimeSplit(a) - combineTimeSplit(b))
+}
+
+export function sumTimes(times: TimeSplit[]): TimeSplit {
+  if (!times || times.length === 0) {
+    return undefined
+  }
+
+  return separateTimeSplit(
+    times
+      .filter(it => it && it[0] != undefined)
+      .map(combineTimeSplit)
+      .reduce((accumulator, current) => accumulator + current),
+  )
+}
+
 export const Stages: Stage[] = [
   {
     name: "C1",
