@@ -1,5 +1,6 @@
 <script>
   import Lightbar from "./Lightbar.svelte"
+  import MtLogo from "./MtLogo.svelte"
 
   export let activeRoute
 </script>
@@ -39,7 +40,10 @@
       fill="url(#plastic-surface)"
     />
   </svg>
-  <a sveltekit:prefetch href="/" class="home"><span class="a11y-hidden">Home</span></a>
+  <a sveltekit:prefetch href="/" class="home">
+    <MtLogo />
+    <span class="a11y-hidden">Home</span>
+  </a>
 </nav>
 
 <style lang="scss">
@@ -93,8 +97,7 @@
   }
 
   .home {
-    background-image: url($logo_square_48w);
-    background-size: cover;
+    background-color: black;
     width: 92px;
     height: 92px;
     border-radius: 50%;
