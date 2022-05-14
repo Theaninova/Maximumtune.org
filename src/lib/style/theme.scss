@@ -44,10 +44,10 @@ $subtitle-width: min(16.5cm, 90%);
 $inset-shadow: inset #000 0 0 5px 2px;
 
 $black-3d-panel: linear-gradient(
-    lighten($color-surface-variant, 10%),
-    darken($color-surface-variant, 50%) 50%,
-    #000 51%,
-    #000
+    #b8b9c2,
+    #39393b 41%,
+    #000 44.5%,
+    #151515
 );
 
 $shine-3d: linear-gradient(to bottom, #fff5, #fff5 50%, #0000 60%, #0000);

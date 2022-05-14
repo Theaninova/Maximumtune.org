@@ -66,6 +66,8 @@
   }
 
   main {
+    overflow: scroll;
+
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -93,16 +95,18 @@
     }
   }
 
+  html,
+  body {
+    overflow: hidden;
+    height: 100%;
+  }
+
   body {
     font-family: "Roboto Flex", "Roboto", sans-serif;
 
     background: radial-gradient($color-background, #080808);
     color: $color-on-background;
     margin: 0;
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
   }
 
   @keyframes light-bar {
@@ -215,6 +219,7 @@
 
     list-style: none;
     margin: 0;
+    padding: 0;
 
     > li > * {
       @include hover() {
