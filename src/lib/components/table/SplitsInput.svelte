@@ -87,6 +87,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 4px 0;
+    margin-inline: 8px;
     align-items: center;
     justify-items: center;
 

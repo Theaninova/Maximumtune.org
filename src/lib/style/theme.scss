@@ -38,7 +38,7 @@ $border-radius-right: 0 $border-radius $border-radius 0;
 $item-gap: 4px;
 
 $max-content-width: 16.5cm;
-$content-width: min(16.5cm, 100%);
+$content-width: min(16.5cm, calc(100% - 16px));
 $subtitle-width: min(16.5cm, 90%);
 
 $inset-shadow: inset #000 0 0 5px 2px;

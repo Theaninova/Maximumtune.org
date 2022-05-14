@@ -66,7 +66,6 @@
   }
 
   main {
-    margin: 0 8px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -76,6 +75,7 @@
 
   main > * {
     width: $content-width;
+    margin-inline: 8px;
   }
 
   main > .subtitle {
@@ -204,5 +204,63 @@
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: $item-gap;
+
+    list-style: none;
+    margin: 0;
+
+    > li > * {
+      @include hover() {
+        background: $color-tertiary-container;
+        color: $color-on-tertiary-container;
+        animation: glow 1s ease infinite;
+
+        box-shadow: 0 0 8px 2px $color-tertiary inset;
+      }
+    }
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 8px 2px $color-tertiary inset;
+      }
+      50% {
+        box-shadow: 0 0 16px 2px $color-tertiary inset;
+      }
+      100% {
+        box-shadow: 0 0 8px 2px $color-tertiary inset;
+      }
+    }
+
+    > li > .active {
+      background: $color-tertiary-container;
+      color: $color-on-tertiary-container;
+
+      box-shadow: 0 0 8px 2px $color-tertiary inset;
+    }
+
+    > li > * {
+      padding: 5px 12px;
+      background: $color-surface-variant;
+      color: $color-on-surface-variant;
+      box-shadow: $inset-shadow;
+
+      transition: all $ease-default;
+      text-decoration: none;
+      text-shadow: none;
+    }
+
+    > li:first-child > * {
+      border-radius: $border-radius-left;
+    }
+
+    > li:last-child > * {
+      border-radius: $border-radius-right;
+    }
   }
 </style>

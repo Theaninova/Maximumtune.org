@@ -57,15 +57,13 @@ export function timeDifference(a: TimeSplit, b: TimeSplit): TimeSplit {
 }
 
 export function sumTimes(times: TimeSplit[]): TimeSplit {
-  if (!times || times.length === 0) {
+  const complete = times?.filter(it => it && it[0] != undefined)
+  if (!complete || complete.length === 0) {
     return undefined
   }
 
   return separateTimeSplit(
-    times
-      .filter(it => it && it[0] != undefined)
-      .map(combineTimeSplit)
-      .reduce((accumulator, current) => accumulator + current),
+    complete.map(combineTimeSplit).reduce((accumulator, current) => accumulator + current),
   )
 }
 

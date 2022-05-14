@@ -17,6 +17,39 @@
     mainSwiper.swiper().controller.control = headerSwiper.swiper()
     headerSwiper.swiper().controller.control = mainSwiper.swiper()
   })
+
+  const exportAll = () => {
+    const out = {}
+    for (const {key} of Stages) {
+      out[key] = JSON.parse(localStorage.getItem(key))
+    }
+
+    // download json
+    const element = document.createElement("a")
+    const file = new Blob([JSON.stringify(out)], {type: "text/plain"})
+    element.href = URL.createObjectURL(file)
+    element.download = `splits_${new Date(Date.now()).toLocaleString()}.json`
+    element.click()
+  }
+
+  const importAll = () => {
+    const input = document.createElement("input")
+    input.type = "file"
+    input.accept = ".json"
+    input.addEventListener("change", () => {
+      const file = input.files[0]
+      const reader = new FileReader()
+      reader.addEventListener("load", () => {
+        const data = JSON.parse(reader.result)
+        for (const {key} of Stages) {
+          localStorage.setItem(key, JSON.stringify(data[key]))
+        }
+        window.location.reload()
+      })
+      reader.readAsText(file)
+    })
+    input.click()
+  }
 </script>
 
 <svelte:head>
@@ -71,6 +104,17 @@
     </Swiper>
     <form />
   </div>
+
+  <div class="button-bar">
+    <ul class="button-group">
+      <li>
+        <button on:click={exportAll}>Export</button>
+      </li>
+      <li>
+        <button on:click={importAll}>Import</button>
+      </li>
+    </ul>
+  </div>
 </section>
 
 <style lang="scss">
@@ -84,6 +128,22 @@
     100% {
       opacity: 0.8;
     }
+  }
+
+  .button-bar {
+    width: 100%;
+    height: 48px;
+    background: $black-3d-panel;
+    display: flex;
+
+    > ul {
+      margin-block: auto;
+      max-width: $content-width;
+    }
+  }
+
+  button {
+    border: none;
   }
 
   section {

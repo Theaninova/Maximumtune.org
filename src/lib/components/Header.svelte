@@ -5,7 +5,7 @@
 <nav>
   <div class="space-between">
     <a sveltekit:prefetch href="/" class="home"><span class="a11y-hidden">Home</span></a>
-    <ul>
+    <ul class="button-group">
       {#each ["tools", "faq", "about"] as route}
         <li>
           <a class:active={activeRoute.startsWith(`/${route}`)} sveltekit:prefetch href={`/${route}`}
@@ -46,63 +46,5 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-  }
-
-  ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: $item-gap;
-
-    list-style: none;
-    margin: 0;
-
-    > li > a {
-      @include hover() {
-        background: $color-tertiary-container;
-        color: $color-on-tertiary-container;
-        animation: glow 1s ease infinite;
-
-        box-shadow: 0 0 8px 2px $color-tertiary inset;
-      }
-    }
-    @keyframes glow {
-      0% {
-        box-shadow: 0 0 8px 2px $color-tertiary inset;
-      }
-      50% {
-        box-shadow: 0 0 16px 2px $color-tertiary inset;
-      }
-      100% {
-        box-shadow: 0 0 8px 2px $color-tertiary inset;
-      }
-    }
-
-    > li > .active {
-      background: $color-tertiary-container;
-      color: $color-on-tertiary-container;
-
-      box-shadow: 0 0 8px 2px $color-tertiary inset;
-    }
-
-    > li > a {
-      padding: 5px 12px;
-      background: $color-surface-variant;
-      color: $color-on-surface-variant;
-      box-shadow: $inset-shadow;
-
-      transition: all $ease-default;
-      text-decoration: none;
-      text-shadow: none;
-    }
-
-    > li:first-child a {
-      border-radius: $border-radius-left;
-    }
-
-    > li:last-child a {
-      border-radius: $border-radius-right;
-    }
   }
 </style>

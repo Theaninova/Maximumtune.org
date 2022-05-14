@@ -17,37 +17,39 @@
 
 <svelte:window on:offline={(online = false)} on:online={(online = true)} />
 
-<section>
-  <h1>Maximumtune.org</h1>
+<div>
+  <section>
+    <h1>Maximumtune.org</h1>
 
-  <slot />
-</section>
-<section>
-  <h2>Calculators</h2>
-  <hr />
-  <div class="horizontal">
-    <BigButton href="/tools/battle-grade-calculator"
-      >BATTLE <span slot="sub">GRADE</span>
-      <div slot="box">VS</div></BigButton
-    >
-    <BigButton href="/tools/story-rank-calculator"
-      >STORY<span slot="sub">RANK</span>
-      <div slot="box" class="panel" /></BigButton
-    >
-  </div>
-</section>
+    <slot />
+  </section>
+  <section>
+    <h2>Calculators</h2>
+    <hr />
+    <div class="horizontal">
+      <BigButton href="/tools/battle-grade-calculator"
+        >BATTLE <span slot="sub">GRADE</span>
+        <div slot="box">VS</div></BigButton
+      >
+      <BigButton href="/tools/story-rank-calculator"
+        >STORY<span slot="sub">RANK</span>
+        <div slot="box" class="panel" /></BigButton
+      >
+    </div>
+  </section>
 
-<section>
-  {#if online}
-    <h2>Posts</h2>
-    <hr />
-    <Posts {posts} />
-  {:else}
-    <h2>You're offline!</h2>
-    <hr />
-    <p>Posts aren't available while you're offline :(</p>
-  {/if}
-</section>
+  <section>
+    {#if online}
+      <h2>Posts</h2>
+      <hr />
+      <Posts {posts} />
+    {:else}
+      <h2>You're offline!</h2>
+      <hr />
+      <p>Posts aren't available while you're offline :(</p>
+    {/if}
+  </section>
+</div>
 
 <style lang="scss">
   @import "../../assets/images";
