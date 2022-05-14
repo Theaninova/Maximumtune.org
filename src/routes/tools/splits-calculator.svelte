@@ -8,6 +8,7 @@
   import "swiper/css/lazy"
   import "swiper/css/controller"
   import {onMount} from "svelte"
+  import TimeInput from "../../lib/components/table/TimeInput.svelte"
 
   let headerSwiper
   let mainSwiper
@@ -67,7 +68,7 @@
           <form>
             <div class="table">
               <em class="green">Personal Best</em>
-              <div>02' 57" 216</div>
+              <TimeInput />
               <em class="purple">Theory Time</em>
               <div>02' 57" 216</div>
               <em class="orange">Difference</em>
@@ -76,7 +77,7 @@
               <hr />
               {#each Array.from({length: sections}) as _, section}
                 <div>Section {section + 1}</div>
-                <div>00' 47" 000</div>
+                <TimeInput />
               {/each}
               <hr />
               <hr />
@@ -102,37 +103,38 @@
     align-items: center;
     justify-items: center;
 
-    > * {
+    > :global(*) {
       font-weight: bold;
       font-style: italic;
       text-shadow: 0 0 4px black;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-    }
-
-    > div {
       font-size: 20px;
     }
-  }
 
-  .table > hr {
-    width: 100%;
-    height: 1px;
-    background: $color-outline;
-    margin-block: 16px;
-    box-shadow: unset;
-  }
+    > div:nth-child(even) {
+      color: gold;
+    }
 
-  em {
-    height: 28px;
-    width: 192px;
-    border-radius: 14px;
+    > hr {
+      width: 100%;
+      height: 1px;
+      background: $color-outline;
+      margin-block: 16px;
+      box-shadow: unset;
+    }
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    > em {
+      height: 28px;
+      width: 192px;
+      border-radius: 14px;
 
-    box-shadow: 0 0 2px black inset;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      box-shadow: 0 0 2px black inset;
+    }
   }
 
   .orange {
@@ -176,16 +178,12 @@
     justify-content: center;
   }
 
-  .container,
-  .container > div {
+  .container {
+    background-image: url($course-select);
     background-size: contain;
     background-repeat: no-repeat;
     width: 192px;
     aspect-ratio: 1;
-  }
-
-  .container {
-    background-image: url($course-select);
 
     cursor: pointer;
 
@@ -244,10 +242,10 @@
     :global(.swiper-button-next)::after,
     :global(.swiper-button-prev)::after {
       content: "";
-      width: 40px;
+      height: 32px;
       aspect-ratio: 1/2;
       // arrow
-      clip-path: polygon(0 50%, 100% 0, 100% 20%, 40% 50%, 100% 80%, 100% 100%, 0 50%);
+      clip-path: polygon(0 50%, 100% 0, 100% 25%, 50% 50%, 100% 75%, 100% 100%, 0 50%);
       background: linear-gradient(to right, $color-tertiary, $color-on-tertiary);
     }
 
@@ -257,16 +255,15 @@
 
     :global(.swiper-button-next),
     :global(.swiper-button-prev) {
-      filter: drop-shadow(0 0 6px lighten($color-tertiary-container, 10%));
+      filter: drop-shadow(0 0 4px lighten($color-tertiary-container, 20%));
     }
-  }
 
-  .inactive {
-    opacity: 0;
-  }
-
-  .active {
-    animation: active-animation 0.5s ease-in-out infinite alternate-reverse;
+    @media (max-width: 768px) {
+      :global(.swiper-button-next),
+      :global(.swiper-button-prev) {
+        display: none;
+      }
+    }
   }
 
   img {

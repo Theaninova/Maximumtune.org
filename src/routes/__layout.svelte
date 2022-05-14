@@ -199,4 +199,10 @@
     white-space: nowrap;
     width: 1px;
   }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 </style>
