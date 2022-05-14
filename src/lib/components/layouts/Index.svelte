@@ -1,7 +1,7 @@
 <script>
   import Posts from "$lib/components/Posts.svelte"
   import {browser} from "$app/env"
-  import BigButton from "../BigButton.svelte"
+  import CalculatorSelector from "../CalculatorSelector.svelte"
 
   export let posts
   export let online = browser ? window.navigator.onLine : true
@@ -26,16 +26,7 @@
   <section>
     <h2>Calculators</h2>
     <hr />
-    <div class="horizontal">
-      <BigButton href="/tools/battle-grade-calculator"
-        >BATTLE <span slot="sub">GRADE</span>
-        <div slot="box">VS</div></BigButton
-      >
-      <BigButton href="/tools/story-rank-calculator"
-        >STORY<span slot="sub">RANK</span>
-        <div slot="box" class="panel" /></BigButton
-      >
-    </div>
+    <CalculatorSelector />
   </section>
 
   <section>
@@ -52,21 +43,6 @@
 </div>
 
 <style lang="scss">
-  @import "../../assets/images";
-
-  .panel {
-    background-image: url($panel_story_90w);
-    width: 90px;
-    height: 50px;
-  }
-
-  .horizontal {
-    display: grid;
-    grid-gap: 40px;
-    grid-template-columns: repeat(auto-fit, 165px);
-    margin: 20px 0;
-  }
-
   h1 {
     transform: skew(-15deg);
     font-size: 30px;
