@@ -3,9 +3,19 @@
   import MtLogo from "./MtLogo.svelte"
 
   export let activeRoute
+
+  $: (() => {
+    void activeRoute
+    if (!container) return
+    container.classList.remove("header-go-in-out")
+    void container.offsetWidth
+    container.classList.add("header-go-in-out")
+  })()
+
+  let container
 </script>
 
-<nav>
+<nav bind:this={container}>
   <div class="nav-items-container">
     <ul class="button-group">
       {#each ["tools", "faq", "about"] as route}
@@ -50,11 +60,27 @@
   @import "../style/theme.scss";
   @import "../assets/images.scss";
 
-  nav {
-    filter: drop-shadow(0px 0px 2px grey);
+  @keyframes in-out {
+    0% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-128px);
+    }
+    60% {
+      transform: translateY(-128px);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
 
-  .space-between {
+  :global(.header-go-in-out) {
+    animation: in-out 0.5s ease;
+  }
+
+  nav {
+    filter: drop-shadow(0px 0px 2px grey);
   }
 
   .nav-items-container {
@@ -101,7 +127,12 @@
     width: 92px;
     height: 92px;
     border-radius: 50%;
+    transform: rotate(180deg);
 
     border: 8px groove #cecece;
+
+    :global(svg) {
+      transform: rotate(180deg);
+    }
   }
 </style>
