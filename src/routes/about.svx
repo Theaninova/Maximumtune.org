@@ -12,8 +12,8 @@ I decided to start this website after realising that there are very few categori
 resources for Maximum Tune. Keep in mind this site is still under construction, and the
 layout and information is subject to change. Keep checking for new updates!
 
-I am a player based in Melbourne, Australia (card name “Myth✰”), and this year will be my
-8th year playing this game.
+<p>I am a player based in Melbourne, Australia (card name “Myth✰”), and this year will be my
+  <span>{new Date(Date.now()).getFullYear() - 2007}</span>th year playing this game.</p>
 
 As well as being a general resource for all things Maximum Tune, I will also link to and
 upload notable Time Attack and Battle videos. I hope you find this website useful!

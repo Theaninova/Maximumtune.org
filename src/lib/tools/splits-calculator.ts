@@ -42,9 +42,10 @@ export function combineTimeSplit(split?: TimeSplit): number {
 }
 
 export function separateTimeSplit(time: number): TimeSplit {
-  const minutes = Math.floor(time / (60 * 1000))
-  const seconds = Math.floor((time - minutes * 60 * 1000) / 1000)
-  const milliseconds = time - minutes * 60 * 1000 - seconds * 1000
+  const t = Math.abs(time)
+  const minutes = Math.floor(t / (60 * 1000))
+  const seconds = Math.floor((t - minutes * 60 * 1000) / 1000)
+  const milliseconds = t - minutes * 60 * 1000 - seconds * 1000
   return [minutes, seconds, milliseconds]
 }
 
@@ -52,6 +53,11 @@ export function timeDifference(a: TimeSplit, b: TimeSplit): TimeSplit {
   if (!a || !b) {
     return undefined
   }
+
+  console.log(
+    combineTimeSplit(a) - combineTimeSplit(b),
+    separateTimeSplit(combineTimeSplit(a) - combineTimeSplit(b)),
+  )
 
   return separateTimeSplit(combineTimeSplit(a) - combineTimeSplit(b))
 }
@@ -196,15 +202,15 @@ export const Stages: Stage[] = [
   },
   {
     name: "Hakone",
-    key: "hakone_in",
-    variation: "Inbound",
+    key: "hakone_out",
+    variation: "Outbound",
     imageIndex: 19,
     sections: 4,
   },
   {
     name: "Hakone",
-    key: "hakone_out",
-    variation: "Outbound",
+    key: "hakone_in",
+    variation: "Inbound",
     imageIndex: 20,
     sections: 4,
   },
