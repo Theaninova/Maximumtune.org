@@ -3,30 +3,37 @@
   import MtLogo from "./MtLogo.svelte"
 
   export let activeRoute
+  const pageTitles = {
+    "/": "Home",
+    "/about/": "About",
+    "/faq/": "FAQ",
+    "/tools/splits-calculator/": "Splits",
+    "/tools/story-rank-calculator/": "Story",
+    "/tools/battle-grade-calculator/": "Battle Grade",
+  }
+  let pageTitle = pageTitles[activeRoute]
+  let showBackButton = activeRoute !== "/"
 
-  $: (() => {
+  $: (async () => {
     void activeRoute
     if (!container) return
     container.classList.remove("header-go-in-out")
     void container.offsetWidth
     container.classList.add("header-go-in-out")
-  })()
 
+    await new Promise(resolve => setTimeout(resolve, 250))
+    pageTitle = pageTitles[activeRoute]
+    showBackButton = activeRoute !== "/"
+  })()
   let container
 </script>
 
 <nav bind:this={container}>
   <div class="nav-items-container">
-    <ul class="button-group">
-      {#each ["tools", "faq", "about"] as route}
-        <li>
-          <a class:active={activeRoute.startsWith(`/${route}`)} sveltekit:prefetch href={`/${route}`}
-            >{route.toUpperCase()}</a
-          >
-        </li>
-      {/each}
-    </ul>
-    <Lightbar direction="reverse" />
+    <div class="page-title">
+      {pageTitle || "No Title"}
+    </div>
+    <Lightbar direction="reverse" type="slide" />
   </div>
   <svg viewBox="0 0 192 92">
     <defs>
@@ -51,7 +58,7 @@
     />
   </svg>
   <a sveltekit:prefetch href="/" class="home">
-    <MtLogo />
+    <MtLogo {showBackButton} />
     <span class="a11y-hidden">Home</span>
   </a>
 </nav>
@@ -79,8 +86,22 @@
     animation: in-out 0.5s ease;
   }
 
+  .page-title {
+    font-size: 1.4rem;
+    font-weight: bolder;
+    letter-spacing: 1.2px;
+    transform: skew(-15deg);
+    filter: drop-shadow(0px 0px 2px black);
+  }
+
   nav {
     filter: drop-shadow(0px 0px 2px grey);
+    will-change: transform;
+  }
+
+  nav > a {
+    all: unset;
+    cursor: pointer;
   }
 
   .nav-items-container {
@@ -98,7 +119,7 @@
     justify-content: center;
   }
 
-  .nav-items-container > :global(div) {
+  .nav-items-container > :global(.light-bar) {
     width: calc(100% - 128px);
     margin-top: 12px;
   }

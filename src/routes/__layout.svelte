@@ -9,7 +9,7 @@
 <script>
   import Header from "$lib/components/Header.svelte"
   import PageTransition from "../lib/components/PageTransition.svelte"
-  import Footer from "../lib/components/Footer.svelte"
+  // import Footer from "../lib/components/Footer.svelte"
 
   export let activeRoute
 </script>
@@ -20,8 +20,7 @@
   <slot />
 </PageTransition>
 
-<Footer {activeRoute} />
-
+<!-- <Footer {activeRoute} /> -->
 <style global lang="scss">
   @import "../lib/style/theme.scss";
 
@@ -108,7 +107,7 @@
     font-family: "Roboto Flex", "Roboto", sans-serif;
 
     display: grid;
-    grid-template-rows: 68px auto 48px;
+    grid-template-rows: 68px auto;
 
     background: radial-gradient($color-background, #080808);
     color: $color-on-background;

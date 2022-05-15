@@ -8,6 +8,7 @@
   import {rankNames} from "../../lib/tools/data/story-rank.ts"
   import Input from "../../lib/components/table/Input.svelte"
   import StoryRank from "../../lib/components/StoryRank.svelte"
+  import HeaderPadding from "../../lib/components/HeaderPadding.svelte"
 
   export let input = Object.fromEntries(rankNames.map(key => [key, 0]))
 
@@ -19,9 +20,7 @@
   <meta name="description" content="Story Rank Calculator for Wangan Midnight Maximum Tune" />
 </svelte:head>
 
-<div class="subtitle">
-  <h1>Story Rank Calculator</h1>
-</div>
+<HeaderPadding />
 
 <form>
   <table>

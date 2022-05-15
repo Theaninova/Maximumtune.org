@@ -22,12 +22,15 @@
   }
 
   a {
-    aspect-ratio: 1;
-    display: block;
-    position: relative;
+    all: unset;
+    cursor: pointer;
 
-    transform: scale(1);
+    aspect-ratio: 1;
+    display: grid;
+
     transition: transform 0.2s $mt-interpolation;
+    will-change: transform;
+    transform: scale(1);
 
     background-position: center;
 
@@ -37,13 +40,12 @@
   }
 
   a > * {
-    position: absolute;
-    top: 0;
+    grid-column: 1;
+    grid-row: 1;
   }
 
   a > span {
-    left: 50%;
-    top: 50%;
+    // transform: translate(-50%, -50%);
     color: #dedede;
     font-weight: bolder;
     text-align: center;
@@ -52,12 +54,12 @@
 
   a > span:nth-child(1) {
     font-size: 1.7em;
-    transform: translate(-50%, -170%);
+    transform: translateY(15%);
   }
 
   a > span:nth-child(2) {
     font-size: 1.2em;
-    transform: translate(-50%, -120%);
+    transform: translateY(32%);
   }
 
   a > div {

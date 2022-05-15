@@ -3,6 +3,8 @@
 </script>
 
 <script>
+  import HeaderPadding from "../HeaderPadding.svelte"
+
   export let title
   export let description
 </script>
@@ -13,5 +15,6 @@
 </svelte:head>
 
 <article>
+  <HeaderPadding />
   <slot />
 </article>

@@ -57,10 +57,6 @@
   <meta name="description" content="Splits Calculator for Wangan Midnight Maximum Tune" />
 </svelte:head>
 
-<div class="subtitle">
-  <h1>Splits Calculator</h1>
-</div>
-
 <section>
   <div class="header">
     <Swiper
@@ -72,12 +68,8 @@
       lazy={true}
     >
       {#each Stages as { name, variation, imageIndex, sections }, i}
-        <SwiperSlide let:data={{isActive}}>
-          <div
-            class:activeSlide={!isActive}
-            class="container"
-            on:click={() => mainSwiper.swiper().slideTo(i)}
-          >
+        <SwiperSlide>
+          <div class="container" on:click={() => mainSwiper.swiper().slideTo(i)}>
             <p>{name}</p>
             <img src="/map_{imageIndex}.webp" alt="TODO" class="swiper-lazy" />
             {#if variation}
@@ -130,6 +122,8 @@
     }
   }
 
+  $card-size: min(192px, calc(100vh - 580px));
+
   .button-bar {
     width: 100%;
     height: 48px;
@@ -149,6 +143,7 @@
   section {
     width: 100%;
     height: 100%;
+    margin: 0;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -158,7 +153,7 @@
     background-image: url($course-select);
     background-size: contain;
     background-repeat: no-repeat;
-    width: 192px;
+    width: $card-size;
     aspect-ratio: 1;
 
     cursor: pointer;
@@ -204,7 +199,8 @@
 
     :global(.swiper-slide) {
       transition: transform 0.2s ease-in-out;
-      width: 192px;
+      width: $card-size;
+      will-change: transform;
     }
 
     :global(.swiper-slide):not(.swiper-slide-active) {
@@ -229,8 +225,13 @@
       transform: rotate(180deg);
     }
 
+    :global(.swiper-slide) {
+      will-change: transform;
+    }
+
     :global(.swiper-button-next),
     :global(.swiper-button-prev) {
+      will-change: opacity;
       filter: drop-shadow(0 0 4px lighten($color-tertiary-container, 20%));
     }
 

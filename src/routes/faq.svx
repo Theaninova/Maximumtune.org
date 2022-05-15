@@ -3,8 +3,6 @@ title: FAQ
 description: FAQ for maximumtune.org and Wangan Midnight Maximum Tune
 ---
 
-# Frequently Asked Questions
-
 These are some (very) frequently asked questions I get about WMMT in general
 as well as some small bits of trivia about the game.
 

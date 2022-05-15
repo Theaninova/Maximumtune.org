@@ -10,6 +10,8 @@
   import {medalValues} from "../../lib/tools/data/medal-values.ts"
   import Output from "../../lib/components/table/Output.svelte"
   import Input from "../../lib/components/table/Input.svelte"
+  import Lightbar from "../../lib/components/Lightbar.svelte"
+  import HeaderPadding from "../../lib/components/HeaderPadding.svelte"
 
   let input = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
 
@@ -21,9 +23,7 @@
   <meta name="description" content="Battle Grade Calculator for Wangan Midnight Maximum Tune" />
 </svelte:head>
 
-<div class="subtitle">
-  <h1>Battle Grade Calculator</h1>
-</div>
+<HeaderPadding />
 
 <form>
   <table>
@@ -46,7 +46,7 @@
   </table>
 </form>
 
-<hr />
+<Lightbar />
 
 <section class="center">
   <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>

@@ -3,6 +3,8 @@
 </script>
 
 <script>
+  import HeaderPadding from "../HeaderPadding.svelte"
+
   export let title
   export let author
   export let date
@@ -19,6 +21,7 @@
 </svelte:head>
 
 <article>
+  <HeaderPadding />
   <header>
     <h1>{title}</h1>
     <time datetime={date}>{new Date(date).toDateString()}</time>

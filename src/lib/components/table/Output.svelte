@@ -1,5 +1,14 @@
+<script>
+  import Lightbar from "../Lightbar.svelte"
+</script>
+
 <td>
-  <slot />
+  <div class="content-container">
+    <div class="slot">
+      <slot />
+    </div>
+    <Lightbar orientation="vertical" />
+  </div>
 </td>
 
 <style lang="scss">
@@ -18,6 +27,22 @@
     color: $color-on-surface-variant;
   }
 
+  .content-container {
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: end;
+  }
+
+  .content-container > :global(*) {
+    transform: translateX(2px);
+  }
+
+  .slot {
+    align-self: center;
+  }
+
   td:first-child {
     border-radius: $border-radius-left;
   }
@@ -26,19 +51,7 @@
     border-radius: $border-radius-right;
   }
 
-  td:after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 3px;
-    height: 24px;
-    transform: translate(-50%, -22px);
-    animation: light-bar-vertical 1s ease infinite;
-    background-image: light-bar(180deg, 1%, 25%, 10%);
-    background-size: 100% 200%;
-  }
-
-  td:first-child:after {
+  td:last-child > .content-container > :global(.light-bar) {
     display: none;
   }
 </style>

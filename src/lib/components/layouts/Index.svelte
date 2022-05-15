@@ -2,6 +2,7 @@
   import Posts from "$lib/components/Posts.svelte"
   import {browser} from "$app/env"
   import CalculatorSelector from "../CalculatorSelector.svelte"
+  import Lightbar from "../Lightbar.svelte"
 
   export let posts
   export let online = browser ? window.navigator.onLine : true
@@ -23,20 +24,28 @@
 
     <slot />
   </section>
+
+  <section>
+    <h2>Info</h2>
+    <Lightbar />
+    <a href="/faq/">FAQ</a>
+    <a href="/about/">About</a>
+  </section>
+
   <section>
     <h2>Calculators</h2>
-    <hr />
+    <Lightbar />
     <CalculatorSelector />
   </section>
 
   <section>
     {#if online}
       <h2>Posts</h2>
-      <hr />
+      <Lightbar />
       <Posts {posts} />
     {:else}
       <h2>You're offline!</h2>
-      <hr />
+      <Lightbar />
       <p>Posts aren't available while you're offline :(</p>
     {/if}
   </section>
@@ -56,7 +65,7 @@
     transform: skew(-10deg);
   }
 
-  section > hr {
+  section > :global(.light-bar) {
     width: 60px;
     margin: 0;
   }

@@ -3,8 +3,6 @@ title: About
 description: About maximumtune.org
 ---
 
-# About
-
 This is a page dedicated to bringing a comprehensive resource for anything related to the
 arcade racing game: “Wangan Midnight Maximum Tune”.
 
