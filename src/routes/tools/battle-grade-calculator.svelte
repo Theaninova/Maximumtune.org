@@ -90,16 +90,4 @@
   caption {
     min-height: 26px;
   }
-
-  @media (min-width: 425px) {
-    .subtitle > h1 {
-      min-height: 43px;
-    }
-  }
-
-  @media (max-width: 424px) {
-    .subtitle > h1 {
-      min-height: 86px;
-    }
-  }
 </style>

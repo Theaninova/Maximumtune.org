@@ -100,14 +100,9 @@
   </div>
 
   <div class="button-bar">
-    <ul class="button-group">
-      <li>
-        <button on:click={exportAll}>Export</button>
-      </li>
-      <li>
-        <button on:click={importAll}>Import</button>
-      </li>
-    </ul>
+    <button on:click={exportAll}>Export</button>
+
+    <button on:click={importAll}>Import</button>
   </div>
 </section>
 
@@ -131,15 +126,20 @@
     height: 48px;
     background: $black-3d-panel;
     display: flex;
-
-    > ul {
-      margin-block: auto;
-      max-width: $content-width;
-    }
   }
 
   button {
+    all: unset;
     border: none;
+    height: 20px;
+    padding: 2px 6px 6px;
+    margin-block: auto;
+    margin-inline: 4px;
+    border-radius: 4px;
+    filter: drop-shadow(0 0 4px black);
+
+    cursor: pointer;
+    background: $black-3d-panel;
   }
 
   section {
