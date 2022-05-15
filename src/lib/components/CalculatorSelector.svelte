@@ -1,6 +1,7 @@
 <div class="horizontal">
   <a href="/tools/battle-grade-calculator" class="battle-grade">
     <span>BATTLE </span><span>GRADE</span>
+    <div />
   </a>
   <a href="/tools/story-rank-calculator" class="story-rank"
     ><span>STORY</span><span>RANK</span>
@@ -49,7 +50,7 @@
     color: #dedede;
     font-weight: bolder;
     text-align: center;
-    text-shadow: #000 0 0 6px;
+    filter: drop-shadow(0 0 6px black);
   }
 
   a > span:nth-child(1) {

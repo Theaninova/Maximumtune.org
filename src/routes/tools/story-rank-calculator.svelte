@@ -48,19 +48,3 @@
 </section>
 
 <CalculatorHeader />
-
-<style lang="scss">
-  @import "../../lib/style/theme.scss";
-
-  @media (min-width: 398px) {
-    .subtitle > h1 {
-      min-height: 43px;
-    }
-  }
-
-  @media (max-width: 397px) {
-    .subtitle > h1 {
-      min-height: 86px;
-    }
-  }
-</style>

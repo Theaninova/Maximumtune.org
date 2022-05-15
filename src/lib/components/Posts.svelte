@@ -37,10 +37,10 @@
   a {
     color: unset;
     text-decoration: none;
-    text-shadow: none;
+    filter: drop-shadow($color-secondary 0 0 0);
   }
   a:hover > article > h3 {
-    text-shadow: $color-secondary 0 0 20px;
+    filter: drop-shadow($color-secondary 0 0 20px);
   }
 
   hr {

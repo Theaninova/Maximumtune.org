@@ -52,8 +52,8 @@
       $rotation,
       transparent 0%,
       transparent 33%,
-      transparent ($a / 3 + 33%),
-      $color-tertiary ($b / 3 + 33%),
+      transparent calc($a / 3 + 33%),
+      $color-tertiary calc($b / 3 + 33%),
       transparent 66%,
       transparent 100%
     );

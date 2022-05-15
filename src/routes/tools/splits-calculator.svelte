@@ -1,7 +1,7 @@
 <script>
   import {Stages} from "../../lib/tools/splits-calculator"
   import {Swiper, SwiperSlide} from "swiper/svelte"
-  import {Mousewheel, Navigation, Lazy, Controller, Virtual} from "swiper"
+  import {Mousewheel, Navigation, Controller, Virtual} from "swiper"
   import "swiper/css"
   import "swiper/css/effect-fade"
   import "swiper/css/navigation"
@@ -61,7 +61,7 @@
   <div class="header">
     <Swiper
       bind:this={headerSwiper}
-      modules={[Mousewheel, Lazy, Controller]}
+      modules={[Mousewheel, Controller]}
       mousewheel
       slidesPerView={"auto"}
       centeredSlides={true}
@@ -69,13 +69,13 @@
     >
       {#each Stages as { name, variation, imageIndex, sections }, i}
         <SwiperSlide>
-          <div class="container" on:click={() => mainSwiper.swiper().slideTo(i)}>
-            <p>{name}</p>
-            <img src="/map_{imageIndex}.webp" alt="TODO" class="swiper-lazy" />
+          <svg viewBox="0 0 280 280" class="container" on:click={() => mainSwiper.swiper().slideTo(i)}>
+            <text x="140" y="63" text-anchor="middle">{name}</text>
+            <image x="12" y="12" width="256" height="256" href="/map_{imageIndex}.webp" />
             {#if variation}
-              <p>{variation}</p>
+              <text x="140" y="239" text-anchor="middle">{variation}</text>
             {/if}
-          </div>
+          </svg>
         </SwiperSlide>
       {/each}
     </Swiper>
@@ -160,39 +160,19 @@
 
     cursor: pointer;
 
-    // center
-    display: grid;
-    place-items: center;
-    justify-items: center;
-    align-items: center;
-
-    > * {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    p {
-      position: absolute;
+    text {
       font-stretch: extra-condensed;
-
-      text-align: center;
-      text-shadow: 0 0 4px #000;
+      fill: white;
+      filter: drop-shadow(0 0 4px #000);
     }
-    p:first-child {
-      top: -15px;
+    text:first-child {
       font-weight: bold;
-      font-size: 1.8rem;
+      font-size: 2.6rem;
     }
-    p:last-child {
+    text:last-child {
       opacity: 0.7;
-      bottom: 0;
       font-weight: bold;
-      font-size: 1.4rem;
-    }
-
-    img {
-      width: calc(100% * (256 / 280));
-      aspect-ratio: 1;
+      font-size: 2.2rem;
     }
   }
 
@@ -243,10 +223,5 @@
         display: none;
       }
     }
-  }
-
-  img {
-    width: 91.4%;
-    height: 91.4%;
   }
 </style>

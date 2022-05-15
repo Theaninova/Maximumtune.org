@@ -26,6 +26,7 @@
   @import "../style/theme.scss";
 
   h2 {
+    filter: none;
     min-height: 32px;
 
     border-radius: 16px;

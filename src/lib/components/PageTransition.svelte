@@ -9,3 +9,9 @@
     <slot />
   </main>
 {/key}
+
+<style global>
+  main {
+    will-change: transform;
+  }
+</style>

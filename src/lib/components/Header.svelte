@@ -97,9 +97,10 @@
   nav {
     filter: drop-shadow(0px 0px 2px grey);
     will-change: transform;
+    z-index: 100;
   }
 
-  nav > a {
+  a {
     all: unset;
     cursor: pointer;
   }
@@ -122,13 +123,6 @@
   .nav-items-container > :global(.light-bar) {
     width: calc(100% - 128px);
     margin-top: 12px;
-  }
-
-  .nav-items-container > ul {
-    padding-top: 6px;
-  }
-
-  .logo-container {
   }
 
   svg,
