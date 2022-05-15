@@ -1,7 +1,7 @@
 <script>
   import {Stages} from "../../lib/tools/splits-calculator"
   import {Swiper, SwiperSlide} from "swiper/svelte"
-  import {Mousewheel, Navigation, Lazy, Controller} from "swiper"
+  import {Mousewheel, Navigation, Lazy, Controller, Virtual} from "swiper"
   import "swiper/css"
   import "swiper/css/effect-fade"
   import "swiper/css/navigation"
@@ -84,12 +84,14 @@
   <div class="main">
     <Swiper
       bind:this={mainSwiper}
-      modules={[Mousewheel, Navigation, Controller]}
+      modules={[Mousewheel, Navigation, Controller, Virtual]}
       navigation={true}
       mousewheel
+      virtual={{slides: Stages}}
+      let:virtualData={{slides, offset, from}}
     >
-      {#each Stages as stage}
-        <SwiperSlide>
+      {#each slides as stage, index (from + index)}
+        <SwiperSlide virtualIndex={from + index} style="left: {offset}px">
           <SplitsInput {stage} />
         </SwiperSlide>
       {/each}
