@@ -9,6 +9,7 @@
 <script>
   import Header from "$lib/components/Header.svelte"
   import PageTransition from "../lib/components/PageTransition.svelte"
+  import Backdrop from "../lib/components/Backdrop.svelte"
   // import Footer from "../lib/components/Footer.svelte"
 
   export let activeRoute
@@ -19,6 +20,8 @@
 <PageTransition {activeRoute}>
   <slot />
 </PageTransition>
+
+<Backdrop />
 
 <!-- <Footer {activeRoute} /> -->
 <style global lang="scss">
@@ -95,8 +98,6 @@
 
     display: grid;
     grid-template-rows: 68px auto;
-
-    background: radial-gradient($color-background, #080808);
     color: $color-on-background;
     margin: 0;
   }

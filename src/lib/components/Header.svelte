@@ -98,10 +98,14 @@
     filter: drop-shadow(0px 0px 2px grey);
     will-change: transform;
     z-index: 100;
+
+    grid-column: 1;
+    grid-row: 1;
   }
 
   a {
     all: unset;
+    transition: filter 0.2s ease;
     cursor: pointer;
   }
 
