@@ -81,7 +81,6 @@
   .circle {
     width: 88%;
     aspect-ratio: 1;
-    filter: blur(1px);
 
     animation: rotate 4s linear infinite;
 
@@ -93,7 +92,7 @@
     }
 
     > div:last-child {
-      width: calc(100% - 10px);
+      width: calc(100% - 8px);
       background: black;
     }
   }

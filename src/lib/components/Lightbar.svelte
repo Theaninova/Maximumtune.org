@@ -97,12 +97,9 @@
     overflow: hidden;
 
     background-color: mix($color-tertiary-container, $color-surface-variant, 30%);
-
-    filter: blur(1px);
   }
 
   .light-bar-animation {
-    box-shadow: $color-tertiary-container 0 0 20px;
     border: none;
     height: 100%;
 
