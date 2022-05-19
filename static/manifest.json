@@ -17,7 +17,8 @@
       "icons": [
         {
           "src": "/shortcuts/icon_battle_grade.png",
-          "sizes": "96x96"
+          "sizes": "96x96",
+          "purpose": "any"
         }
       ]
     },
@@ -29,7 +30,8 @@
       "icons": [
         {
           "src": "/shortcuts/icon_story_rank.png",
-          "sizes": "96x96"
+          "sizes": "96x96",
+          "purpose": "any"
         }
       ]
     },
@@ -40,34 +42,14 @@
       "description": "Time Splits Calculator",
       "icons": [
         {
-          "src": "/shortcuts/icon_splits.png",
-          "sizes": "96x96"
+          "src": "/shortcuts/icon_time_splits.png",
+          "sizes": "96x96",
+          "purpose": "any"
         }
       ]
     }
   ],
   "screenshots": [
-    {
-      "src": "/screenshots/wide/splits.png",
-      "type": "image/png",
-      "sizes": "2360x1640",
-      "platform": "wide",
-      "label": "Time Splits Calculator"
-    },
-    {
-      "src": "/screenshots/wide/grade.png",
-      "type": "image/png",
-      "sizes": "2360x1640",
-      "platform": "wide",
-      "label": "Battle Grade Calculator"
-    },
-    {
-      "src": "/screenshots/wide/home.png",
-      "type": "image/png",
-      "sizes": "2360x1640",
-      "platform": "wide",
-      "label": "Home Screen"
-    },
     {
       "src": "/screenshots/narrow/splits.png",
       "type": "image/png",
@@ -87,6 +69,27 @@
       "type": "image/png",
       "sizes": "828x1792",
       "platform": "narrow",
+      "label": "Home Screen"
+    },
+    {
+      "src": "/screenshots/wide/splits.png",
+      "type": "image/png",
+      "sizes": "2360x1640",
+      "platform": "wide",
+      "label": "Time Splits Calculator"
+    },
+    {
+      "src": "/screenshots/wide/grade.png",
+      "type": "image/png",
+      "sizes": "2360x1640",
+      "platform": "wide",
+      "label": "Battle Grade Calculator"
+    },
+    {
+      "src": "/screenshots/wide/home.png",
+      "type": "image/png",
+      "sizes": "2360x1640",
+      "platform": "wide",
       "label": "Home Screen"
     }
   ],
