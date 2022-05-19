@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "Maximumtune",
+      "package_name": "org.maximumtune",
+      "sha256_cert_fingerprints": [
+        "XX:XX:XX:..."
+      ]
+    }
+  }
+]

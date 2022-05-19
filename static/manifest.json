@@ -5,6 +5,93 @@
   "theme_color": "#1C1B1F",
   "background_color": "#1C1B1F",
   "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": ["games"],
+  "shortcuts": [
+    {
+      "name": "Battle Grade",
+      "short_name": "Grade",
+      "url": "/tools/battle-grade-calculator/",
+      "description": "Battle Grade Calculator",
+      "icons": [
+        {
+          "src": "/shortcuts/icon_battle_grade.webp",
+          "type": "image/webp",
+          "purpose": "any"
+        }
+      ]
+    },
+    {
+      "name": "Story Rank",
+      "short_name": "Story",
+      "url": "/tools/story-rank-calculator/",
+      "description": "Story Rank Calculator",
+      "icons": [
+        {
+          "src": "/shortcuts/icon_story_rank.webp",
+          "type": "image/webp",
+          "purpose": "any"
+        }
+      ]
+    },
+    {
+      "name": "Time Splits",
+      "short_name": "Splits",
+      "url": "/tools/splits-calculator/",
+      "description": "Time Splits Calculator",
+      "icons": [
+        {
+          "src": "/shortcuts/icon_splits.webp",
+          "type": "image/webp",
+          "purpose": "any"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/wide/splits.webp",
+      "type": "image/webp",
+      "sizes": "2360x1640",
+      "platform": "wide",
+      "label": "Time Splits Calculator"
+    },
+    {
+      "src": "/screenshots/wide/grade.webp",
+      "type": "image/webp",
+      "sizes": "2360x1640",
+      "platform": "wide",
+      "label": "Battle Grade Calculator"
+    },
+    {
+      "src": "/screenshots/wide/home.webp",
+      "type": "image/webp",
+      "sizes": "2360x1640",
+      "platform": "wide",
+      "label": "Home Screen"
+    },
+    {
+      "src": "/screenshots/narrow/splits.webp",
+      "type": "image/webp",
+      "sizes": "827x1791",
+      "platform": "narrow",
+      "label": "Time Splits Calculator"
+    },
+    {
+      "src": "/screenshots/narrow/grade.webp",
+      "type": "image/webp",
+      "sizes": "827x1791",
+      "platform": "narrow",
+      "label": "Battle Grade Calculator"
+    },
+    {
+      "src": "/screenshots/narrow/home.webp",
+      "type": "image/webp",
+      "sizes": "827x1791",
+      "platform": "narrow",
+      "label": "Home Screen"
+    }
+  ],
   "icons": [
     {
       "src": "icons/icon-128x128.png",
