@@ -1,6 +1,7 @@
 {
   "name": "Maximumtune.org",
   "short_name": "Maximumtune",
+  "description": "The no. 1 resource for maximum tune. Built with ❤️, high quality, free, no ads, no tracking, no bullshit.",
   "start_url": "/",
   "theme_color": "#1C1B1F",
   "background_color": "#1C1B1F",
@@ -15,9 +16,8 @@
       "description": "Battle Grade Calculator",
       "icons": [
         {
-          "src": "/shortcuts/icon_battle_grade.webp",
-          "type": "image/webp",
-          "purpose": "any"
+          "src": "/shortcuts/icon_battle_grade.png",
+          "sizes": "96x96"
         }
       ]
     },
@@ -28,9 +28,8 @@
       "description": "Story Rank Calculator",
       "icons": [
         {
-          "src": "/shortcuts/icon_story_rank.webp",
-          "type": "image/webp",
-          "purpose": "any"
+          "src": "/shortcuts/icon_story_rank.png",
+          "sizes": "96x96"
         }
       ]
     },
@@ -41,53 +40,52 @@
       "description": "Time Splits Calculator",
       "icons": [
         {
-          "src": "/shortcuts/icon_splits.webp",
-          "type": "image/webp",
-          "purpose": "any"
+          "src": "/shortcuts/icon_splits.png",
+          "sizes": "96x96"
         }
       ]
     }
   ],
   "screenshots": [
     {
-      "src": "/screenshots/wide/splits.webp",
-      "type": "image/webp",
+      "src": "/screenshots/wide/splits.png",
+      "type": "image/png",
       "sizes": "2360x1640",
       "platform": "wide",
       "label": "Time Splits Calculator"
     },
     {
-      "src": "/screenshots/wide/grade.webp",
-      "type": "image/webp",
+      "src": "/screenshots/wide/grade.png",
+      "type": "image/png",
       "sizes": "2360x1640",
       "platform": "wide",
       "label": "Battle Grade Calculator"
     },
     {
-      "src": "/screenshots/wide/home.webp",
-      "type": "image/webp",
+      "src": "/screenshots/wide/home.png",
+      "type": "image/png",
       "sizes": "2360x1640",
       "platform": "wide",
       "label": "Home Screen"
     },
     {
-      "src": "/screenshots/narrow/splits.webp",
-      "type": "image/webp",
-      "sizes": "827x1791",
+      "src": "/screenshots/narrow/splits.png",
+      "type": "image/png",
+      "sizes": "828x1792",
       "platform": "narrow",
       "label": "Time Splits Calculator"
     },
     {
-      "src": "/screenshots/narrow/grade.webp",
-      "type": "image/webp",
-      "sizes": "827x1791",
+      "src": "/screenshots/narrow/grade.png",
+      "type": "image/png",
+      "sizes": "828x1792",
       "platform": "narrow",
       "label": "Battle Grade Calculator"
     },
     {
-      "src": "/screenshots/narrow/home.webp",
-      "type": "image/webp",
-      "sizes": "827x1791",
+      "src": "/screenshots/narrow/home.png",
+      "type": "image/png",
+      "sizes": "828x1792",
       "platform": "narrow",
       "label": "Home Screen"
     }

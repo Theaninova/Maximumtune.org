@@ -2,8 +2,8 @@
   {
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
-      "namespace": "Maximumtune",
-      "package_name": "org.maximumtune",
+      "namespace": "android_app",
+      "package_name": "com.your.package_name",
       "sha256_cert_fingerprints": [
         "XX:XX:XX:..."
       ]
