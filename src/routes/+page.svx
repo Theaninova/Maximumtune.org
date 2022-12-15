@@ -10,9 +10,3 @@ description: The No.1 Maximum Tune Resource
 The No.1 Maximum Tune Resource *(sorta)*
 
 *This app is a fan project and not affiliated with WMMT or Bandai Namco*
-
-<InstallNotice>
-
-  *If you install this page ("Add to home page"), tools will work <u>offline</u>!*
-
-</InstallNotice>

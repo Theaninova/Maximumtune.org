@@ -4,9 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.your.package_name",
-      "sha256_cert_fingerprints": [
-        "XX:XX:XX:..."
-      ]
+      "sha256_cert_fingerprints": ["XX:XX:XX:..."]
     }
   }
 ]

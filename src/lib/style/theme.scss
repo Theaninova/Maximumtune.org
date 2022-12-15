@@ -2,25 +2,25 @@ $color-primary: #eac340;
 $color-on-primary: #3d2f00;
 $color-primary-container: #574400;
 $color-on-primary-container: #ffe07d;
-$color-secondary: #CCC2DC;
-$color-on-secondary: #332D41;
-$color-secondary-container: #4A4458;
-$color-on-secondary-container: #E8DEF8;
+$color-secondary: #ccc2dc;
+$color-on-secondary: #332d41;
+$color-secondary-container: #4a4458;
+$color-on-secondary-container: #e8def8;
 $color-tertiary: #ffacef;
 $color-on-tertiary: #5d0058;
 $color-tertiary-container: #83007c;
 $color-on-tertiary-container: #ffd6f4;
-$color-error: #F2B8B5;
+$color-error: #f2b8b5;
 $color-on-error: #601410;
-$color-error-container: #8C1D18;
-$color-on-error-container: #F9DEDC;
-$color-outline: #938F99;
-$color-background: #1C1B1F;
-$color-on-background: #E6E1E5;
-$color-surface: #1C1B1F;
+$color-error-container: #8c1d18;
+$color-on-error-container: #f9dedc;
+$color-outline: #938f99;
+$color-background: #1c1b1f;
+$color-on-background: #e6e1e5;
+$color-surface: #1c1b1f;
 $color-on-surface: #e6e1e5;
-$color-surface-variant: #49454F;
-$color-on-surface-variant: #CAC4D0;
+$color-surface-variant: #49454f;
+$color-on-surface-variant: #cac4d0;
 
 $text-ital: "wght" 350, "ital" 1;
 $text-short: "wdth" 50, "wght" 280;
@@ -43,12 +43,7 @@ $subtitle-width: min(16.5cm, 90%);
 
 $inset-shadow: inset #000 0 0 5px 2px;
 
-$black-3d-panel: linear-gradient(
-    #b8b9c2,
-    #39393b 41%,
-    #000 44.5%,
-    #151515
-);
+$black-3d-panel: linear-gradient(#b8b9c2, #39393b 41%, #000 44.5%, #151515);
 
 $shine-3d: linear-gradient(to bottom, #fff5, #fff5 50%, #0000 60%, #0000);
 
@@ -69,20 +64,20 @@ $mt-interpolation: cubic-bezier(0.1, 0.75, 0.23, 1.77);
 
 @function light-bar($rotation, $a, $b, $darken: 30%) {
   @return linear-gradient(
-      $rotation,
-      mix($color-tertiary-container, $color-surface-variant, $darken),
-      mix($color-tertiary-container, $color-surface-variant, $darken) $a,
-      $color-tertiary $b,
-      mix($color-tertiary-container, $color-surface-variant, $darken) 50%,
-      mix($color-tertiary-container, $color-surface-variant, $darken)
+    $rotation,
+    mix($color-tertiary-container, $color-surface-variant, $darken),
+    mix($color-tertiary-container, $color-surface-variant, $darken) $a,
+    $color-tertiary $b,
+    mix($color-tertiary-container, $color-surface-variant, $darken) 50%,
+    mix($color-tertiary-container, $color-surface-variant, $darken)
   );
 }
 
 @function panel-3d($color, $lighten, $rotation) {
   @return linear-gradient(
-      $rotation,
-      lighten($color, $lighten),
-      lighten($color, 0%),
-      lighten($color, $lighten)
-  )
+    $rotation,
+    lighten($color, $lighten),
+    lighten($color, 0%),
+    lighten($color, $lighten)
+  );
 }
