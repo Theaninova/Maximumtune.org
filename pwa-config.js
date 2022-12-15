@@ -4,6 +4,13 @@ export const pwaConfig = {
   integration: {
     closeBundleOrder: "pre",
   },
+  devOptions: {
+    enabled: true,
+  },
+  includeAssets: ["fonts/*.ttf", "map_*.webp"],
+  workbox: {
+    globPatterns: ["**/*{js,css,html,webp,png,svg}"]
+  },
   manifest: {
     name: "Maximumtune.org",
     short_name: "Maximumtune",
