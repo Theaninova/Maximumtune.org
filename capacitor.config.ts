@@ -1,10 +1,10 @@
-import { CapacitorConfig } from '@capacitor/cli';
+import type {CapacitorConfig} from "@capacitor/cli"
 
 const config: CapacitorConfig = {
-  appId: 'org.maximumtune.mmtorg',
-  appName: 'Maximumtune.org',
-  webDir: 'build',
-  bundledWebRuntime: false
-};
+  appId: "org.maximumtune.mmtorg",
+  appName: "Maximumtune.org",
+  webDir: "build",
+  bundledWebRuntime: false,
+}
 
-export default config;
+export default config
