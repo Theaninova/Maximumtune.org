@@ -1,8 +1,8 @@
 <script>
   import Lightbar from "./Lightbar.svelte"
   import MtLogo from "./MtLogo.svelte"
+  import {page} from "$app/stores"
 
-  export let activeRoute
   const pageTitles = {
     "/": "Home",
     "/about/": "About",
@@ -11,19 +11,20 @@
     "/tools/story-rank-calculator/": "Story",
     "/tools/battle-grade-calculator/": "Battle Grade",
   }
-  let pageTitle = pageTitles[activeRoute]
-  let showBackButton = activeRoute !== "/"
+  let pageTitle = pageTitles[$page.url.pathname]
+  let showBackButton = $page.url.pathname !== "/"
 
+  // eslint-disable-next-line unicorn/prefer-top-level-await
   $: (async () => {
-    void activeRoute
+    void $page.url.pathname
     if (!container) return
     container.classList.remove("header-go-in-out")
     void container.offsetWidth
     container.classList.add("header-go-in-out")
 
     await new Promise(resolve => setTimeout(resolve, 250))
-    pageTitle = pageTitles[activeRoute]
-    showBackButton = activeRoute !== "/"
+    pageTitle = pageTitles[$page.url.pathname]
+    showBackButton = $page.url.pathname !== "/"
   })()
   let container
 </script>

@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   import Posts from "$lib/components/Posts.svelte"
-  import {browser} from "$app/env"
+  import {browser} from "$app/environment"
   import CalculatorSelector from "../CalculatorSelector.svelte"
   import Lightbar from "../Lightbar.svelte"
 
-  export let posts
+  export let data
   export let online = browser ? window.navigator.onLine : true
 
   export let title
@@ -42,7 +42,7 @@
     {#if online}
       <h2>Posts</h2>
       <Lightbar />
-      <Posts {posts} />
+      <Posts posts={data.posts} />
     {:else}
       <h2>You're offline!</h2>
       <Lightbar />
