@@ -1,5 +1,5 @@
 <script>
-  import "../../../../lib/style/table.scss"
+  import "$lib/style/table.scss"
 </script>
 
 <table>
@@ -34,7 +34,7 @@
 </table>
 
 <style lang="scss">
-  @import "../../../lib/style/theme.scss";
+  @import "../../../../lib/style/theme.scss";
 
   table {
     table-layout: fixed;
