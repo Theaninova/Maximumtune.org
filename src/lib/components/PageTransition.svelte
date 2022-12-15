@@ -1,9 +1,10 @@
 <script lang="ts">
   import {fly} from "svelte/transition"
-  import {page} from "$app/stores"
+
+  export let pathname
 </script>
 
-{#key $page.url.pathname}
+{#key pathname}
   <main in:fly={{duration: 250, delay: 300, x: -150}} out:fly={{duration: 250, x: -150}}>
     <slot />
   </main>

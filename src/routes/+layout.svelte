@@ -1,21 +1,21 @@
 <script>
-  // throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
   import Header from "$lib/components/Header.svelte"
   import PageTransition from "$lib/components/PageTransition.svelte"
   import Backdrop from "$lib/components/Backdrop.svelte"
-  import {browser, dev} from "$app/environment"
+  import {browser} from "$app/environment"
+
+  export let data
 </script>
 
 <svelte:head>
-  {#if !dev && browser}
-    <link rel="manifest" href="/_app/manifest.webmanifest" />
+  {#if browser}
+    <link rel="manifest" href="/manifest.webmanifest" />
   {/if}
 </svelte:head>
 
 <Header />
 
-<PageTransition>
+<PageTransition pathname={data.pathname}>
   <slot />
 </PageTransition>
 
