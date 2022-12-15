@@ -4,7 +4,14 @@
   import Header from "$lib/components/Header.svelte"
   import PageTransition from "$lib/components/PageTransition.svelte"
   import Backdrop from "$lib/components/Backdrop.svelte"
+  import {browser, dev} from "$app/environment"
 </script>
+
+<svelte:head>
+  {#if !dev && browser}
+    <link rel="manifest" href="/_app/manifest.webmanifest" />
+  {/if}
+</svelte:head>
 
 <Header />
 

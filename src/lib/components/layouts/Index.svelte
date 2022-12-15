@@ -1,14 +1,24 @@
 <script lang="ts">
   import Posts from "$lib/components/Posts.svelte"
-  import {browser} from "$app/environment"
+  import {browser, dev} from "$app/environment"
   import CalculatorSelector from "../CalculatorSelector.svelte"
   import Lightbar from "../Lightbar.svelte"
+  import {onMount} from "svelte"
 
   export let data
   export let online = browser ? window.navigator.onLine : true
 
   export let title
   export let description
+
+  let InstallNotice
+  onMount(() => {
+    if (!dev || !browser) return
+
+    import("$lib/components/InstallNotice.svelte").then(it => {
+      InstallNotice = it.default
+    })
+  })
 </script>
 
 <svelte:head>
@@ -23,6 +33,10 @@
     <h1>Maximumtune.org</h1>
 
     <slot />
+
+    {#if InstallNotice}
+      <svelte:component this={InstallNotice} />
+    {/if}
   </section>
 
   <section>
