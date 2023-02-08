@@ -1,24 +1,11 @@
-<script>
+<script lang="ts">
   // throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
+  import {swiper} from "$lib/components/swiper"
   import {Stages} from "$lib/tools/splits-calculator"
-  import {Swiper, SwiperSlide} from "swiper/svelte"
-  import {Mousewheel, Navigation, Controller, Virtual} from "swiper"
-  import "swiper/css"
-  import "swiper/css/effect-fade"
-  import "swiper/css/navigation"
-  import "swiper/css/lazy"
-  import "swiper/css/controller"
-  import {onMount} from "svelte"
   import SplitsInput from "$lib/components/table/SplitsInput.svelte"
+  import type Swiper from "swiper"
 
-  let headerSwiper
-  let mainSwiper
-
-  onMount(() => {
-    mainSwiper.swiper().controller.control = headerSwiper.swiper()
-    headerSwiper.swiper().controller.control = mainSwiper.swiper()
-  })
+  let mainSwiper: {swiper: Swiper}
 
   const exportAll = () => {
     const out = {}
@@ -42,6 +29,7 @@
       const file = input.files[0]
       const reader = new FileReader()
       reader.addEventListener("load", () => {
+        if (typeof reader.result !== "string") return
         const data = JSON.parse(reader.result)
         for (const {key} of Stages) {
           localStorage.setItem(key, JSON.stringify(data[key]))
@@ -61,43 +49,45 @@
 
 <section>
   <div class="header">
-    <Swiper
-      bind:this={headerSwiper}
-      modules={[Mousewheel, Controller]}
+    <swiper-container
+      bind:this={mainSwiper}
+      use:swiper
       mousewheel
-      slidesPerView={"auto"}
-      centeredSlides={true}
+      slides-per-view="auto"
+      centered-slides={true}
       lazy={true}
+      controller-control=".main-swiper"
+      class="header-swiper"
     >
       {#each Stages as { name, variation, imageIndex, sections }, i}
-        <SwiperSlide>
-          <svg viewBox="0 0 280 280" class="container" on:click={() => mainSwiper.swiper().slideTo(i)}>
+        <swiper-slide>
+          <svg viewBox="0 0 280 280" class="container" on:click={() => mainSwiper.swiper.slideTo(i)}>
             <text x="140" y="63" text-anchor="middle">{name}</text>
             <image x="12" y="12" width="256" height="256" href="/map_{imageIndex}.webp" />
             {#if variation}
               <text x="140" y="239" text-anchor="middle">{variation}</text>
             {/if}
           </svg>
-        </SwiperSlide>
+        </swiper-slide>
       {/each}
-    </Swiper>
+    </swiper-container>
   </div>
 
   <div class="main">
-    <Swiper
-      bind:this={mainSwiper}
-      modules={[Mousewheel, Navigation, Controller, Virtual]}
+    <swiper-container
+      use:swiper
       navigation={true}
       mousewheel
-      virtual={{slides: Stages}}
-      let:virtualData={{slides, offset, from}}
+      virtual={true}
+      controller-control=".header-swiper"
+      class="main-swiper"
     >
-      {#each slides as stage, index (from + index)}
-        <SwiperSlide virtualIndex={from + index} style="left: {offset}px">
+      {#each Stages as stage, index (index)}
+        <swiper-slide>
           <SplitsInput {stage} />
-        </SwiperSlide>
+        </swiper-slide>
       {/each}
-    </Swiper>
+    </swiper-container>
     <form />
   </div>
 
@@ -181,13 +171,13 @@
   .header {
     margin-block: 32px;
 
-    :global(.swiper-slide) {
+    swiper-slide {
       transition: transform 0.2s ease-in-out;
       width: $card-size;
       will-change: transform;
     }
 
-    :global(.swiper-slide):not(.swiper-slide-active) {
+    swiper-slide:not(.swiper-slide-active) {
       transform: scale(0.8);
     }
   }
@@ -195,8 +185,8 @@
   .main {
     flex-grow: 1;
 
-    :global(.swiper-button-next)::after,
-    :global(.swiper-button-prev)::after {
+    swiper-container::part(button-next)::after,
+    swiper-container::part(button-prev)::after {
       content: "";
       height: 32px;
       aspect-ratio: 1/2;
@@ -205,23 +195,23 @@
       background: linear-gradient(to right, $color-tertiary, $color-on-tertiary);
     }
 
-    :global(.swiper-button-next)::after {
+    swiper-container::part(button-next)::after {
       transform: rotate(180deg);
     }
 
-    :global(.swiper-slide) {
+    swiper-slide {
       will-change: transform;
     }
 
-    :global(.swiper-button-next),
-    :global(.swiper-button-prev) {
+    swiper-container::part(button-next),
+    swiper-container::part(button-prev) {
       will-change: opacity;
       filter: drop-shadow(0 0 4px lighten($color-tertiary-container, 20%));
     }
 
     @media (max-width: 768px) {
-      :global(.swiper-button-next),
-      :global(.swiper-button-prev) {
+      swiper-container::part(button-next),
+      swiper-container::part(button-prev) {
         display: none;
       }
     }
