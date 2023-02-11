@@ -133,7 +133,7 @@ types:
       bone_size:
         value: vert_info >> 4
       normal_channel_count:
-        value: vert_info & 0b11
+        value: 'vert_info & 0b11 == 2 ? 1 : vert_info & 0b11'
       normal_size:
         value: '((vert_info & 0b1100) >> 2) != 0 ? 2 : 4'
       uv_channel_count:
@@ -161,7 +161,10 @@ types:
   vertex_data:
     seq:
       - id: vertex
-        type: vector(4, 4)
+        type: vector(3, 4)
+      - id: vertex_padding
+        size: 4
+        if: _parent.normal_channel_count > 1
       - id: normal_channels
         type: vector(4, _parent.normal_size)
         repeat: expr

@@ -1,109 +1,165 @@
 <script lang="ts">
-  import {
-    BufferGeometry,
-    Float32BufferAttribute,
-    LineBasicMaterial,
-    LineSegments,
-    Mesh,
-    MeshBasicMaterial,
-    MeshPhongMaterial,
-    PerspectiveCamera,
-    PointLight,
-    PointLightHelper,
-    Points,
-    PointsMaterial,
-    Scene,
-    Uint16BufferAttribute,
-    WebGLRenderer,
-  } from "three"
-  import {onMount} from "svelte"
-  import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js"
+  import {T, Canvas, OrbitControls} from "@threlte/core"
+  import Nud from "$lib/tools/kaitai/nud.ksy"
+  import {BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute, Uint8BufferAttribute} from "three"
 
-  let scene: Scene
   let input: HTMLInputElement
-  let camera: PerspectiveCamera
+  let dragging: boolean
 
-  async function fileChange() {
-    const view = new DataView(await input.files[0].arrayBuffer())
+  let geometry: BufferGeometry | undefined
 
-    let vertices = []
-    // read xyz values (float32) until the end of the file
-    for (let i = 0x2a_20; i < 0x1_6e_88; i += 0x1c) {
-      vertices.push(
-        view.getFloat32(i, true),
-        view.getFloat32(i + 0x4, true),
-        view.getFloat32(i + 0x8, true),
-        /*view.getFloat32(i + 0xc, true),
-        view.getFloat32(i + 0x10, true),
-        view.getFloat32(i + 0x14, true),*/
-      )
-    }
+  function getRenderingVertexIndices(vertexIndices: number[]): number[] {
+    let renderingIndices: number[] = []
 
-    let indices = [[]]
-    for (let i = 0x2_90; i < 0x2a_20; i += 0x2) {
-      const value = view.getUint16(i, true)
-      if (value === 0xff_ff) {
-        indices.push([])
+    let startDirection = 1
+    let p = 0
+    let f1 = vertexIndices[p++]
+    let f2 = vertexIndices[p++]
+    let faceDirection = startDirection
+    let f3
+    do {
+      f3 = vertexIndices[p++]
+      if (f3 === 0xff_ff) {
+        f1 = vertexIndices[p++]
+        f2 = vertexIndices[p++]
+        faceDirection = startDirection
       } else {
-        indices[indices.length - 1].push(value)
+        faceDirection *= -1
+        if (f1 !== f2 && f2 !== f3 && f3 !== f1) {
+          if (faceDirection > 0) {
+            renderingIndices.push(f3, f2, f1)
+          } else {
+            renderingIndices.push(f2, f3, f1)
+          }
+        }
+        f1 = f2
+        f2 = f3
       }
-    }
-    // triangulate ngons
-    const tris = indices.flatMap(poly => {
-      const n = poly.length
-      const tri = []
-      for (let i = 2; i < n; i++) {
-        tri.push(poly[i], poly[i - 1], poly[i - 2])
-      }
-      return tri
-    })
+    } while (p < vertexIndices.length)
 
-    console.log(vertices.length, vertices.length / 3)
-    console.log(tris.length, tris.length / 3)
-
-    const geometry = new BufferGeometry()
-    geometry.setAttribute("position", new Float32BufferAttribute(vertices, 3))
-
-    geometry.setIndex(tris)
-    const material = new MeshBasicMaterial({color: 0xff_ff_ff, wireframe: true})
-    const points = new Mesh(geometry, material)
-    scene.add(points)
-
-    camera.lookAt(points.position)
+    // this.displayFaceSize = renderingIndices.length;
+    return renderingIndices
   }
 
-  onMount(async () => {
-    scene = new Scene()
-    camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100_000)
-    const renderer = new WebGLRenderer()
-    document.body.append(renderer.domElement)
-    const controls = new OrbitControls(camera, renderer.domElement)
-    renderer.setClearColor(0x00_00_00)
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    camera.position.set(0, 20, 100)
-    controls.update()
+  async function fileChange(files: FileList) {
+    for (const file of files) {
+      const nud = new Nud(await file.arrayBuffer())
+      const vertexData = nud.polyData[0].vertices
 
-    const light = new PointLight(0xff_00_ff, 1, 100)
-    light.position.set(20, 20, 20)
-    scene.add(light)
-    const sphereSize = 4
-    const pointLightHelper = new PointLightHelper(light, sphereSize)
-    scene.add(pointLightHelper)
+      const vertices = vertexData.map(it => it.vertex.values)
+      const indices = getRenderingVertexIndices(nud.polyData[0].indices)
+      // const uvs = vertexData.map(it => it.uvChannels[0].values)
+      const colors = vertexData.map(it => it.colors.values)
 
-    function animate() {
-      requestAnimationFrame(animate)
-      controls.update()
-      renderer.render(scene, camera)
+      geometry = new BufferGeometry()
+      geometry.index = new Uint16BufferAttribute(indices, 1)
+      geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
+      // geometry.setAttribute("uv", new Float32BufferAttribute(uvs.flat(), uvs[0].length))
+      geometry.setAttribute("color", new Uint8BufferAttribute(colors.flat(), colors[0].length))
     }
-
-    animate()
-  })
+  }
 </script>
 
-<input bind:this={input} on:change={fileChange} accept=".nud" type="file" name="filename" />
-<p>Path files are just a straight list of little endian float32 3d points, no metadata.</p>
-<p>
-  Each of the paths in a folder connect, so you can load multiple files at once by selecting them on after
-  another
-</p>
-<p>To clear old results, reload the page</p>
+<svelte:window
+  on:dragenter={() => (dragging = true)}
+  on:dragleave={() => (dragging = false)}
+  on:dragend={() => (dragging = false)}
+  on:drop|preventDefault={event => {
+    dragging = false
+    fileChange(event.dataTransfer.files)
+  }}
+  on:dragover|preventDefault={() => false}
+/>
+
+<div class="file-box" class:dragging class:has-content={!!geometry}>
+  <input
+    bind:this={input}
+    on:change={() => fileChange(input.files)}
+    accept=".nud"
+    type="file"
+    name="filename"
+    multiple
+  />
+</div>
+
+<Canvas>
+  <T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={24}>
+    <OrbitControls />
+  </T.PerspectiveCamera>
+
+  <T.DirectionalLight castShadow position={[3, 10, 10]} />
+  <T.DirectionalLight position={[-3, 10, -10]} intensity={0.2} />
+  <T.AmbientLight intensity={0.2} />
+
+  {#if geometry}
+    <T.Mesh {geometry}>
+      <T.MeshBasicMaterial wireframe={false} />
+    </T.Mesh>
+  {/if}
+</Canvas>
+
+<style lang="scss">
+  input {
+    display: none;
+  }
+
+  .file-box {
+    display: flex;
+    margin-inline: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    z-index: -1;
+
+    $drag-box-color: gray;
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      opacity: 0.5;
+      top: 0;
+      left: 0;
+      transition: all 120ms ease;
+    }
+
+    &::after {
+      margin: 32px;
+
+      right: 0;
+      bottom: 0;
+      border-radius: 16px;
+      outline: 2px dashed $drag-box-color;
+      outline-offset: 16px;
+
+      background: rgba($drag-box-color, 0.3);
+    }
+
+    &::before {
+      content: "+";
+
+      top: 50%;
+      left: 50%;
+      color: $drag-box-color;
+      font-size: 10vh;
+      transform: translate(-50%, -50%);
+    }
+
+    &.has-content::before,
+    &.has-content::after {
+      opacity: 0;
+    }
+
+    &.dragging::before,
+    &.dragging::after {
+      opacity: 1;
+    }
+  }
+
+  :global(main) {
+    overflow: hidden;
+  }
+</style>
