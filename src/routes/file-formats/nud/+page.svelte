@@ -1,62 +1,24 @@
 <script lang="ts">
   import {T, Canvas, OrbitControls} from "@threlte/core"
-  import Nud from "$lib/tools/kaitai/nud.ksy"
-  import {BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute, Uint8BufferAttribute} from "three"
+  import {BufferGeometry, DoubleSide, PerspectiveCamera} from "three"
+  import {loadNud} from "../../../lib/tools/three-nud"
 
   let input: HTMLInputElement
   let dragging: boolean
+  let wireframe = false
+  let camera: PerspectiveCamera
+  let controls: OrbitControls
+
+  let cameraPosition = [0, 0, 0]
+  let target = [0, 0, 0]
 
   let geometry: BufferGeometry | undefined
-
-  function getRenderingVertexIndices(vertexIndices: number[]): number[] {
-    let renderingIndices: number[] = []
-
-    let startDirection = 1
-    let p = 0
-    let f1 = vertexIndices[p++]
-    let f2 = vertexIndices[p++]
-    let faceDirection = startDirection
-    let f3
-    do {
-      f3 = vertexIndices[p++]
-      if (f3 === 0xff_ff) {
-        f1 = vertexIndices[p++]
-        f2 = vertexIndices[p++]
-        faceDirection = startDirection
-      } else {
-        faceDirection *= -1
-        if (f1 !== f2 && f2 !== f3 && f3 !== f1) {
-          if (faceDirection > 0) {
-            renderingIndices.push(f3, f2, f1)
-          } else {
-            renderingIndices.push(f2, f3, f1)
-          }
-        }
-        f1 = f2
-        f2 = f3
-      }
-    } while (p < vertexIndices.length)
-
-    // this.displayFaceSize = renderingIndices.length;
-    return renderingIndices
-  }
-
   async function fileChange(files: FileList) {
-    for (const file of files) {
-      const nud = new Nud(await file.arrayBuffer())
-      const vertexData = nud.polyData[0].vertices
+    const nud = await loadNud(files[0])
+    geometry = nud.geometry
 
-      const vertices = vertexData.map(it => it.vertex.values)
-      const indices = getRenderingVertexIndices(nud.polyData[0].indices)
-      // const uvs = vertexData.map(it => it.uvChannels[0].values)
-      const colors = vertexData.map(it => it.colors.values)
-
-      geometry = new BufferGeometry()
-      geometry.index = new Uint16BufferAttribute(indices, 1)
-      geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
-      // geometry.setAttribute("uv", new Float32BufferAttribute(uvs.flat(), uvs[0].length))
-      geometry.setAttribute("color", new Uint8BufferAttribute(colors.flat(), colors[0].length))
-    }
+    cameraPosition = geometry.boundingSphere.center.addScalar(geometry.boundingSphere.radius * 4).toArray()
+    target = geometry.boundingSphere.center.toArray()
   }
 </script>
 
@@ -68,7 +30,7 @@
     dragging = false
     fileChange(event.dataTransfer.files)
   }}
-  on:dragover|preventDefault={() => false}
+  on:dragover|preventDefault={() => (dragging = true)}
 />
 
 <div class="file-box" class:dragging class:has-content={!!geometry}>
@@ -80,26 +42,31 @@
     name="filename"
     multiple
   />
+  <label
+    >Wireframe
+    <input type="checkbox" bind:checked={wireframe} /></label
+  >
 </div>
 
-<Canvas>
-  <T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={24}>
-    <OrbitControls />
-  </T.PerspectiveCamera>
+{#if geometry}
+  {#key geometry}
+    <Canvas>
+      <T.PerspectiveCamera bind:ref={camera} makeDefault fov={24} position={cameraPosition}>
+        <OrbitControls bind:this={controls} autoRotate autoRotateSpeed={0.5} {target} />
+      </T.PerspectiveCamera>
 
-  <T.DirectionalLight castShadow position={[3, 10, 10]} />
-  <T.DirectionalLight position={[-3, 10, -10]} intensity={0.2} />
-  <T.AmbientLight intensity={0.2} />
+      <T.DirectionalLight castShadow position={[3, 10, 10]} />
+      <T.AmbientLight intensity={0.2} />
 
-  {#if geometry}
-    <T.Mesh {geometry}>
-      <T.MeshBasicMaterial wireframe={false} />
-    </T.Mesh>
-  {/if}
-</Canvas>
+      <T.Mesh {geometry} frustumCulled={false} castShadow receiveShadow>
+        <T.MeshPhongMaterial {wireframe} side={DoubleSide} />
+      </T.Mesh>
+    </Canvas>
+  {/key}
+{/if}
 
 <style lang="scss">
-  input {
+  input[type="file"] {
     display: none;
   }
 
