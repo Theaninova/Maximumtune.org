@@ -8,8 +8,8 @@
 
 <style lang="scss">
   div {
-    width: 100%;
     aspect-ratio: 1;
+    width: 100%;
     background: black;
   }
 </style>

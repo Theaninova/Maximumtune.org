@@ -12,27 +12,27 @@
 </td>
 
 <style lang="scss">
-  @import "../../style/theme.scss";
+  @use "sass:color";
+  @import "../../style/theme";
 
   td {
-    padding: 0;
-    margin: 0;
-
     width: 66px;
     height: 32px;
+    margin: 0;
+    padding: 0;
+
+    color: $color-on-surface-variant;
     text-align: center;
 
     background-image: $black-3d-panel;
-    box-shadow: darken($color-on-surface-variant, 60%) 0 0 3px 1px inset;
-    color: $color-on-surface-variant;
+    box-shadow: color.adjust($color-on-surface-variant, $lightness: -60%) 0 0 3px 1px inset;
   }
 
   .content-container {
-    height: 100%;
-
     display: grid;
     grid-template-columns: auto auto;
     justify-items: end;
+    height: 100%;
   }
 
   .content-container > :global(*) {

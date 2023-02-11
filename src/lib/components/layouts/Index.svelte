@@ -74,9 +74,8 @@
   }
 
   section > h2 {
-    margin-bottom: 8px;
-
     transform: skew(-10deg);
+    margin-bottom: 8px;
   }
 
   section > :global(.light-bar) {

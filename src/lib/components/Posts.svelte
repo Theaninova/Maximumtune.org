@@ -26,12 +26,12 @@
 </ul>
 
 <style lang="scss">
-  @import "../style/theme.scss";
+  @import "../style/theme";
 
   ul {
-    list-style: none;
     margin: 0;
     padding: 0;
+    list-style: none;
   }
 
   a {
@@ -39,6 +39,7 @@
     text-decoration: none;
     filter: drop-shadow($color-secondary 0 0 0);
   }
+
   a:hover > article > h3 {
     filter: drop-shadow($color-secondary 0 0 20px);
   }

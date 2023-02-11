@@ -27,7 +27,7 @@
 </table>
 
 <style lang="scss">
-  @import "../../../../lib/style/theme.scss";
+  @import "../../../../lib/style/theme";
 
   table {
     table-layout: fixed;
@@ -35,9 +35,9 @@
   }
 
   td {
-    border: 1px solid $color-outline;
     height: 32px;
     font-family: monospace;
     text-align: center;
+    border: 1px solid $color-outline;
   }
 </style>

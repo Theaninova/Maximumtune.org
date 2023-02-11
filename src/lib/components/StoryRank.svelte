@@ -23,15 +23,16 @@
 </h2>
 
 <style lang="scss">
-  @import "../style/theme.scss";
+  @import "../style/theme";
 
   h2 {
-    filter: none;
     min-height: 32px;
-
-    border-radius: 16px;
-    font-stretch: 150%;
     padding: 0 60px;
+
+    font-stretch: 150%;
+
+    filter: none;
+    border-radius: 16px;
     box-shadow: $inset-shadow;
   }
 </style>

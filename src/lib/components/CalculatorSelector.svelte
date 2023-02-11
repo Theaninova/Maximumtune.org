@@ -22,22 +22,38 @@
     grid-template-columns: repeat(auto-fit, 180px);
   }
 
+  a > span {
+    font-weight: bolder;
+
+    // transform: translate(-50%, -50%);
+    color: #dedede;
+    text-align: center;
+    filter: drop-shadow(0 0 6px black);
+  }
+
+  .battle-grade > span {
+    top: 65%;
+  }
+
   a {
+    @include hover {
+      transform: scale(1.1);
+    }
+
     all: unset;
+
+    will-change: transform;
     cursor: pointer;
 
-    aspect-ratio: 1;
+    transform: scale(1);
+
     display: grid;
 
-    transition: transform 0.2s $mt-interpolation;
-    will-change: transform;
-    transform: scale(1);
+    aspect-ratio: 1;
 
     background-position: center;
 
-    @include hover() {
-      transform: scale(1.1);
-    }
+    transition: transform 0.2s $mt-interpolation;
   }
 
   a > * {
@@ -45,33 +61,21 @@
     grid-row: 1;
   }
 
-  a > span {
-    // transform: translate(-50%, -50%);
-    color: #dedede;
-    font-weight: bolder;
-    text-align: center;
-    filter: drop-shadow(0 0 6px black);
-  }
-
   a > span:nth-child(1) {
-    font-size: 1.7em;
     transform: translateY(15%);
+    font-size: 1.7em;
   }
 
   a > span:nth-child(2) {
-    font-size: 1.2em;
     transform: translateY(32%);
+    font-size: 1.2em;
   }
 
   a > div {
-    width: 100%;
     aspect-ratio: 1;
+    width: 100%;
     background-repeat: no-repeat;
     background-position: center;
-  }
-
-  .battle-grade > span {
-    top: 65%;
   }
 
   .battle-grade {

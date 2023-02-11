@@ -21,32 +21,23 @@ $color-surface: #1c1b1f;
 $color-on-surface: #e6e1e5;
 $color-surface-variant: #49454f;
 $color-on-surface-variant: #cac4d0;
-
 $text-ital: "wght" 350, "ital" 1;
 $text-short: "wdth" 50, "wght" 280;
 $text-normal: "wdth" 100, "wght" 350;
 $text-bold: "wdth" 100, "wght" 600;
 $text-bold-ital: "ital" 1, "wdth" 100, "wght" 600;
 $text-wide: "wdth" 150, "wght" 280;
-
 $ease-default: 0.2s ease;
-
 $border-radius: 12px;
 $border-radius-left: $border-radius 0 0 $border-radius;
 $border-radius-right: 0 $border-radius $border-radius 0;
-
 $item-gap: 4px;
-
 $max-content-width: 16.5cm;
 $content-width: min(16.5cm, calc(100% - 16px));
 $subtitle-width: min(16.5cm, 90%);
-
 $inset-shadow: inset #000 0 0 5px 2px;
-
 $black-3d-panel: linear-gradient(#b8b9c2, #39393b 41%, #000 44.5%, #151515);
-
 $shine-3d: linear-gradient(to bottom, #fff5, #fff5 50%, #0000 60%, #0000);
-
 $mt-interpolation: cubic-bezier(0.1, 0.75, 0.23, 1.77);
 
 @mixin hover() {

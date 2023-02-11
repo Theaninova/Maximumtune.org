@@ -12,8 +12,8 @@
 
 <style global>
   main {
-    grid-row: 2;
-    grid-column: 1;
     will-change: transform, opacity;
+    grid-column: 1;
+    grid-row: 2;
   }
 </style>

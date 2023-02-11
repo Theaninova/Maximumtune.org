@@ -3,25 +3,25 @@
 </td>
 
 <style lang="scss">
-  @import "../../style/theme.scss";
+  @import "../../style/theme";
 
   input,
   td {
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
 
   input {
     width: 66px;
     height: 32px;
+
+    color: $color-on-secondary-container;
     text-align: center;
 
-    background: $color-secondary-container;
-    color: $color-on-secondary-container;
-    box-shadow: $inset-shadow;
-
-    border: none;
     appearance: none;
+    background: $color-secondary-container;
+    border: none;
+    box-shadow: $inset-shadow;
   }
 
   td:first-child > input {

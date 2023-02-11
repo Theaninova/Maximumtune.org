@@ -8,75 +8,74 @@ $orange: #ffb958;
 $red: #ffb4a6;
 $pink: #ffaaf6;
 $gold: #eac400;
-
 $shadow: inset #000 0 0 10px 2px;
 
 .rank-theme-neutral {
-  box-shadow: $color-outline 0 0 20px, $shadow;
-  border-color: $color-outline;
-  background: $color-surface-variant;
   color: $color-on-surface-variant;
+  background: $color-surface-variant;
+  border-color: $color-outline;
+  box-shadow: $color-outline 0 0 20px, $shadow;
 }
 
 .rank-theme-blue {
-  box-shadow: $blue 0 0 20px, $shadow;
-  border-color: $blue;
-  background: #004f50;
   color: #02fbfb;
+  background: #004f50;
+  border-color: $blue;
+  box-shadow: $blue 0 0 20px, $shadow;
 }
 
 .rank-theme-green {
-  box-shadow: $green 0 0 20px, $shadow;
-  border-color: $green;
-  background: #005300;
   color: #73ff5b;
+  background: #005300;
+  border-color: $green;
+  box-shadow: $green 0 0 20px, $shadow;
 }
 
 .rank-theme-yellow {
-  box-shadow: $yellow 0 0 20px, $shadow;
-  border-color: $yellow;
-  background: #4a4900;
   color: #eaea00;
+  background: #4a4900;
+  border-color: $yellow;
+  box-shadow: $yellow 0 0 20px, $shadow;
 }
 
 .rank-theme-orange {
-  box-shadow: $orange 0 0 20px, $shadow;
-  border-color: $orange;
-  background: #653e00;
   color: #ffddb4;
+  background: #653e00;
+  border-color: $orange;
+  box-shadow: $orange 0 0 20px, $shadow;
 }
 
 .rank-theme-red {
-  box-shadow: $red 0 0 20px, $shadow;
-  border-color: $red;
-  background: #940000;
   color: #ffdad3;
+  background: #940000;
+  border-color: $red;
+  box-shadow: $red 0 0 20px, $shadow;
 }
 
 .rank-theme-pink {
-  box-shadow: $pink 0 0 20px, $shadow;
-  border-color: $pink;
-  background: #810083;
   color: #ffd6f7;
+  background: #810083;
+  border-color: $pink;
+  box-shadow: $pink 0 0 20px, $shadow;
 }
 
 .rank-theme-gold {
-  box-shadow: $gold 0 0 20px, $shadow;
-  border-color: $gold;
-  background: #554600;
   color: #ffe15e;
+  background: #554600;
+  border-color: $gold;
+  box-shadow: $gold 0 0 20px, $shadow;
 }
 
 .rank-theme-rainbow {
-  box-shadow: #fff 0 0 20px, $shadow;
-  border-color: #181818;
-  background: linear-gradient(to right, $purple, $blue, $green, $yellow, $orange, $red, $pink);
   color: #000;
+  background: linear-gradient(to right, $purple, $blue, $green, $yellow, $orange, $red, $pink);
+  border-color: #181818;
+  box-shadow: #fff 0 0 20px, $shadow;
 }
 
 .rank-theme-leather {
-  box-shadow: #ffb2bd 0 0 20px, $shadow;
-  border-color: #ffb2bd;
-  background: #7c2939;
   color: #ffdade;
+  background: #7c2939;
+  border-color: #ffb2bd;
+  box-shadow: #ffb2bd 0 0 20px, $shadow;
 }

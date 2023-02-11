@@ -102,6 +102,7 @@
     from {
       background-color: $color-primary;
     }
+
     to {
       background-color: transparent;
     }
@@ -117,10 +118,13 @@
 
   input {
     all: unset;
-    caret-color: transparent;
-    outline: 0 solid transparent;
+
     cursor: default;
+
     text-align: start;
+
+    outline: 0 solid transparent;
+    caret-color: transparent;
   }
 
   input:focus {

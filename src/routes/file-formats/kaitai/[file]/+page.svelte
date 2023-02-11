@@ -16,20 +16,29 @@
   ></pre>
 
 <style lang="scss">
-  @import "src/lib/style/theme.scss";
+  @import "src/lib/style/theme";
 
   pre {
     position: relative;
+
+    padding: 16px;
+
+    background: rgb(0 0 0 / 60%);
+    border: 6px ridge #cecece;
+    border-radius: 32px;
   }
 
   button {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    border: none;
-    background: none;
-    color: $color-tertiary;
     cursor: pointer;
+
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    color: $color-tertiary;
+
+    background: none;
+    border: none;
 
     &:hover {
       color: $color-tertiary-container;
@@ -39,12 +48,5 @@
   div {
     display: flex;
     justify-content: space-between;
-  }
-
-  pre {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 16px;
-    border-radius: 32px;
-    border: 6px ridge #cecece;
   }
 </style>

@@ -73,31 +73,32 @@
   @import "../../style/theme";
 
   form {
-    max-width: 16.5cm;
-    height: 100%;
-    margin: auto;
-
     // center
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    max-width: 16.5cm;
+    height: 100%;
+    margin: auto;
   }
 
   .table {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     grid-gap: 4px 0;
-    margin-inline: 8px;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     justify-items: center;
 
+    margin-inline: 8px;
+
     > :global(*) {
+      font-size: 20px;
       font-weight: bold;
       font-style: italic;
       text-shadow: 0 0 4px black;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      font-size: 20px;
     }
 
     > div:nth-child(even) {
@@ -107,20 +108,21 @@
     > hr {
       width: 100%;
       height: 1px;
-      background: $color-outline;
       margin-block: 16px;
+
+      background: $color-outline;
       box-shadow: unset;
     }
 
     > em {
-      height: 28px;
-      width: 192px;
-      border-radius: 14px;
-
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
 
+      width: 192px;
+      height: 28px;
+
+      border-radius: 14px;
       box-shadow: 0 0 2px black inset;
     }
   }
@@ -128,12 +130,15 @@
   .orange {
     background: #934b00 $shine-3d;
   }
+
   .green {
     background: #0a5a0c $shine-3d;
   }
+
   .purple {
     background: #502f8a $shine-3d;
   }
+
   .grey {
     background: #484546 $shine-3d;
   }
