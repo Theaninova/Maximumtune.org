@@ -15,18 +15,21 @@
 </footer>
 
 <style lang="scss">
-  @import "../style/theme.scss";
+  @import "../style/theme";
 
   @keyframes in-out-top {
     0% {
       transform: translateY(0);
     }
+
     40% {
       transform: translateY(-128px);
     }
+
     60% {
       transform: translateY(-128px);
     }
+
     100% {
       transform: translateY(0);
     }
@@ -36,12 +39,15 @@
     0% {
       transform: translateY(0);
     }
+
     40% {
       transform: translateY(128px);
     }
+
     60% {
       transform: translateY(128px);
     }
+
     100% {
       transform: translateY(0);
     }
@@ -51,20 +57,23 @@
     0% {
       transform: translateX(0);
     }
+
     40% {
       transform: translateX(-128px);
     }
+
     60% {
       transform: translateX(-128px);
     }
+
     100% {
       transform: translateY(0);
     }
   }
 
   footer {
-    background: $black-3d-panel;
     width: 100%;
     height: 100%;
+    background: $black-3d-panel;
   }
 </style>

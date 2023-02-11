@@ -1,8 +1,8 @@
 <div class="content">
   <div class="backdrop" />
 
-  <div class="backdrop-rects" style="height: 120px; background-color:  rgba(0,0,0,0.3)" />
-  <div class="backdrop-rects" style="height: 30px; background-color:  rgba(0,0,0,0.3)" />
+  <div class="backdrop-rects" style="height: 120px; background-color:  rgb(0 0 0 / 30%)" />
+  <div class="backdrop-rects" style="height: 30px; background-color:  rgb(0 0 0 / 30%)" />
 
   <div class="flowing-rects">
     <div class="rect" />
@@ -22,6 +22,7 @@
     from {
       transform: translateX(-25%) translateY(-100%);
     }
+
     to {
       transform: translateX(25%) translateY(-100%);
     }
@@ -31,36 +32,37 @@
     from {
       transform: translateX(-25%);
     }
+
     to {
       transform: translateX(25%);
     }
   }
 
   .content {
-    grid-row: 1 / span 2;
-    grid-column: 1;
-
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    > * {
-      grid-row: 1;
-      grid-column: 1;
-    }
-
     z-index: -100;
 
     overflow: hidden;
+    display: grid;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-items: center;
+    justify-items: center;
+
+    > * {
+      grid-column: 1;
+      grid-row: 1;
+    }
   }
 
   .backdrop-rects {
-    width: 120%;
     z-index: 5;
+    width: 120%;
   }
 
   .backdrop {
     width: 200%;
     height: 100%;
+
     background-image: linear-gradient(
         to bottom,
         black,
@@ -90,6 +92,7 @@
     .flowing-rects {
       animation-duration: 12s;
     }
+
     .backdrop {
       animation-duration: 96s;
     }
@@ -108,12 +111,13 @@
   }
 
   .rect {
+    transform: skew(-15deg);
+
     width: clamp(40px, 32vw, 400px);
     height: 80px;
 
-    background-color: black;
     opacity: 0.6;
-    transform: skew(-15deg);
+    background-color: black;
   }
 
   .last-rect {

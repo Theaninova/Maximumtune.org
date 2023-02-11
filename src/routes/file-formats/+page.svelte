@@ -27,8 +27,8 @@
 
 <style lang="scss">
   table {
-    border-collapse: separate;
     border-spacing: 8px;
+    border-collapse: separate;
   }
 
   tr.override > :global(th)::before {

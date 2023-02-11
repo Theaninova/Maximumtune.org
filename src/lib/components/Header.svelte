@@ -65,19 +65,22 @@
 </nav>
 
 <style lang="scss">
-  @import "../style/theme.scss";
-  @import "../assets/images.scss";
+  @import "../style/theme";
+  @import "../assets/images";
 
   @keyframes in-out {
     0% {
       transform: translateY(0);
     }
+
     40% {
       transform: translateY(-128px);
     }
+
     60% {
       transform: translateY(-128px);
     }
+
     100% {
       transform: translateY(0);
     }
@@ -88,41 +91,44 @@
   }
 
   .page-title {
+    transform: skew(-15deg);
+
     font-size: 1.4rem;
     font-weight: bolder;
     letter-spacing: 1.2px;
-    transform: skew(-15deg);
-    filter: drop-shadow(0px 0px 2px black);
+
+    filter: drop-shadow(0 0 2px black);
   }
 
   nav {
-    filter: drop-shadow(0px 0px 2px grey);
     will-change: transform;
+
     z-index: 100;
 
     grid-column: 1;
     grid-row: 1;
+
+    filter: drop-shadow(0 0 2px grey);
   }
 
   a {
     all: unset;
-    transition: filter 0.2s ease;
     cursor: pointer;
+    transition: filter 0.2s ease;
   }
 
   .nav-items-container {
-    padding: 8px;
-    background: $black-3d-panel;
-
-    width: calc(100% - 32px);
-    height: 48px;
-
-    border-bottom: #cecece solid 4px;
-
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: center;
+
+    width: calc(100% - 32px);
+    height: 48px;
+    padding: 8px;
+
+    background: $black-3d-panel;
+    border-bottom: #cecece solid 4px;
   }
 
   .nav-items-container > :global(.light-bar) {
@@ -143,13 +149,14 @@
   }
 
   .home {
-    background-color: black;
-    width: 92px;
-    height: 92px;
-    border-radius: 50%;
     transform: rotate(180deg);
 
+    width: 92px;
+    height: 92px;
+
+    background-color: black;
     border: 8px groove #cecece;
+    border-radius: 50%;
 
     :global(svg) {
       transform: rotate(180deg);

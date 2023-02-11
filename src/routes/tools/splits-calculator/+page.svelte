@@ -99,13 +99,15 @@
 </section>
 
 <style lang="scss">
-  @import "../../../lib/assets/images";
+  @use "sass:color";
+  @import "../../../lib/assets/images"; // stylelint-disable-line order/order
   @import "../../../lib/style/theme";
 
   @keyframes active-animation {
     0% {
       opacity: 0.1;
     }
+
     100% {
       opacity: 0.8;
     }
@@ -114,67 +116,77 @@
   $card-size: min(192px, calc(100vh - 580px));
 
   .button-bar {
+    display: flex;
     width: 100%;
     height: 48px;
     background: $black-3d-panel;
-    display: flex;
   }
 
   button {
     all: unset;
-    border: none;
-    height: 20px;
-    padding: 2px 6px 6px;
-    margin-block: auto;
-    margin-inline: 4px;
-    border-radius: 4px;
-    filter: drop-shadow(0 0 4px black);
 
     cursor: pointer;
+
+    height: 20px;
+    margin-block: auto;
+    margin-inline: 4px;
+    padding: 2px 6px 6px;
+
     background: $black-3d-panel;
+    filter: drop-shadow(0 0 4px black);
+    border: none;
+    border-radius: 4px;
   }
 
   section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
     width: 100%;
     height: 100%;
     margin: 0;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
   }
 
   .container {
-    background-image: url($course-select);
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: $card-size;
-    aspect-ratio: 1;
-
     cursor: pointer;
+
+    aspect-ratio: 1;
+    width: $card-size;
+
+    background-image: url($course-select);
+    background-repeat: no-repeat;
+    background-size: contain;
 
     text {
       font-stretch: extra-condensed;
-      fill: white;
       filter: drop-shadow(0 0 4px #000);
+      fill: white;
     }
+
     text:first-child {
-      font-weight: bold;
       font-size: 2.6rem;
-    }
-    text:last-child {
-      opacity: 0.7;
       font-weight: bold;
-      font-size: 2.2rem;
     }
+
+    text:last-child {
+      font-size: 2.2rem;
+      font-weight: bold;
+      opacity: 0.7;
+    }
+  }
+
+  swiper-slide {
+    will-change: transform;
   }
 
   .header {
     margin-block: 32px;
 
     swiper-slide {
-      transition: transform 0.2s ease-in-out;
-      width: $card-size;
       will-change: transform;
+      width: $card-size;
+      transition: transform 0.2s ease-in-out;
     }
 
     swiper-slide:not(.swiper-slide-active) {
@@ -188,25 +200,24 @@
     swiper-container::part(button-next)::after,
     swiper-container::part(button-prev)::after {
       content: "";
-      height: 32px;
+
       aspect-ratio: 1/2;
+      height: 32px;
+
+      background: linear-gradient(to right, $color-tertiary, $color-on-tertiary);
+
       // arrow
       clip-path: polygon(0 50%, 100% 0, 100% 25%, 50% 50%, 100% 75%, 100% 100%, 0 50%);
-      background: linear-gradient(to right, $color-tertiary, $color-on-tertiary);
     }
 
     swiper-container::part(button-next)::after {
       transform: rotate(180deg);
     }
 
-    swiper-slide {
-      will-change: transform;
-    }
-
     swiper-container::part(button-next),
     swiper-container::part(button-prev) {
       will-change: opacity;
-      filter: drop-shadow(0 0 4px lighten($color-tertiary-container, 20%));
+      filter: drop-shadow(0 0 4px color.adjust($color-tertiary-container, $lightness: 20%));
     }
 
     @media (max-width: 768px) {

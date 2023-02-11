@@ -14,17 +14,19 @@
     class:fade={type === "fade"}
     class:slide={type === "slide"}
     class="light-bar-animation"
-    style="animation-direction: {direction}; animation-duration: {duration}s;"
+    style=" animation-duration: {duration}s;animation-direction: {direction};"
   />
 </div>
 
 <style lang="scss">
+  @use "sass:color";
   @import "../style/theme";
 
   @keyframes light-bar-slide {
     0% {
       transform: translateX(-66%);
     }
+
     66% {
       transform: translateX(0%);
     }
@@ -35,13 +37,16 @@
       opacity: 0;
       animation-timing-function: ease-in-out;
     }
+
     33% {
       opacity: 1;
       animation-timing-function: ease-in-out;
     }
+
     66% {
       opacity: 0;
     }
+
     100% {
       opacity: 0;
     }
@@ -64,9 +69,9 @@
   }
 
   .slide {
+    width: 300%;
     animation-name: light-bar-slide;
     animation-timing-function: linear;
-    width: 300%;
   }
 
   .horizontal {
@@ -75,6 +80,7 @@
     > .fade {
       background-image: linear-gradient(to right, transparent, $color-tertiary, transparent);
     }
+
     > .slide {
       background-image: light-bar-double(to right, 40%, 60%);
     }
@@ -87,22 +93,21 @@
     > .fade {
       background-image: linear-gradient(to bottom, transparent, $color-tertiary, transparent);
     }
+
     > .slide {
       background-image: light-bar-double(to bottom, 40%, 60%);
     }
   }
 
   .light-bar {
-    border-radius: 2px;
     overflow: hidden;
-
-    background-color: mix($color-tertiary-container, $color-surface-variant, 30%);
+    background-color: color.mix($color-tertiary-container, $color-surface-variant, 30%);
+    border-radius: 2px;
   }
 
   .light-bar-animation {
-    border: none;
     height: 100%;
-
+    border: none;
     animation-iteration-count: infinite;
   }
 </style>

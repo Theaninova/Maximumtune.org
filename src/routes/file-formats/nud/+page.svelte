@@ -104,38 +104,43 @@
   }
 
   .file-box {
-    display: flex;
-    margin-inline: 0;
+    $drag-box-color: gray;
+
     position: absolute;
+    z-index: -1;
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
-    width: 100vw;
-    z-index: -1;
+    left: 0;
 
-    $drag-box-color: gray;
+    display: flex;
+
+    width: 100vw;
+    margin-inline: 0;
 
     &::after,
     &::before {
       content: "";
+
       position: absolute;
-      opacity: 0.5;
       top: 0;
       left: 0;
+
+      opacity: 0.5;
+
       transition: all 120ms ease;
     }
 
     &::after {
-      margin: 32px;
-
       right: 0;
       bottom: 0;
+
+      margin: 32px;
+
+      background: rgba($drag-box-color, 0.3);
       border-radius: 16px;
       outline: 2px dashed $drag-box-color;
       outline-offset: 16px;
-
-      background: rgba($drag-box-color, 0.3);
     }
 
     &::before {
@@ -143,9 +148,10 @@
 
       top: 50%;
       left: 50%;
-      color: $drag-box-color;
-      font-size: 10vh;
       transform: translate(-50%, -50%);
+
+      font-size: 10vh;
+      color: $drag-box-color;
     }
 
     &.has-content::before,

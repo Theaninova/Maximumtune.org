@@ -22,45 +22,18 @@
 <Backdrop />
 
 <style global lang="scss">
-  @import "../lib/style/theme.scss";
-
-  //noinspection CssUnknownTarget
-  @font-face {
-    font-family: "Roboto Flex";
-    src: url("/fonts/roboto-flex.min.ttf") format("woff2 supports variations"),
-      url("/fonts/roboto-flex.min.ttf") format("woff2-variations");
-    font-weight: 100 1000;
-    font-stretch: 25% 151%;
-    font-display: fallback;
-    unicode-range: U+20-7E;
-  }
-
-  //noinspection CssUnknownTarget
-  @font-face {
-    font-family: "Roboto Flex";
-    src: url("/fonts/RobotoFlex.ttf") format("woff2 supports variations"),
-      url("/fonts/RobotoFlex.ttf") format("woff2-variations");
-    font-weight: 100 1000;
-    font-stretch: 25% 151%;
-    font-display: swap;
-    unicode-range: U+00A0-FB04;
-  }
-
-  //noinspection CssInvalidAtRule
-  @layer base {
-    html {
-      -webkit-tap-highlight-color: transparent;
-    }
-  }
+  @use "sass:color";
+  @import "../lib/style/theme"; /* stylelint-disable-line order/order */
 
   a {
-    color: $color-secondary;
-    transition: filter 0.2s ease-in-out;
-    will-change: filter;
-    filter: drop-shadow($color-secondary 0 0 0);
-    @include hover() {
+    @include hover {
       filter: drop-shadow($color-secondary 0 0 10px);
     }
+
+    will-change: filter;
+    color: $color-secondary;
+    filter: drop-shadow($color-secondary 0 0 0);
+    transition: filter 0.2s ease-in-out;
   }
 
   u {
@@ -71,12 +44,11 @@
 
   main {
     overflow-y: auto;
-
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    flex-grow: 1;
     align-items: center;
+    justify-content: start;
   }
 
   main > * {
@@ -91,80 +63,112 @@
   }
 
   body {
-    font-family: "Roboto Flex", "Roboto", sans-serif;
-
     display: grid;
     grid-template-rows: 68px auto;
-    color: $color-on-background;
+
     margin: 0;
+
+    font-family: "Roboto Flex", Roboto, sans-serif;
+    color: $color-on-background;
   }
 
   h2,
   h3 {
-    color: $color-secondary;
     will-change: filter;
+    color: $color-secondary;
     filter: drop-shadow($color-secondary-container 0 0 5px);
     transition: filter $ease-default;
   }
 
-  a > h2,
   a > h2 {
-    @include hover() {
+    @include hover {
       filter: drop-shadow($color-secondary 0 0 20px);
     }
   }
 
   h1 {
+    margin: 16px 0;
+
+    font-stretch: 120%;
+
     // color: $color-tertiary;
     background-color: #f3ec78;
     background-image: linear-gradient(
       0deg,
-      lighten($color-tertiary-container, 10%),
-      lighten($color-tertiary, 0%),
-      lighten($color-tertiary-container, 10%)
+      color.adjust($color-tertiary-container, $lightness: 10%),
+      color.adjust($color-tertiary, $lightness: 0%),
+      color.adjust($color-tertiary-container, $lightness: 10%)
     );
+    -webkit-background-clip: text; // stylelint-disable-line property-no-vendor-prefix
+    background-clip: text;
     background-size: 100%;
-    -webkit-background-clip: text;
-    //noinspection CssInvalidPropertyValue
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    //noinspection CssUnknownProperty
-    -moz-text-fill-color: transparent;
     filter: drop-shadow($color-tertiary 0 0 20px);
 
-    margin: 16px 0;
-
-    font-stretch: 120%;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
   }
 
   h3 > a,
   h2 > a,
   h1 > a {
-    transition: color $ease-default;
-    text-decoration: none;
     color: unset;
+    text-decoration: none;
+    transition: color $ease-default;
   }
 
   .center {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   }
 
-  .a11y-hidden:not(:focus):not(:active) {
+  .a11y-hidden:not(:focus, :active) {
+    position: absolute;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+
+    white-space: nowrap;
+
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
   }
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
     margin: 0;
+    appearance: none;
+  }
+
+  // noinspection CssUnknownTarget
+  @font-face {
+    font-family: "Roboto Flex";
+    font-weight: 100 1000;
+    font-display: fallback;
+    font-stretch: 25% 151%;
+    src: url("/fonts/roboto-flex.min.ttf") format("woff2 supports variations"),
+      url("/fonts/roboto-flex.min.ttf") format("woff2-variations");
+    unicode-range: U+20-7E;
+  }
+
+  // noinspection CssUnknownTarget
+  @font-face {
+    font-family: "Roboto Flex";
+    font-weight: 100 1000;
+    font-display: swap;
+    font-stretch: 25% 151%;
+    src: url("/fonts/RobotoFlex.ttf") format("woff2 supports variations"),
+      url("/fonts/RobotoFlex.ttf") format("woff2-variations");
+    unicode-range: U+00A0-FB04;
+  }
+
+  // noinspection CssInvalidAtRule
+  @layer base {
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 </style>
