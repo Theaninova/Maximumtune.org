@@ -32,7 +32,7 @@
 <nav bind:this={container}>
   <div class="nav-items-container">
     <div class="page-title">
-      {pageTitle || "No Title"}
+      {pageTitle || "Maximumtune.org"}
     </div>
     <Lightbar direction="reverse" type="slide" />
   </div>

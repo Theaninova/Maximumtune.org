@@ -46,6 +46,7 @@
     "svelte": "3.55.1",
     "svelte-check": "3.0.3",
     "svelte-preprocess": "5.0.1",
+    "highlight.js": "^11.7.0",
     "swiper": "9.0.3",
     "three": "0.149.0",
     "tslib": "2.5.0",
