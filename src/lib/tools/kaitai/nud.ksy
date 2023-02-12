@@ -76,7 +76,7 @@ types:
         type: u4
       - id: empty_bytes
         doc: this is just for alignment
-        contents: [0, 0]
+        contents: [ 0, 0 ]
       - id: bone_flags
         type: u2
       - id: bone_index
