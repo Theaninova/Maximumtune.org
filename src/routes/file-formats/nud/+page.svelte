@@ -1,8 +1,8 @@
 <script lang="ts">
   import {T, Canvas, OrbitControls} from "@threlte/core"
-  import {BufferGeometry, DoubleSide, PerspectiveCamera} from "three"
+  import {DoubleSide, PerspectiveCamera} from "three"
   import {loadNud} from "../../../lib/tools/three-nud"
-  import type {NudType} from "../../../lib/tools/kaitai/nud"
+  import type {Model} from "../../../lib/tools/three-nud"
 
   let input: HTMLInputElement
   let dragging: boolean
@@ -16,20 +16,23 @@
   let cameraPosition = [0, 0, 0]
   let target = [0, 0, 0]
 
-  let geometry: BufferGeometry | undefined
-  let nud: NudType
+  let models: Model[]
+  let selectedModel: Model
 
   async function fileChange(files: FileList) {
-    const file = await loadNud(files[0])
-    geometry = file.geometry
-    nud = file.nud
+    models = await loadNud(files[0])
+    selectedModel = models[0]
+  }
 
-    controls.controls.reset()
-    const fov = camera.fov * (Math.PI / 180)
-    cameraPosition = geometry.boundingSphere.center
-      .addScalar(geometry.boundingSphere.radius * 2 * Math.tan(fov * 2) * 1.2)
-      .toArray()
-    target = geometry.boundingSphere.center.toArray()
+  $: {
+    if (models) {
+      controls.controls.reset()
+      const fov = camera.fov * (Math.PI / 180)
+      cameraPosition = models[0].geometry[0].boundingSphere.center
+        .addScalar(models[0].geometry[0].boundingSphere.radius * 2 * Math.tan(fov * 2) * 1.2)
+        .toArray()
+      target = models[0].geometry[0].boundingSphere.center.toArray()
+    }
   }
 </script>
 
@@ -51,9 +54,15 @@
   >
   <label>Normals<input type="checkbox" bind:checked={normal} /></label>
   <label>Rotate<input type="checkbox" bind:checked={autoRotate} /></label>
-  {#if nud}<div>{nud.objectData[0].name}</div> {/if}
+  {#if models}
+    <div class="model-list">
+      {#each models as model}
+        <label>{model.id}<input type="radio" name="model" value={model} bind:group={selectedModel} /></label>
+      {/each}
+    </div>
+  {/if}
 </div>
-<div class="file-box" class:dragging class:has-content={!!geometry}>
+<div class="file-box" class:dragging class:has-content={!!selectedModel}>
   <input
     bind:this={input}
     on:change={() => fileChange(input.files)}
@@ -72,14 +81,22 @@
   <T.DirectionalLight castShadow position={[3, 10, 10]} />
   <T.AmbientLight intensity={0.2} />
 
-  {#if geometry}
-    <T.Mesh {geometry} frustumCulled={false} receiveShadow>
-      {#if normal}
-        <T.MeshNormalMaterial {wireframe} side={DoubleSide} />
-      {:else}
-        <T.MeshStandardMaterial {wireframe} side={DoubleSide} />
-      {/if}
-    </T.Mesh>
+  {#if models}
+    {#each models as model}
+      {#each model.geometry as geometry}
+        <T.Mesh {geometry} frustumCulled={false} receiveShadow>
+          {#if normal && model !== selectedModel}
+            <T.MeshNormalMaterial {wireframe} side={DoubleSide} />
+          {:else}
+            <T.MeshStandardMaterial
+              color={model === selectedModel ? "red" : "white"}
+              {wireframe}
+              side={DoubleSide}
+            />
+          {/if}
+        </T.Mesh>
+      {/each}
+    {/each}
   {/if}
 </Canvas>
 
@@ -116,6 +133,11 @@
 
   input[type="file"] {
     display: none;
+  }
+
+  .model-list {
+    display: flex;
+    overflow: scroll;
   }
 
   .controls,
