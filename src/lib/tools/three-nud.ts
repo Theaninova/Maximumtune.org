@@ -35,6 +35,10 @@ function getRenderingVertexIndices(vertexIndices: number[]): number[] {
   return renderingIndices
 }
 
+export function halfFloatToFloat(half: number): number {
+  return ((half & 0x80_00) << 16) | (((half & 0x7c_00) + 0x1_c0_00) << 13) | ((half & 0x03_ff) << 13)
+}
+
 export async function loadNud(file: File): Promise<{geometry: BufferGeometry; nud: NudType}> {
   const nud = new Nud<NudType>(await file.arrayBuffer())
   const vertexData = nud.polyData[0].vertices
@@ -47,7 +51,7 @@ export async function loadNud(file: File): Promise<{geometry: BufferGeometry; nu
   const geometry = new BufferGeometry()
   geometry.index = new Uint16BufferAttribute(indices, 1)
   geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
-  geometry.setAttribute("uv", new Float32BufferAttribute(uvs.flat(), uvs[0].length))
+  geometry.setAttribute("uv", new Float32BufferAttribute(uvs.flat().map(halfFloatToFloat), uvs[0].length))
   geometry.setAttribute("color", new Uint8BufferAttribute(colors.flat(), colors[0].length))
 
   geometry.computeBoundingSphere()
