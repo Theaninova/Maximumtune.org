@@ -1,6 +1,6 @@
 meta:
-  id: xmd_001
-  file-extension: bin
+  id: mdl
+  file-extension: [bin, mdl]
   title: XMD.001 3d model archive
   endian: le
   imports:
@@ -31,7 +31,7 @@ types:
   xmd_header:
     seq:
       - id: signature
-        contents: [ 'XMD', 0x00, 0x30, 0x30, 0x31, 0x00 ]
+        contents: [0x58, 0x4d, 0x44, 0x00, 0x30, 0x30, 0x31, 0x00]
       - id: layout
         type: u4
         enum: list_counts
