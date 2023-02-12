@@ -1,17 +1,28 @@
 import Nud from "./kaitai/nud.ksy"
 import Mdl from "./kaitai/mdl.ksy"
-import {BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute, Uint8BufferAttribute} from "three"
+import {
+  BufferGeometry,
+  Float32BufferAttribute,
+  MeshStandardMaterial,
+  Uint16BufferAttribute,
+  Uint8BufferAttribute,
+} from "three"
 import {inflate} from "pako"
 
 export class Model {
-  private _geometry: BufferGeometry[]
+  private _polysets: Polyset[]
 
   constructor(readonly nud: Nud, readonly id?: number) {}
 
-  get geometry(): BufferGeometry[] {
-    this._geometry ||= processNud(this.nud)
-    return this._geometry
+  get polysets(): Polyset[] {
+    this._polysets ||= processNud(this.nud, this.id)
+    return this._polysets
   }
+}
+
+export interface Polyset {
+  geometry: BufferGeometry
+  material: MeshStandardMaterial
 }
 
 function getRenderingVertexIndices(vertexIndices: number[]): number[] {
@@ -51,12 +62,12 @@ export function halfFloatToFloat(half: number): number {
   return ((half & 0x80_00) << 16) | (((half & 0x7c_00) + 0x1_c0_00) << 13) | ((half & 0x03_ff) << 13)
 }
 
-export function processNud(nud: Nud): BufferGeometry[] {
-  return nud.polyData.map(({vertices: vertexData, indices: indexData}) => {
+export function processNud(nud: Nud, id?: number): Polyset[] {
+  return nud.polyData.map(({vertices: vertexData, indices: indexData, materials: materialData}, i) => {
     const geometry = new BufferGeometry()
 
     const indices = getRenderingVertexIndices(indexData)
-    geometry.index = new Uint16BufferAttribute(indices, 1)
+    geometry.setIndex(new Uint16BufferAttribute(indices, 1))
     const vertices = vertexData.map(it => it.vertex.values)
     geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
 
@@ -72,9 +83,24 @@ export function processNud(nud: Nud): BufferGeometry[] {
     geometry.computeBoundingSphere()
     geometry.computeBoundingBox()
     geometry.computeVertexNormals()
-    geometry.computeTangents()
 
-    return geometry
+    if (geometry.hasAttribute("uv")) {
+      geometry.computeTangents()
+    } else {
+      console.error("Cannot compute tangents because of missing UV data:", "Model", id, "Polyset", i)
+    }
+
+    console.assert(materialData.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
+    const material = new MeshStandardMaterial()
+    if (materialData[0].material.alphaTest) {
+      material.transparent = true
+      material.opacity = 0.4
+    }
+    for (const texture of materialData[0].material.materialTextures) {
+      console.log("Requesting texture", texture.hash)
+    }
+
+    return {geometry, material}
   })
 }
 
