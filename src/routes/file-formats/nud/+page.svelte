@@ -2,22 +2,33 @@
   import {T, Canvas, OrbitControls} from "@threlte/core"
   import {BufferGeometry, DoubleSide, PerspectiveCamera} from "three"
   import {loadNud} from "../../../lib/tools/three-nud"
+  import type {NudType} from "../../../lib/tools/kaitai/nud"
 
   let input: HTMLInputElement
   let dragging: boolean
-  let wireframe = false
   let camera: PerspectiveCamera
   let controls: OrbitControls
+
+  let wireframe = false
+  let normal = false
+  let autoRotate = true
 
   let cameraPosition = [0, 0, 0]
   let target = [0, 0, 0]
 
   let geometry: BufferGeometry | undefined
-  async function fileChange(files: FileList) {
-    const nud = await loadNud(files[0])
-    geometry = nud.geometry
+  let nud: NudType
 
-    cameraPosition = geometry.boundingSphere.center.addScalar(geometry.boundingSphere.radius * 4).toArray()
+  async function fileChange(files: FileList) {
+    const file = await loadNud(files[0])
+    geometry = file.geometry
+    nud = file.nud
+
+    controls.controls.reset()
+    const fov = camera.fov * (Math.PI / 180)
+    cameraPosition = geometry.boundingSphere.center
+      .addScalar(geometry.boundingSphere.radius * 2 * Math.tan(fov * 2) * 1.2)
+      .toArray()
     target = geometry.boundingSphere.center.toArray()
   }
 </script>
@@ -33,6 +44,15 @@
   on:dragover|preventDefault={() => (dragging = true)}
 />
 
+<div class="controls">
+  <label
+    >Wireframe
+    <input type="checkbox" bind:checked={wireframe} /></label
+  >
+  <label>Normals<input type="checkbox" bind:checked={normal} /></label>
+  <label>Rotate<input type="checkbox" bind:checked={autoRotate} /></label>
+  {#if nud}<div>{nud.objectData[0].name}</div> {/if}
+</div>
 <div class="file-box" class:dragging class:has-content={!!geometry}>
   <input
     bind:this={input}
@@ -42,48 +62,91 @@
     name="filename"
     multiple
   />
-  <label
-    >Wireframe
-    <input type="checkbox" bind:checked={wireframe} /></label
-  >
 </div>
 
-{#if geometry}
-  {#key geometry}
-    <Canvas>
-      <T.PerspectiveCamera bind:ref={camera} makeDefault fov={24} position={cameraPosition}>
-        <OrbitControls bind:this={controls} autoRotate autoRotateSpeed={0.5} {target} />
-      </T.PerspectiveCamera>
+<Canvas>
+  <T.PerspectiveCamera bind:ref={camera} makeDefault fov={24} position={cameraPosition}>
+    <OrbitControls bind:this={controls} {autoRotate} autoRotateSpeed={0.5} {target} />
+  </T.PerspectiveCamera>
 
-      <T.DirectionalLight castShadow position={[3, 10, 10]} />
-      <T.AmbientLight intensity={0.2} />
+  <T.DirectionalLight castShadow position={[3, 10, 10]} />
+  <T.AmbientLight intensity={0.2} />
 
-      <T.Mesh {geometry} frustumCulled={false} castShadow receiveShadow>
-        <T.MeshPhongMaterial {wireframe} side={DoubleSide} />
-      </T.Mesh>
-    </Canvas>
-  {/key}
-{/if}
+  {#if geometry}
+    <T.Mesh {geometry} frustumCulled={false} receiveShadow>
+      {#if normal}
+        <T.MeshNormalMaterial {wireframe} side={DoubleSide} />
+      {:else}
+        <T.MeshStandardMaterial {wireframe} side={DoubleSide} />
+      {/if}
+    </T.Mesh>
+  {/if}
+</Canvas>
 
 <style lang="scss">
+  label:has(input) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 32px;
+    padding-inline: 8px;
+
+    border: 1px solid white;
+
+    &:has(:checked) {
+      color: black;
+      background: white;
+    }
+
+    :not(label + &) {
+      padding-inline-start: 16px;
+      border-radius: 16px 0 0 16px;
+    }
+
+    :not(&:has(+ label)) {
+      padding-inline-end: 16px;
+      border-radius: 0 16px 16px 0;
+    }
+
+    > input {
+      display: none;
+    }
+  }
+
   input[type="file"] {
     display: none;
   }
 
+  .controls,
   .file-box {
-    $drag-box-color: gray;
-
     position: absolute;
-    z-index: -1;
     top: 0;
     right: 0;
-    bottom: 0;
     left: 0;
 
     display: flex;
 
     width: 100vw;
     margin-inline: 0;
+  }
+
+  .controls {
+    gap: 4px;
+    padding: 16px;
+    opacity: 0;
+    transition: all 120ms ease;
+
+    &:has(+ .has-content:not(.dragging)):not(:has(+ .dragging)) {
+      opacity: 1;
+    }
+  }
+
+  .file-box {
+    $drag-box-color: gray;
+
+    z-index: -1;
+    bottom: 0;
 
     &::after,
     &::before {
