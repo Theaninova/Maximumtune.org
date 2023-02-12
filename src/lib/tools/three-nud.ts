@@ -1,6 +1,6 @@
 import Nud from "./kaitai/nud.ksy"
+import Mdl from "./kaitai/mdl.ksy"
 import {BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute, Uint8BufferAttribute} from "three"
-import type {NudType} from "./kaitai/nud"
 
 function getRenderingVertexIndices(vertexIndices: number[]): number[] {
   const renderingIndices: number[] = []
@@ -39,8 +39,9 @@ export function halfFloatToFloat(half: number): number {
   return ((half & 0x80_00) << 16) | (((half & 0x7c_00) + 0x1_c0_00) << 13) | ((half & 0x03_ff) << 13)
 }
 
-export async function loadNud(file: File): Promise<{geometry: BufferGeometry; nud: NudType}> {
-  const nud = new Nud<NudType>(await file.arrayBuffer())
+export async function loadNud(file: File): Promise<{geometry: BufferGeometry; nud: Nud}> {
+  const nud = new Nud(await file.arrayBuffer())
+  console.log(nud)
   const vertexData = nud.polyData[0].vertices
 
   const vertices = vertexData.map(it => it.vertex.values)

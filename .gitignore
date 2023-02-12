@@ -8,6 +8,7 @@ node_modules
 !.env.example
 .idea
 /dev-dist
+generated
 
 # special files
 ## blogs
