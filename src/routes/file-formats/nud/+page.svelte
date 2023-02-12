@@ -11,7 +11,7 @@
 
   let wireframe = false
   let normal = false
-  let autoRotate = true
+  let autoRotate = false
 
   let cameraPosition = [0, 0, 0]
   let target = [0, 0, 0]
@@ -28,10 +28,11 @@
     if (models) {
       controls.controls.reset()
       const fov = camera.fov * (Math.PI / 180)
-      cameraPosition = models[0].geometry[0].boundingSphere.center
-        .addScalar(models[0].geometry[0].boundingSphere.radius * 2 * Math.tan(fov * 2) * 1.2)
+      const boundingSphere = models[0].polysets[0].geometry.boundingSphere
+      cameraPosition = boundingSphere.center
+        .addScalar(boundingSphere.radius * 2 * Math.tan(fov * 2) * 1.2)
         .toArray()
-      target = models[0].geometry[0].boundingSphere.center.toArray()
+      target = boundingSphere.center.toArray()
     }
   }
 </script>
@@ -83,19 +84,19 @@
 
   {#if models}
     {#each models as model}
-      {#each model.geometry as geometry}
-        <T.Mesh {geometry} frustumCulled={false} receiveShadow>
-          {#if normal && model !== selectedModel}
-            <T.MeshNormalMaterial {wireframe} side={DoubleSide} />
-          {:else}
-            <T.MeshStandardMaterial
-              color={model === selectedModel ? "red" : "white"}
-              {wireframe}
-              side={DoubleSide}
-            />
-          {/if}
-        </T.Mesh>
-      {/each}
+      <T.Group userData={model.id}>
+        {#each model.polysets as polyset}
+          <T.Mesh
+            geometry={polyset.geometry}
+            material={polyset.material}
+            material.wireframe={wireframe}
+            material.color={model === selectedModel ? "red" : undefined}
+            material.side={DoubleSide}
+            frustumCulled={false}
+            receiveShadow
+          />
+        {/each}
+      </T.Group>
     {/each}
   {/if}
 </Canvas>
