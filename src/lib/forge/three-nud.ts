@@ -10,13 +10,10 @@ import {
 import {inflate} from "pako"
 
 export class Model {
-  private _polysets: Polyset[]
+  readonly polysets: Polyset[]
 
-  constructor(readonly nud: Nud, readonly id?: number) {}
-
-  get polysets(): Polyset[] {
-    this._polysets ||= processNud(this.nud, this.id)
-    return this._polysets
+  constructor(readonly nud: Nud, readonly id?: number) {
+    this.polysets = processNud(this.nud, this.id)
   }
 }
 

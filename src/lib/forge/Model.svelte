@@ -1,6 +1,8 @@
 <script lang="ts">
-  import {T, Canvas, OrbitControls} from "@threlte/core"
+  import {T, Canvas, OrbitControls, Three} from "@threlte/core"
+  import type {ThrelteContext} from "@threlte/core"
   import {DoubleSide, PerspectiveCamera} from "three"
+  import {FlyControls} from "three/examples/jsm/controls/FlyControls"
   import type {Model} from "./three-nud"
 
   let camera: PerspectiveCamera
@@ -9,9 +11,11 @@
   let wireframe = false
   let normal = false
   let autoRotate = false
+  let ctx: ThrelteContext
+  export let fpsControls = false
   let fov = 24
 
-  let cameraPosition = [0, 0, 0]
+  let cameraPosition = [-10, -10, -10]
   let target = [0, 0, 0]
 
   export let models: Promise<Model[]>
@@ -38,6 +42,7 @@
   >
   <label>Normals<input type="checkbox" bind:checked={normal} /></label>
   <label>Rotate<input type="checkbox" bind:checked={autoRotate} /></label>
+  <label>Fly Controls<input type="checkbox" bind:checked={fpsControls} /></label>
 </div>
 
 {#if models}
@@ -55,9 +60,13 @@
   {/await}
 {/if}
 
-<Canvas>
-  <T.PerspectiveCamera bind:ref={camera} makeDefault {fov} position={cameraPosition}>
-    <OrbitControls bind:this={controls} {autoRotate} autoRotateSpeed={0.5} {target} />
+<Canvas bind:ctx>
+  <T.PerspectiveCamera bind:ref={camera} makeDefault {fov} position={cameraPosition} far={1_000_000}>
+    {#if !fpsControls}
+      <OrbitControls bind:this={controls} {autoRotate} autoRotateSpeed={0.5} {target} />
+    {:else}
+      <Three type={FlyControls} args={[camera, ctx.renderer.domElement]} autoForward={true} />
+    {/if}
   </T.PerspectiveCamera>
 
   <T.DirectionalLight castShadow position={[3, 10, 10]} />
