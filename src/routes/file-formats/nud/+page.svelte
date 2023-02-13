@@ -1,8 +1,8 @@
 <script lang="ts">
   import {T, Canvas, OrbitControls} from "@threlte/core"
   import {DoubleSide, PerspectiveCamera} from "three"
-  import {loadNud} from "../../../lib/tools/three-nud"
-  import type {Model} from "../../../lib/tools/three-nud"
+  import {loadNud} from "$lib/forge/three-nud"
+  import type {Model} from "$lib/forge/three-nud"
 
   let input: HTMLInputElement
   let dragging: boolean

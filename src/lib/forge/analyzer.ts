@@ -5,12 +5,12 @@ export class GameInfo {
 
   private _stages: Promise<StageInfo[]>
 
-  private _music: Promise<Info[]>
+  private _music: Promise<Info<"music">[]>
 
   private _cars: Promise<CarInfo[]>
 
   get stages(): Promise<StageInfo[]> {
-    this._stages ||= this.fileSystem.readdir("data/course/stage").then(stages =>
+    this._stages ||= this.fileSystem.getDirectory("data/course/stage").then(stages =>
       stages.map(stage => ({
         fileSystem: stage,
         name: stage.name
@@ -20,16 +20,18 @@ export class GameInfo {
           .toLocaleUpperCase(),
         night: /NGT_(NML|EXT)$/.test(stage.name),
         extreme: stage.name.endsWith("EXT"),
+        type: "stage",
       })),
     )
     return this._stages
   }
 
   get music(): Promise<Info[]> {
-    this._music ||= this.fileSystem.readdir("data/sound/BGM").then(music =>
+    this._music ||= this.fileSystem.getDirectory("data/sound/BGM").then(music =>
       music.map(it => ({
         name: it.name,
         fileSystem: it,
+        type: "music",
       })),
     )
     return this._music
@@ -37,9 +39,9 @@ export class GameInfo {
 
   get cars(): Promise<CarInfo[]> {
     this._cars ||= Promise.all([
-      this.fileSystem.readdir("data/car/car_data/playerCar"),
-      this.fileSystem.readdir("data/car/car_data/charCar"),
-      this.fileSystem.readdir("data/car/car_data/otherCar"),
+      this.fileSystem.getDirectory("data/car/car_data/playerCar"),
+      this.fileSystem.getDirectory("data/car/car_data/charCar"),
+      this.fileSystem.getDirectory("data/car/car_data/otherCar"),
     ]).then(([player, char, other]) =>
       [
         {cars: player, type: "player"},
@@ -49,7 +51,8 @@ export class GameInfo {
         cars.map(car => ({
           name: car.name,
           fileSystem: car,
-          type: type as "player" | "character" | "other",
+          carType: type as "player" | "character" | "other",
+          type: "car",
         })),
       ),
     )
@@ -61,17 +64,19 @@ export class GameInfo {
   }
 }
 
-export interface Info {
+export interface Info<T extends string = string> {
   name: string
 
   fileSystem: FileSystem
+
+  type: T
 }
 
-export interface StageInfo extends Info {
+export interface StageInfo extends Info<"stage"> {
   extreme: boolean
   night: boolean
 }
 
-export interface CarInfo extends Info {
-  type: "player" | "character" | "other"
+export interface CarInfo extends Info<"car"> {
+  carType: "player" | "character" | "other"
 }

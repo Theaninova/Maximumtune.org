@@ -96,9 +96,9 @@ export function processNud(nud: Nud, id?: number): Polyset[] {
       material.transparent = true
       material.opacity = 0.4
     }
-    for (const texture of materialData[0].material.materialTextures) {
-      console.log("Requesting texture", texture.hash)
-    }
+    // for (const texture of materialData[0].material.materialTextures) {
+    //   console.log("Requesting texture", texture.hash)
+    // }
 
     return {geometry, material}
   })

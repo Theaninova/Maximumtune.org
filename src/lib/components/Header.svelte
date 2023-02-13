@@ -10,12 +10,11 @@
     "/tools/splits-calculator/": "Splits",
     "/tools/story-rank-calculator/": "Story",
     "/tools/battle-grade-calculator/": "Battle Grade",
-    "/tools/forge/": "MT Forge (Alpha)",
+    "/forge/": "MT Forge (Alpha)",
   }
   let pageTitle = pageTitles[$page.url.pathname]
   let showBackButton = $page.url.pathname !== "/"
 
-  // eslint-disable-next-line unicorn/prefer-top-level-await
   $: (async () => {
     void $page.url.pathname
     if (!container) return

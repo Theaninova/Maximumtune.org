@@ -1,12 +1,8 @@
+<!-- @hmr:keep-all -->
 <script lang="ts">
   /* eslint-disable no-undef */
-  import {createEventDispatcher} from "svelte"
-
   let dragging = false
-  let hasContent = false
   export let folder: FileSystemDirectoryEntry
-
-  const dispatch = createEventDispatcher<{change: FileSystemEntry}>()
 
   function fileChange(itemList: DataTransferItemList) {
     const webkitEntry = itemList[0].webkitGetAsEntry()
@@ -16,10 +12,8 @@
     }
 
     dragging = false
-    hasContent = true
 
     folder = webkitEntry as FileSystemDirectoryEntry
-    dispatch("change", webkitEntry)
   }
 </script>
 
@@ -30,7 +24,7 @@
   on:drop|preventDefault={event => fileChange(event.dataTransfer.items)}
   on:dragover|preventDefault={() => (dragging = true)}
 />
-<div class="file-box" class:dragging class:has-content={hasContent}>
+<div class="file-box" class:dragging class:has-content={!!folder}>
   <span><slot /></span>
 </div>
 
