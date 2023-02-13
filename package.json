@@ -47,7 +47,6 @@
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-storybook": "^0.6.10",
     "eslint-plugin-svelte3": "4.0.0",
-    "eslint-plugin-unicorn": "45.0.2",
     "highlight.js": "^11.7.0",
     "imagemin": "8.0.1",
     "imagemin-webp": "8.0.0",

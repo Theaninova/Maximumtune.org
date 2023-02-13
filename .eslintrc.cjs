@@ -5,10 +5,9 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:unicorn/recommended",
     "plugin:storybook/recommended",
   ],
-  plugins: ["eslint-plugin-unicorn", "svelte3", "@typescript-eslint"],
+  plugins: ["svelte3", "@typescript-eslint"],
   ignorePatterns: ["*.cjs"],
   overrides: [
     {
@@ -17,24 +16,6 @@ module.exports = {
     },
   ],
   rules: {
-    "unicorn/filename-case": "off",
-    "unicorn/no-array-reduce": "off",
-    "unicorn/number-literal-case": "off",
-    "unicorn/no-array-callback-reference": "off",
-    "unicorn/no-await-expression-member": "off",
-    "unicorn/no-null": "off",
-    "unicorn/prefer-object-from-entries": "off",
-    "unicorn/prevent-abbreviations": [
-      "warn",
-      {
-        replacements: {
-          ref: false,
-          i: false,
-        },
-      },
-    ],
-    "unicorn/no-nested-ternary": "off",
-    "unicorn/better-regex": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
