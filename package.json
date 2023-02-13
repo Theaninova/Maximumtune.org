@@ -62,7 +62,7 @@
     "react-dom": "^18.2.0",
     "sass": "1.58.0",
     "storybook": "^7.0.0-beta.46",
-    "stylelint": "^15.1.0",
+    "stylelint": "^14.16.1",
     "svelte": "3.55.1",
     "svelte-check": "3.0.3",
     "svelte-preprocess": "5.0.1",

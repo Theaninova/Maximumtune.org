@@ -10,6 +10,7 @@
     "/tools/splits-calculator/": "Splits",
     "/tools/story-rank-calculator/": "Story",
     "/tools/battle-grade-calculator/": "Battle Grade",
+    "/tools/forge/": "MT Forge (Alpha)",
   }
   let pageTitle = pageTitles[$page.url.pathname]
   let showBackButton = $page.url.pathname !== "/"
