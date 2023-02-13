@@ -3,13 +3,13 @@ import * as path from "node:path"
 import {error} from "@sveltejs/kit"
 
 const kaitaiFiles = Object.fromEntries(
-  Object.entries(import.meta.glob("$lib/tools/kaitai/*.ksy", {as: "raw"})).map(([filePath, importer]) => [
+  Object.entries(import.meta.glob("$lib/forge/kaitai/*.ksy", {as: "raw"})).map(([filePath, importer]) => [
     path.basename(filePath),
     importer,
   ]),
 )
 const kaitaiUrls = Object.fromEntries(
-  Object.entries(import.meta.glob("$lib/tools/kaitai/*.ksy", {as: "url"})).map(([filePath, importer]) => [
+  Object.entries(import.meta.glob("$lib/forge/kaitai/*.ksy", {as: "url"})).map(([filePath, importer]) => [
     path.basename(filePath),
     importer,
   ]),
