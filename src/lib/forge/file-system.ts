@@ -15,7 +15,7 @@ export class FileSystem {
     return this.native.fullPath
   }
 
-  constructor(readonly native: FileSystemEntry) {}
+  constructor(readonly native: FileSystemEntry, readonly root?: FileSystem) {}
 
   async getDirectory(path: string, options?: FileSystemFlags): Promise<FileSystem[]> {
     return new Promise((resolve, reject) =>
@@ -23,7 +23,7 @@ export class FileSystem {
         path,
         options,
         (entry: FileSystemDirectoryEntry) => {
-          entry.createReader().readEntries(entries => resolve(entries.map(it => new FileSystem(it))))
+          entry.createReader().readEntries(entries => resolve(entries.map(it => new FileSystem(it, this))))
         },
         error => reject(error),
       ),

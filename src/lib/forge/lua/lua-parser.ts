@@ -18,8 +18,9 @@ export function luaConfigParser(lua: string): LoadList {
       // remove comments
       .replace(/^\s*--.*$/gm, "")
       // replace array {} with []
-      .replace(/(?<=([\t ]*)\w+ = ){(\n[\t ]*["\d{](.|\s)*?)?(\n\1})/g, it => `[${it.slice(1, -1)}]`)
-      .replace(/(?<=([\t ]*)\w+ = ){(\n[\t ]*["\d{](.|\s)*?)?(\n\1})/g, it => `[${it.slice(1, -1)}]`)
+      .replace(/(?<=(ADDR|NAME|TEXTURELIST)\s*=\s*[^}]*)},?/g, "],")
+      .replace(/(?<=(ADDR|NAME|MODELLIST|TEXTURELIST)\s*=\s*)\{/g, "[")
+      .replace(/}\s*$/, "]")
       // wrap prop names with "" and replace the = with :
       .replace(
         /(?<=^\s*)\w+\s*=/gm,
@@ -30,9 +31,7 @@ export function luaConfigParser(lua: string): LoadList {
             .replace(/_\w/g, it => it.slice(1).toUpperCase())}":`,
       )
       // remove trailing commas
-      .replace(/,(?=\s*[}\]])/gm, "")
-      // add a comma for the top level object
-      .replace(/^]/m, "],") +
+      .replace(/,(?=\s*[}\]])/gm, "") +
     "}"
 
   return JSON.parse(jsonString)
