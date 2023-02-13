@@ -7,7 +7,8 @@
 <h1>Kaitai File</h1>
 
 <div>
-  <a download={data.fileName} href={data.url}>Download</a>
+  <!-- TODO -->
+  <!-- <a download={data.fileName} href={data.url}>Download</a> -->
   <a rel="noreferrer" target="_blank" href="https://kaitai.io/#what-is-it">What's Kaitai?</a>
 </div>
 

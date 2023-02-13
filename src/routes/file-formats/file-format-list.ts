@@ -167,7 +167,7 @@ export const fileFormats: FileFormat[] = [
         title: "XMD Model Archive",
         extension: ".mdl",
         compressed: "yes",
-        kaitai: "/file-formats/kaitai/xmd-001.ksy",
+        kaitai: "/file-formats/kaitai/xmd.ksy",
         container: true,
       },
     ],
