@@ -13,6 +13,6 @@ original game.
 ## Proof-of-Concept
 
 * [x] Solve XMD.001 files
-* [ ] Solve Model files
-* [ ] Solve Texture files
-* [ ] Implement loading of a specific map
+* [x] Solve Model files
+* [x] Solve Texture files
+* [x] Implement loading of a specific map
