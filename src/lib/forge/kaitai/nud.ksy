@@ -117,10 +117,29 @@ types:
         type: u4
       - id: vert_count
         type: u2
-      - id: vert_info
-        type: u1
-      - id: uv_info
-        type: u1
+      # vertex info byte
+      - id: bone_size
+        type: b4
+        enum: bone_size
+      - id: unused_bit
+        type: b1
+      - id: normal_half_float
+        type: b1
+      - id: normal_type
+        type: b2
+        enum: normal_type
+      # uv info byte
+      - id: uv_channel_count
+        type: b4
+      - id: vertex_color_size
+        type: b4
+        enum: vertex_color_size
+        valid:
+          any-of:
+            - vertex_color_size::no_vertex_colors
+            - vertex_color_size::byte
+            - vertex_color_size::half_float
+      # ------------
       - id: texprop
         type: u4
         repeat: expr
@@ -143,17 +162,6 @@ types:
       vert_add_start:
         value: _root.header.vert_add_clump_start + vert_add_offset
 
-      bone_size:
-        value: vert_info >> 4
-      normal_channel_count:
-        value: 'vert_info & 0b11 == 2 ? 1 : vert_info & 0b11'
-      normal_size:
-        value: '((vert_info & 0b1100) >> 2) != 0 ? 2 : 4'
-      uv_channel_count:
-        value: uv_info >> 4
-      color_size:
-        value: (uv_info & 0xf) / 2
-
       # TODO: read uv
       vertices:
         io: _root._io
@@ -173,41 +181,67 @@ types:
         repeat-until: _index == 4 or texprop[_index] == 0
   vertex:
     seq:
-      - id: vertex
-        type: vector(3, 4)
-      - id: vertex_padding
-        size: 4
-        if: _parent.normal_channel_count > 1
-      - id: normal_channels
-        type: vector(4, _parent.normal_size)
+      - id: position
+        type: f4
         repeat: expr
-        repeat-expr: _parent.normal_channel_count
+        repeat-expr: 3
+      - id: padding
+        size: 4
+        if: _parent.normal_type == normal_type::no_normals or
+          (_parent.normal_type == normal_type::normals_tan_bitan and not _parent.normal_half_float)
+
+      - id: normal
+        if: _parent.normal_type != normal_type::no_normals
+        type:
+          switch-on: _parent.normal_half_float
+          cases:
+            true: u2
+            false: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: r1
+        doc: 'no idea what this is'
+        size: 4
+        repeat: expr
+        repeat-expr: '_parent.normal_type == normal_type::normals_float ? 1 : 8'
+        if: (_parent.normal_type == normal_type::normals_r1 or
+          _parent.normal_type == normal_type::normals_float)
+          and not _parent.normal_half_float
+
+      - id: tan
+        if: _parent.normal_type == normal_type::normals_tan_bitan
+        type:
+          switch-on: _parent.normal_half_float
+          cases:
+            true: u2
+            false: f4
+        repeat: expr
+        repeat-expr: 4
+      - id: bitan
+        if: _parent.normal_type == normal_type::normals_tan_bitan
+        type:
+          switch-on: _parent.normal_half_float
+          cases:
+            true: u2
+            false: f4
+        repeat: expr
+        repeat-expr: 4
+
       - id: colors
         if: |
-          _parent.bone_size == 0 and
-          _parent.color_size > 0
-        type: vector(4, _parent.color_size)
-      - id: uv_channels
-        if: _parent.bone_size == 0
-        type: vector(2, 2)
-        repeat: expr
-        repeat-expr: _parent.uv_channel_count
-  vector:
-    params:
-      - id: length
+          (_parent.bone_size == bone_size::no_bones) and
+          (_parent.vertex_color_size != vertex_color_size::no_vertex_colors)
         type: u1
-      - id: size
-        type: u1
-    seq:
-      - id: values
-        type:
-          switch-on: size
-          cases:
-            1: u1
-            2: u2
-            4: f4
         repeat: expr
-        repeat-expr: length
+        repeat-expr: 4
+
+      - id: uv
+        if: _parent.bone_size == bone_size::no_bones
+        type: u2
+        repeat: expr
+        repeat-expr: _parent.uv_channel_count * 2
+        # TODO: bones
   material_wrapper:
     params:
       - id: position
@@ -299,6 +333,23 @@ types:
         size: 7
 
 enums:
+  normal_type:
+    0: no_normals
+    1: normals_float
+    2: normals_r1
+    3: normals_tan_bitan
+  normal_size:
+    0: float
+    1: half_float
+  bone_size:
+    0: no_bones
+    1: float
+    2: half_float
+    4: byte
+  vertex_color_size:
+    0: no_vertex_colors
+    2: byte
+    4: half_float
   signature:
     1146569806: ndwd # NDWD
     1313099827: ndp3 # NDP3
