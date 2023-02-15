@@ -14,7 +14,6 @@ export class Model {
   readonly polysets: Polyset[]
 
   constructor(readonly nud: Nud, readonly id?: number) {
-    console.log(nud)
     this.polysets = processNud(this.nud, this.id)
   }
 }
@@ -68,18 +67,19 @@ export function processNud(nud: Nud, id?: number): Polyset[] {
 
       const indices = getRenderingVertexIndices(indexData)
       geometry.setIndex(new Uint16BufferAttribute(indices, 1))
-      const vertices = vertexData.map(it => it.vertex.values)
+      const vertices = vertexData.map(it => it.position)
       geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
 
-      if (vertexData[0].uvChannels?.[0]) {
-        const uvs = vertexData.map(it => it.uvChannels[0].values)
+      if (vertexData[0].uv) {
+        // TODO: more uv channels
+        const uvs = vertexData.map(it => [it.uv[0], it.uv[1]])
         geometry.setAttribute(
           "uv",
           new Float32BufferAttribute(uvs.flat().map(halfFloatToFloat), uvs[0].length),
         )
       }
       if (vertexData[0].colors) {
-        const colors = vertexData.map(it => it.colors.values)
+        const colors = vertexData.map(it => it.colors)
         geometry.setAttribute("color", new Uint8BufferAttribute(colors.flat(), colors[0].length))
       }
 
