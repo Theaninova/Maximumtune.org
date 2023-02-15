@@ -1,0 +1,19 @@
+---
+title: MT Forge
+date: 2023-02-13
+author: Theaninova
+description: A Web-based Game File Explorer
+---
+
+This is an experiment I've been working on for a bit, so try it out [here](/forge/).
+
+You can drag the game folder (only 5DX+ is tested but others might also work) into the browser window
+and get a view of the game files.
+
+It's all still really early and broken, but as a proof-of-concept it works.
+
+This all works fully in your browser, so nothing gets actually uploaded anywhere.
+
+If you're interested in the technical details, check out [the file format overview](/file-formats/)
+as well as of course the [GitHub Page](https://github.com/Theaninova/mmtorg/tree/master/src/lib/forge)
+(because if you didn't know, this site is OpenSource).

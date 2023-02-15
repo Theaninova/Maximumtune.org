@@ -21,6 +21,10 @@
     background-image: url($story_mode_select_66h);
   }
 
+  span {
+    display: none;
+  }
+
   th {
     width: 44px;
     height: 66px;

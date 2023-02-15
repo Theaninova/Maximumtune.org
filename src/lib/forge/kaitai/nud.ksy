@@ -4,11 +4,11 @@ meta:
   id: nud
   file-extension: nud
   title: Bandai Namco NUD file
-  endian:
-    switch-on: file_type
-    cases:
-      ndwd: le
-      ndp3: be
+  endian: le
+  #  switch-on: file_type
+  #  cases:
+  #    ndwd: le
+  #    ndp3: be
 seq:
   - id: file_type
     type: u4le
@@ -16,15 +16,14 @@ seq:
     valid:
       any-of:
         - signature::ndwd
-        - signature::ndp3
   - id: header
     type: header
-  - id: object_data
-    type: object_data
+  - id: meshes
+    type: mesh(_index)
     repeat: expr
     repeat-expr: header.polyset_count
-  - id: poly_data
-    type: poly_data
+  - id: parts
+    type: parts(meshes[_index].part_count)
     repeat: expr
     repeat-expr: header.polyset_count
 
@@ -45,9 +44,9 @@ types:
         type: u2
       - id: bone_count
         type: u2
-      - id: poly_clump_offset
+      - id: part_clump_size
         type: u4
-      - id: poly_clump_size
+      - id: indices_clump_size
         type: u4
       - id: vert_clump_size
         type: u4
@@ -58,15 +57,30 @@ types:
         repeat: expr
         repeat-expr: 4
     instances:
-      poly_clump_start:
-        value: poly_clump_offset + 0x30
+      part_clump_start:
+        value: 0x30
+      indices_clump_start:
+        value: part_clump_start + part_clump_size
       vert_clump_start:
-        value: poly_clump_start + poly_clump_size
+        value: indices_clump_start + indices_clump_size
       vert_add_clump_start:
         value: vert_clump_start + vert_clump_size
       name_start:
         value: vert_add_clump_start + vert_add_clump_size
-  object_data:
+  parts:
+    params:
+      - id: count
+        type: u2
+    seq:
+      - id: parts
+        type: part
+        size: 0x30
+        repeat: expr
+        repeat-expr: count
+  mesh:
+    params:
+      - id: i
+        type: u4
     seq:
       - id: bounding_sphere
         type: f4
@@ -76,12 +90,12 @@ types:
         type: u4
       - id: empty_bytes
         doc: this is just for alignment
-        contents: [ 0, 0 ]
+        contents: [0, 0]
       - id: bone_flags
         type: u2
       - id: bone_index
         type: s2
-      - id: poly_count
+      - id: part_count
         type: u2
       - id: position_b
         type: s4
@@ -91,7 +105,9 @@ types:
         pos: _parent.header.name_start + name_offset
         type: strz
         encoding: UTF-8
-  poly_data:
+      parts:
+        value: _root.parts[i].parts
+  part:
     seq:
       - id: poly_offset
         type: u4
@@ -119,12 +135,9 @@ types:
         valid:
           any-of:
             - 0
-      - id: alignment_padding
-        doc: This does nothing it just aligns the file
-        size: 0xC
     instances:
-      poly_start:
-        value: _root.header.poly_clump_start + poly_offset
+      indices_start:
+        value: _root.header.indices_clump_start + poly_offset
       vert_start:
         value: _root.header.vert_clump_start + vert_offset
       vert_add_start:
@@ -145,12 +158,12 @@ types:
       vertices:
         io: _root._io
         pos: vert_start
-        type: vertex_data
+        type: vertex
         repeat: expr
         repeat-expr: vert_count
       indices:
         io: _root._io
-        pos: poly_start
+        pos: indices_start
         type: u2
         repeat: expr
         repeat-expr: poly_count
@@ -158,7 +171,7 @@ types:
         type: material_wrapper(texprop[_index])
         repeat: until
         repeat-until: _index == 4 or texprop[_index] == 0
-  vertex_data:
+  vertex:
     seq:
       - id: vertex
         type: vector(3, 4)
