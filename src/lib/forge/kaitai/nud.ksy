@@ -123,6 +123,9 @@ types:
         enum: bone_size
       - id: unused_bit
         type: b1
+        valid:
+          any-of:
+            - false
       - id: normal_half_float
         type: b1
       - id: normal_type
@@ -134,11 +137,6 @@ types:
       - id: vertex_color_size
         type: b4
         enum: vertex_color_size
-        valid:
-          any-of:
-            - vertex_color_size::no_vertex_colors
-            - vertex_color_size::byte
-            - vertex_color_size::half_float
       # ------------
       - id: texprop
         type: u4
@@ -241,7 +239,27 @@ types:
         type: u2
         repeat: expr
         repeat-expr: _parent.uv_channel_count * 2
-        # TODO: bones
+
+      - id: bone_id
+        if: _parent.bone_size != bone_size::no_bones
+        type:
+          switch-on: _parent.bone_size
+          cases:
+            'bone_size::float': u4
+            'bone_size::half_float': u2
+            'bone_size::byte': u1
+        repeat: expr
+        repeat-expr: 4
+      - id: bone_weight
+        if: _parent.bone_size != bone_size::no_bones
+        type:
+          switch-on: _parent.bone_size
+          cases:
+            'bone_size::float': f4
+            'bone_size::half_float': u2
+            'bone_size::byte': u1
+        repeat: expr
+        repeat-expr: 4
   material_wrapper:
     params:
       - id: position
