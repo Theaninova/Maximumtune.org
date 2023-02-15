@@ -32,12 +32,7 @@
           {#each info as info}
             <li>
               <label
-                >{info.fileSystem.name}<input
-                  value={info}
-                  name="selection"
-                  type="radio"
-                  bind:group={selected}
-                /></label
+                >{info.name}<input value={info} name="selection" type="radio" bind:group={selected} /></label
               >
             </li>
           {/each}
