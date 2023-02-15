@@ -9,15 +9,15 @@ seq:
   - id: positions
     type: u4
     repeat: expr
-    repeat-expr: header.count
+    repeat-expr: header.aligned_count
   - id: lengths
     type: u4
     repeat: expr
-    repeat-expr: header.count
+    repeat-expr: header.aligned_count
   - id: item_ids
     type: u4
     repeat: expr
-    repeat-expr: header.count
+    repeat-expr: header.aligned_count
 
 types:
   xmd_header:
@@ -32,6 +32,9 @@ types:
             - list_counts::pos_len_id
       - id: count
         type: u4
+    instances:
+      aligned_count:
+        value: count + ((4 - count) % 4)
 
 enums:
   list_counts:

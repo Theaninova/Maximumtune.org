@@ -1,5 +1,6 @@
 import Nud from "./kaitai/nud.ksy"
 import Mdl from "./kaitai/mdl.ksy"
+import Xmd from "./kaitai/xmd.ksy"
 import {
   BufferGeometry,
   Float32BufferAttribute,
@@ -61,25 +62,25 @@ export function halfFloatToFloat(half: number): number {
 }
 
 export function processNud(nud: Nud, id?: number): Polyset[] {
-  return nud.meshes.flatMap(it =>
-    (it.parts as Part[]).map(({vertices: vertexData, indices: indexData, materials: materialData}, i) => {
+  return nud.meshes.flatMap(it => {
+    return (it.parts as Part[]).map((part, i) => {
       const geometry = new BufferGeometry()
 
-      const indices = getRenderingVertexIndices(indexData)
+      const indices = getRenderingVertexIndices(part.indices)
       geometry.setIndex(new Uint16BufferAttribute(indices, 1))
-      const vertices = vertexData.map(it => it.position)
+      const vertices = part.vertices.map(it => it.position)
       geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
 
-      if (vertexData[0].uv) {
+      if (part.vertices[0].uv) {
         // TODO: more uv channels
-        const uvs = vertexData.map(it => [it.uv[0], it.uv[1]])
+        const uvs = part.vertices.map(it => [it.uv[0], it.uv[1]])
         geometry.setAttribute(
           "uv",
           new Float32BufferAttribute(uvs.flat().map(halfFloatToFloat), uvs[0].length),
         )
       }
-      if (vertexData[0].colors) {
-        const colors = vertexData.map(it => it.colors)
+      if (part.vertices[0].colors) {
+        const colors = part.vertices.map(it => it.colors)
         geometry.setAttribute("color", new Uint8BufferAttribute(colors.flat(), colors[0].length))
       }
 
@@ -93,20 +94,24 @@ export function processNud(nud: Nud, id?: number): Polyset[] {
         console.error("Cannot compute tangents because of missing UV data:", "Model", id, "Polyset", i)
       }
 
-      console.assert(materialData.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
+      console.assert(part.boneSize == 0, "Bones are not implemented yet:", "Model", id, "Polyset", i)
+      console.assert(part.materials.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
       const material = new MeshStandardMaterial()
-      if (materialData[0].material.alphaTest) {
+      if (part.materials[0].material.alphaTest) {
         material.transparent = true
         material.opacity = 0.4
       }
+      material.color.setHex(Math.random() * 0xff_ff_ff)
       // for (const texture of materialData[0].material.materialTextures) {
       //   console.log("Requesting texture", texture.hash)
       // }
 
       return {geometry, material}
-    }),
-  )
+    })
+  })
 }
+
+const debug = true
 
 export async function loadNud(file: File): Promise<Model[]> {
   const models: Model[] = []
@@ -114,7 +119,32 @@ export async function loadNud(file: File): Promise<Model[]> {
   switch (file.name.replace(/^[^.]+/, "")) {
     case ".mdl": {
       const decompressed = inflate(await file.arrayBuffer()) as Uint8Array
-      models.push(...new Mdl(decompressed.buffer).models.map(({nud, id}) => new Model(nud, id as number)))
+      if (debug) {
+        const xmd = new Xmd(decompressed.buffer)
+        for (let i = 0; i < xmd.header.count; i++) {
+          const id = xmd.itemIds[i]
+          const position = xmd.positions[i]
+          const size = xmd.lengths[i]
+          try {
+            models.push(new Model(new Nud(decompressed.slice(position, position + size).buffer), id))
+          } catch (error) {
+            console.error(
+              "Failed to load NUD as part of an XMD archive, index",
+              i,
+              "id",
+              id,
+              "start",
+              position,
+              "size",
+              size,
+              "-",
+              error,
+            )
+          }
+        }
+      } else {
+        models.push(...new Mdl(decompressed.buffer).models.map(({nud, id}) => new Model(nud, id as number)))
+      }
       break
     }
     case ".nud": {

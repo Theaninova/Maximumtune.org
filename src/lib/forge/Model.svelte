@@ -81,7 +81,6 @@
               geometry={polyset.geometry}
               material={polyset.material}
               material.wireframe={wireframe}
-              material.color={model === selectedModel ? "red" : undefined}
               material.side={DoubleSide}
               frustumCulled={false}
               receiveShadow
