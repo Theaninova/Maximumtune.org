@@ -10,18 +10,28 @@ export class GameInfo {
   private _cars: Promise<CarInfo[]>
 
   get stages(): Promise<StageInfo[]> {
-    this._stages ||= this.fileSystem.getDirectory("data/course/stage").then(stages =>
-      stages.map(stage => ({
-        fileSystem: stage,
-        name: stage.name
-          .replace(/^A_/, "")
-          .replace(/_(DAY|NGT)_(NML|EXT)$/, "")
-          .toLowerCase()
-          .toLocaleUpperCase(),
-        night: /NGT_(NML|EXT)$/.test(stage.name),
-        extreme: stage.name.endsWith("EXT"),
-        type: "stage",
-      })),
+    this._stages ||= this.fileSystem.getDirectory("data/course/stage").then(areas =>
+      Promise.all(
+        areas.map(area =>
+          area.getDirectory("./").then(stages =>
+            stages
+              .filter(it => it.name !== "COMMON")
+              .map<StageInfo>(stage => ({
+                fileSystem: stage,
+                area: area.name
+                  .replace(/^A_/, "")
+                  .replace(/_(DAY|NGT)_(NML|EXT)$/, "")
+                  .toLowerCase()
+                  .toLocaleUpperCase(),
+                name: `${area.name}/${stage.name}`,
+                path: stage.name,
+                night: /NGT_(NML|EXT)$/.test(stage.name),
+                extreme: stage.name.endsWith("EXT"),
+                type: "stage",
+              })),
+          ),
+        ),
+      ).then(it => it.flat()),
     )
     return this._stages
   }
@@ -73,6 +83,8 @@ export interface Info<T extends string = string> {
 }
 
 export interface StageInfo extends Info<"stage"> {
+  path: string
+  area: string
   extreme: boolean
   night: boolean
 }

@@ -6,10 +6,9 @@ import Nud from "./kaitai/nud.ksy"
 import type {StageInfo} from "./analyzer"
 
 export async function loadStage(stage: StageInfo) {
-  const luaFile = await stage.fileSystem.getFile(
-    `${stage.name}/model/LOADLIST_${stage.fileSystem.name}_${stage.name}.lua`,
-  )
+  const luaFile = await stage.fileSystem.getFile(`model/LOADLIST_${stage.name.replace(/\//g, "_")}.lua`)
   const loadList = luaConfigParser(await luaFile.text())
+  console.log(loadList)
 
   const models = loadList.modellist.map<Promise<Model[]>>(model =>
     loadModelFromLoadList(model, stage).catch(error => {
