@@ -26,6 +26,10 @@
     background-image: url($black_medal_66h);
   }
 
+  span {
+    display: none;
+  }
+
   th {
     width: 44px;
     height: 66px;

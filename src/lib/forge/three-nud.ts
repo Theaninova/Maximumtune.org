@@ -8,11 +8,13 @@ import {
   Uint8BufferAttribute,
 } from "three"
 import {inflate} from "pako"
+import type {Part} from "../../../generated/src/lib/forge/kaitai/nud.ksy"
 
 export class Model {
   readonly polysets: Polyset[]
 
   constructor(readonly nud: Nud, readonly id?: number) {
+    console.log(nud)
     this.polysets = processNud(this.nud, this.id)
   }
 }
@@ -60,45 +62,50 @@ export function halfFloatToFloat(half: number): number {
 }
 
 export function processNud(nud: Nud, id?: number): Polyset[] {
-  return nud.polyData.map(({vertices: vertexData, indices: indexData, materials: materialData}, i) => {
-    const geometry = new BufferGeometry()
+  return nud.meshes.flatMap(it =>
+    (it.parts as Part[]).map(({vertices: vertexData, indices: indexData, materials: materialData}, i) => {
+      const geometry = new BufferGeometry()
 
-    const indices = getRenderingVertexIndices(indexData)
-    geometry.setIndex(new Uint16BufferAttribute(indices, 1))
-    const vertices = vertexData.map(it => it.vertex.values)
-    geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
+      const indices = getRenderingVertexIndices(indexData)
+      geometry.setIndex(new Uint16BufferAttribute(indices, 1))
+      const vertices = vertexData.map(it => it.vertex.values)
+      geometry.setAttribute("position", new Float32BufferAttribute(vertices.flat(), vertices[0].length))
 
-    if (vertexData[0].uvChannels?.[0]) {
-      const uvs = vertexData.map(it => it.uvChannels[0].values)
-      geometry.setAttribute("uv", new Float32BufferAttribute(uvs.flat().map(halfFloatToFloat), uvs[0].length))
-    }
-    if (vertexData[0].colors) {
-      const colors = vertexData.map(it => it.colors.values)
-      geometry.setAttribute("color", new Uint8BufferAttribute(colors.flat(), colors[0].length))
-    }
+      if (vertexData[0].uvChannels?.[0]) {
+        const uvs = vertexData.map(it => it.uvChannels[0].values)
+        geometry.setAttribute(
+          "uv",
+          new Float32BufferAttribute(uvs.flat().map(halfFloatToFloat), uvs[0].length),
+        )
+      }
+      if (vertexData[0].colors) {
+        const colors = vertexData.map(it => it.colors.values)
+        geometry.setAttribute("color", new Uint8BufferAttribute(colors.flat(), colors[0].length))
+      }
 
-    geometry.computeBoundingSphere()
-    geometry.computeBoundingBox()
-    geometry.computeVertexNormals()
+      geometry.computeBoundingSphere()
+      geometry.computeBoundingBox()
+      geometry.computeVertexNormals()
 
-    if (geometry.hasAttribute("uv")) {
-      geometry.computeTangents()
-    } else {
-      console.error("Cannot compute tangents because of missing UV data:", "Model", id, "Polyset", i)
-    }
+      if (geometry.hasAttribute("uv")) {
+        geometry.computeTangents()
+      } else {
+        console.error("Cannot compute tangents because of missing UV data:", "Model", id, "Polyset", i)
+      }
 
-    console.assert(materialData.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
-    const material = new MeshStandardMaterial()
-    if (materialData[0].material.alphaTest) {
-      material.transparent = true
-      material.opacity = 0.4
-    }
-    // for (const texture of materialData[0].material.materialTextures) {
-    //   console.log("Requesting texture", texture.hash)
-    // }
+      console.assert(materialData.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
+      const material = new MeshStandardMaterial()
+      if (materialData[0].material.alphaTest) {
+        material.transparent = true
+        material.opacity = 0.4
+      }
+      // for (const texture of materialData[0].material.materialTextures) {
+      //   console.log("Requesting texture", texture.hash)
+      // }
 
-    return {geometry, material}
-  })
+      return {geometry, material}
+    }),
+  )
 }
 
 export async function loadNud(file: File): Promise<Model[]> {
