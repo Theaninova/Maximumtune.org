@@ -135,8 +135,10 @@ types:
       - id: uv_channel_count
         type: b4
       - id: vertex_color_size
-        type: b4
+        type: b3
         enum: vertex_color_size
+      - id: uv_float
+        type: b1
       # ------------
       - id: texprop
         type: u4
@@ -236,7 +238,11 @@ types:
 
       - id: uv
         if: _parent.bone_size == bone_size::no_bones
-        type: u2
+        type:
+          switch-on: _parent.uv_float
+          cases:
+            true: f4
+            false: u2
         repeat: expr
         repeat-expr: _parent.uv_channel_count * 2
 
@@ -302,7 +308,7 @@ types:
       - id: material_attributes
         type: material_attribute
         repeat: until
-        repeat-until: _.value_count == 0
+        repeat-until: _.size == 0
   material_attribute:
     seq:
       - id: size
@@ -316,7 +322,7 @@ types:
       - id: values
         type: f4
         repeat: expr
-        repeat-expr: 4
+        repeat-expr: value_count
     instances:
       name:
         type: strz
@@ -366,8 +372,8 @@ enums:
     4: byte
   vertex_color_size:
     0: no_vertex_colors
-    2: byte
-    4: half_float
+    1: byte
+    2: half_float
   signature:
     1146569806: ndwd # NDWD
     1313099827: ndp3 # NDP3
