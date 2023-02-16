@@ -1,10 +1,10 @@
 export type Addresses = "long" | "lodm" | "road" | "onrd" | "back" | "cast" | "refc" | "refr" | "rfbg"
 
 export type ModelList = {
-  sectionId: number
-  bin: string
-} & Record<`${Addresses}Addr`, number[]> &
-  Record<`${Addresses}Name`, string[]>
+  SECTION_ID: number
+  BIN: string
+} & Record<`${Uppercase<Addresses>}_ADDR`, number[]> &
+  Record<`${Uppercase<Addresses>}_NAME`, string[]>
 
 export interface LoadList {
   texturelist: string[]
