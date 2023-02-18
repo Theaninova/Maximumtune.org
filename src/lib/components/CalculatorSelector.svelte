@@ -1,16 +1,11 @@
+<script>
+  import Badge from "$lib/components/Badge.svelte"
+</script>
+
 <div class="horizontal">
-  <a href="/tools/battle-grade-calculator" class="battle-grade">
-    <span>BATTLE </span><span>GRADE</span>
-    <div />
-  </a>
-  <a href="/tools/story-rank-calculator" class="story-rank"
-    ><span>STORY</span><span>RANK</span>
-    <div />
-  </a>
-  <a href="/tools/splits-calculator" class="time-splits"
-    ><span>TIME</span><span>SPLITS</span>
-    <div />
-  </a>
+  <Badge href="/tools/battle-grade-calculator" title="Battle" subtitle="Grade" color="#de441a" />
+  <Badge href="/tools/story-rank-calculator" title="Story" subtitle="Rank" color="#342829" />
+  <Badge href="/tools/splits-calculator" title="Time" subtitle="Splits" color="#342829" />
 </div>
 
 <style lang="scss">
@@ -19,7 +14,7 @@
 
   .horizontal {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 180px);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 
   a > span {

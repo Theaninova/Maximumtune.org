@@ -4,6 +4,7 @@
   import {Stages} from "$lib/tools/splits-calculator"
   import SplitsInput from "$lib/components/table/SplitsInput.svelte"
   import type Swiper from "swiper"
+  import Badge from "$lib/components/Badge.svelte"
 
   let mainSwiper: {swiper: Swiper}
 
@@ -61,13 +62,9 @@
     >
       {#each Stages as { name, variation, imageIndex, sections }, i}
         <swiper-slide>
-          <svg viewBox="0 0 280 280" class="container" on:click={() => mainSwiper.swiper.slideTo(i)}>
-            <text x="140" y="63" text-anchor="middle">{name}</text>
-            <image x="12" y="12" width="256" height="256" href="/map_{imageIndex}.webp" />
-            {#if variation}
-              <text x="140" y="239" text-anchor="middle">{variation}</text>
-            {/if}
-          </svg>
+          <Badge title={name} subtitle={variation} cornerRadius={16} color="#342829">
+            <image x="16" y="16" width="224" height="224" href="/map_{imageIndex}.webp" />
+          </Badge>
         </swiper-slide>
       {/each}
     </swiper-container>
