@@ -1,11 +1,17 @@
 <script>
   import Badge from "$lib/components/Badge.svelte"
+  import StoryRank from "$lib/assets/story-mode.webp"
+  import TimeSplits from "$lib/assets/time-trial.webp"
 </script>
 
 <div class="horizontal">
   <Badge href="/tools/battle-grade-calculator" title="Battle" subtitle="Grade" color="#de441a" />
-  <Badge href="/tools/story-rank-calculator" title="Story" subtitle="Rank" color="#342829" />
-  <Badge href="/tools/splits-calculator" title="Time" subtitle="Splits" color="#342829" />
+  <Badge href="/tools/story-rank-calculator" title="Story" subtitle="Rank" color="#342829">
+    <image x="16" y="16" width="224" height="224" href={StoryRank} />
+  </Badge>
+  <Badge href="/tools/splits-calculator" title="Time" subtitle="Splits" color="#342829">
+    <image x="16" y="16" width="224" height="224" href={TimeSplits} />
+  </Badge>
 </div>
 
 <style lang="scss">
@@ -14,20 +20,7 @@
 
   .horizontal {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-
-  a > span {
-    font-weight: bolder;
-
-    // transform: translate(-50%, -50%);
-    color: #dedede;
-    text-align: center;
-    filter: drop-shadow(0 0 6px black);
-  }
-
-  .battle-grade > span {
-    top: 65%;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
   a {
@@ -49,44 +42,5 @@
     background-position: center;
 
     transition: transform 0.2s $mt-interpolation;
-  }
-
-  a > * {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  a > span:nth-child(1) {
-    transform: translateY(15%);
-    font-size: 1.7em;
-  }
-
-  a > span:nth-child(2) {
-    transform: translateY(32%);
-    font-size: 1.2em;
-  }
-
-  a > div {
-    aspect-ratio: 1;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  .battle-grade {
-    background-image: url($battle-grade-button);
-  }
-
-  .story-rank,
-  .time-splits {
-    background-image: url($big-button-round);
-  }
-
-  .story-rank > div {
-    background-image: url($story-mode);
-  }
-
-  .time-splits > div {
-    background-image: url($time-trial);
   }
 </style>

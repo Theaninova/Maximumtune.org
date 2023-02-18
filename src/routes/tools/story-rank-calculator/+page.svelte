@@ -22,31 +22,37 @@
   <meta name="description" content="Story Rank Calculator for Wangan Midnight Maximum Tune" />
 </svelte:head>
 
-<HeaderPadding />
-
-<form>
-  <table>
-    <thead>
-      <RankHeader />
-    </thead>
-    <tr>
-      {#each rankNames as medalName}
-        <Input
-          on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
-          id={medalName}
-          type="number"
-          placeholder="0"
-          name={medalName}
-        />
-      {/each}
-    </tr>
-  </table>
-</form>
-
 <section class="center">
-  <StoryRank rank={result} />
+  <HeaderPadding />
 
-  <p><a href="/tools/story-rank-info">See how we calculate your rank</a></p>
+  <form>
+    <table>
+      <thead>
+        <RankHeader />
+      </thead>
+      <tr>
+        {#each rankNames as medalName}
+          <Input
+            on:input={event => (input = {...input, [medalName]: Number(event.target.value)})}
+            id={medalName}
+            type="number"
+            placeholder="0"
+            aria-label={medalName.replace(/(?<=[a-z])[A-Z]/, it => ` ${it.toLowerCase()}`)}
+            name={medalName}
+          />
+        {/each}
+      </tr>
+    </table>
+  </form>
+
+  <StoryRank rank={result} />
 </section>
 
+<div><a href="/tools/story-rank-info">See how we calculate your rank</a></div>
 <CalculatorHeader />
+
+<style lang="scss">
+  section {
+    margin-block: auto;
+  }
+</style>

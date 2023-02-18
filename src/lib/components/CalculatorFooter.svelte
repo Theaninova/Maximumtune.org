@@ -1,7 +1,3 @@
-<script context="module">
-  export const hydrate = false
-</script>
-
 <noscript><p>This is a calculator, and if you had JavaScript enabled, you could use it too!</p></noscript>
 
 <p><em>Disclaimer: If you have glitch boosted, none of the calculations will be accurate</em></p>

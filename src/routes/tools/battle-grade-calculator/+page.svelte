@@ -6,8 +6,8 @@
   import MedalHeader from "../../../lib/components/MedalHeader.svelte"
   import RankTitle from "../../../lib/components/RankTitle.svelte"
 
-  import {calculateRank} from "../../../lib/tools/aura-calculator.ts"
-  import {medalValues} from "../../../lib/tools/data/medal-values.ts"
+  import {calculateRank} from "$lib/tools/aura-calculator"
+  import {medalValues} from "$lib/tools/data/medal-values"
   import Output from "../../../lib/components/table/Output.svelte"
   import Input from "../../../lib/components/table/Input.svelte"
   import Lightbar from "../../../lib/components/Lightbar.svelte"
@@ -25,32 +25,31 @@
 
 <HeaderPadding />
 
-<form>
-  <table>
-    <thead>
-      <tr>
-        <MedalHeader />
-      </tr>
-    </thead>
-    <tr>
-      {#each Object.entries(medalValues) as [medalName]}
-        <Input
-          on:change={event => (input = {...input, [medalName]: Number(event.target.value)})}
-          id={medalName}
-          type="number"
-          placeholder="0"
-          name={medalName}
-        />
-      {/each}
-    </tr>
-  </table>
-</form>
-
-<Lightbar />
-
 <section class="center">
+  <form>
+    <table>
+      <thead>
+        <tr>
+          <MedalHeader />
+        </tr>
+      </thead>
+      <tr>
+        {#each Object.entries(medalValues) as [medalName]}
+          <Input
+            on:input={event => (input = {...input, [medalName]: Number(event.target.value)})}
+            id={medalName}
+            type="number"
+            placeholder="0"
+            name={medalName}
+          />
+        {/each}
+      </tr>
+    </table>
+  </form>
+
+  <Lightbar />
+
   <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
-  <p><a href="/tools/battle-grade-info">See how we calculate your rank</a></p>
 
   <table>
     <caption>Total</caption>
@@ -84,9 +83,19 @@
   {/if}
 </section>
 
+<div><a href="/tools/battle-grade-info">See how we calculate your rank</a></div>
 <CalculatorFooter />
 
-<style>
+<style lang="scss">
+  section {
+    margin-block: auto;
+
+    > :global(.light-bar) {
+      width: 128px;
+      margin-block: 16px;
+    }
+  }
+
   caption {
     min-height: 26px;
   }

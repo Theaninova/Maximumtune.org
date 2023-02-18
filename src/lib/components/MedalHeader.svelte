@@ -1,7 +1,3 @@
-<script context="module">
-  export const hydrate = false
-</script>
-
 <th class="gold-medal"><span class="a11y-hidden">Gold Medal</span></th>
 <th class="silver-medal"><span class="a11y-hidden">Silver Medal</span></th>
 <th class="bronze-medal"><span class="a11y-hidden">Bronze Medal</span></th>

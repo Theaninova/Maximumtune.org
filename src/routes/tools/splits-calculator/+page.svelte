@@ -1,12 +1,7 @@
 <script lang="ts">
-  // throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-  import {swiper} from "$lib/components/swiper"
   import {Stages} from "$lib/tools/splits-calculator"
   import SplitsInput from "$lib/components/table/SplitsInput.svelte"
-  import type Swiper from "swiper"
   import Badge from "$lib/components/Badge.svelte"
-
-  let mainSwiper: {swiper: Swiper}
 
   const exportAll = () => {
     const out = {}
@@ -50,42 +45,18 @@
 
 <section>
   <div class="header">
-    <swiper-container
-      bind:this={mainSwiper}
-      use:swiper
-      mousewheel
-      slides-per-view="auto"
-      centered-slides={true}
-      lazy={true}
-      controller-control=".main-swiper"
-      class="header-swiper"
-    >
-      {#each Stages as { name, variation, imageIndex, sections }, i}
-        <swiper-slide>
-          <Badge title={name} subtitle={variation} cornerRadius={16} color="#342829">
-            <image x="16" y="16" width="224" height="224" href="/map_{imageIndex}.webp" />
-          </Badge>
-        </swiper-slide>
-      {/each}
-    </swiper-container>
+    {#each Stages as stage, i (i)}
+      <a class="slide" id="{stage.name}-{stage.variation}" href="#{stage.name}-{stage.variation}">
+        <Badge title={stage.name} subtitle={stage.variation} cornerRadius={16} color="#342829">
+          <image x="16" y="16" width="224" height="224" href="/map_{stage.imageIndex}.webp" />
+        </Badge>
+      </a>
+      <SplitsInput {stage} />
+    {/each}
   </div>
 
   <div class="main">
-    <swiper-container
-      use:swiper
-      navigation={true}
-      mousewheel
-      virtual={true}
-      controller-control=".header-swiper"
-      class="main-swiper"
-    >
-      {#each Stages as stage, index (index)}
-        <swiper-slide>
-          <SplitsInput {stage} />
-        </swiper-slide>
-      {/each}
-    </swiper-container>
-    <form />
+    {#each Stages as stage, index (index)}{/each}
   </div>
 
   <div class="button-bar">
@@ -97,7 +68,8 @@
 
 <style lang="scss">
   @use "sass:color";
-  @import "../../../lib/assets/images"; // stylelint-disable-line order/order
+  @import "../../../lib/assets/images";
+  // stylelint-disable-line order/order
   @import "../../../lib/style/theme";
 
   @keyframes active-animation {
@@ -116,7 +88,18 @@
     display: flex;
     width: 100%;
     height: 48px;
-    background: $black-3d-panel;
+  }
+
+  a + :global(form) {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none !important;
+  }
+
+  a:target + :global(form) {
+    display: flex !important;
   }
 
   button {
@@ -161,12 +144,12 @@
       fill: white;
     }
 
-    text:first-child {
+    text:first-of-type {
       font-size: 2.6rem;
       font-weight: bold;
     }
 
-    text:last-child {
+    text:last-of-type {
       font-size: 2.2rem;
       font-weight: bold;
       opacity: 0.7;
@@ -178,50 +161,45 @@
   }
 
   .header {
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+
+    overflow-x: auto;
+    display: grid;
+
+    height: 256px;
     margin-block: 32px;
 
-    swiper-slide {
-      will-change: transform;
-      width: $card-size;
-      transition: transform 0.2s ease-in-out;
-    }
+    -webkit-overflow-scrolling: touch;
 
-    swiper-slide:not(.swiper-slide-active) {
-      transform: scale(0.8);
+    > * {
+      all: unset;
+
+      will-change: transform;
+      scroll-snap-align: center;
+
+      display: flex;
+      grid-row: 1;
+
+      width: $card-size;
+
+      transition: transform 0.2s ease-in-out;
+
+      &:first-of-type {
+        margin-inline-start: 50vw;
+      }
+
+      &:last-of-type {
+        margin-inline-end: 50vw;
+      }
+
+      &:not(:target) {
+        transform: scale(0.8);
+      }
     }
   }
 
   .main {
     flex-grow: 1;
-
-    swiper-container::part(button-next)::after,
-    swiper-container::part(button-prev)::after {
-      content: "";
-
-      aspect-ratio: 1/2;
-      height: 32px;
-
-      background: linear-gradient(to right, $color-tertiary, $color-on-tertiary);
-
-      // arrow
-      clip-path: polygon(0 50%, 100% 0, 100% 25%, 50% 50%, 100% 75%, 100% 100%, 0 50%);
-    }
-
-    swiper-container::part(button-next)::after {
-      transform: rotate(180deg);
-    }
-
-    swiper-container::part(button-next),
-    swiper-container::part(button-prev) {
-      will-change: opacity;
-      filter: drop-shadow(0 0 4px color.adjust($color-tertiary-container, $lightness: 20%));
-    }
-
-    @media (max-width: 768px) {
-      swiper-container::part(button-next),
-      swiper-container::part(button-prev) {
-        display: none;
-      }
-    }
   }
 </style>
