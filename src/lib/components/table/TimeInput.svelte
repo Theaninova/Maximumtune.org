@@ -19,42 +19,15 @@
     container.classList.add("flash-time-input")
   }
 
-  const onKeydown = (event: KeyboardEvent, length: number, max: number, index: number) => {
-    if (!value) {
-      value = [undefined, undefined, undefined]
-    }
+  const onInput = (data: string, length: number, max: number, index: number) => {
+    value ||= [undefined, undefined, undefined]
 
-    if (event.key <= "9" && event.key >= "0") {
+    if (data <= "9" && data >= "0") {
       if (value[0] == undefined) {
         value = [0, 0, 0]
       }
-      presses.push(event.key)
-    } else
-      switch (event.key) {
-        case "ArrowRight":
-        case "ArrowLeft": {
-          inputs[index + (event.key === "ArrowRight" ? 1 : -1)]?.focus()
-          presses = []
-          return
-        }
-        case "Backspace": {
-          presses = []
-          value = [undefined, undefined, undefined]
-          return
-        }
-        case "Escape": {
-          presses = []
-          inputs[index].blur()
-          return
-        }
-        case "Enter": {
-          commit(index)
-          return
-        }
-        default: {
-          return
-        }
-      }
+      presses.push(data)
+    }
 
     value[index] = Math.min(Number(presses.slice(-1 * length).join("")), max)
 
@@ -68,6 +41,32 @@
     }
   }
 
+  const onKeydown = (event: KeyboardEvent, length: number, max: number, index: number) => {
+    if (event.key <= "9" && event.key >= "0") return onInput(event.key, length, max, index)
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowLeft": {
+        inputs[index + (event.key === "ArrowRight" ? 1 : -1)]?.focus()
+        presses = []
+        return
+      }
+      case "Backspace": {
+        presses = []
+        value = [undefined, undefined, undefined]
+        return
+      }
+      case "Escape": {
+        presses = []
+        inputs[index].blur()
+        return
+      }
+      case "Enter": {
+        commit(index)
+        return
+      }
+    }
+  }
+
   let presses = []
 
   let container: HTMLSpanElement
@@ -76,22 +75,28 @@
 
 <span class="flash" bind:this={container}>
   <input
-    type="text"
+    type="number"
+    placeholder="--"
     style="width: 26px"
     value={formatTimePart(value?.[0])}
     on:keydown|preventDefault={event => onKeydown(event, 2, 99, 0)}
+    on:beforeinput|preventDefault={event => onInput(event.data, 2, 99, 0)}
   />'
   <input
-    type="text"
+    type="number"
+    placeholder="--"
     style="width: 26px"
     value={formatTimePart(value?.[1])}
     on:keydown|preventDefault={event => onKeydown(event, 2, 59, 1)}
+    on:beforeinput|preventDefault={event => onInput(event.data, 2, 59, 1)}
   />"
   <input
-    type="text"
+    type="number"
+    placeholder="--"
     style="width: 40px"
     value={formatTimePart(value?.[2], 3)}
     on:keydown|preventDefault={event => onKeydown(event, 3, 999, 2)}
+    on:beforeinput|preventDefault={event => onInput(event.data, 3, 999, 2)}
   />
 </span>
 
@@ -121,13 +126,20 @@
 
     cursor: default;
 
-    text-align: start;
+    transform: skewX(-20deg);
+
+    font-style: normal;
+    text-align: end;
 
     outline: 0 solid transparent;
     caret-color: transparent;
-  }
 
-  input:focus {
-    background-color: $color-primary-container;
+    &:empty {
+      text-align: center;
+    }
+
+    &:focus {
+      background-color: $color-primary-container;
+    }
   }
 </style>

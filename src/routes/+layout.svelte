@@ -1,5 +1,4 @@
-<script>
-  import Header from "$lib/components/Header.svelte"
+<script lang="ts">
   import PageTransition from "$lib/components/PageTransition.svelte"
   import Backdrop from "$lib/components/Backdrop.svelte"
   import {browser} from "$app/environment"
@@ -12,8 +11,6 @@
     <link rel="manifest" href="/manifest.webmanifest" />
   {/if}
 </svelte:head>
-
-<Header />
 
 <PageTransition pathname={data.pathname}>
   <slot />

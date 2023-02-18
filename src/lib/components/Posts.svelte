@@ -1,7 +1,3 @@
-<script context="module">
-  export const hydrate = false
-</script>
-
 <script>
   export let posts
   export let separator = true

@@ -1,7 +1,3 @@
-<script context="module">
-  export const hydrate = false
-</script>
-
 <script>
   import HeaderPadding from "../HeaderPadding.svelte"
 

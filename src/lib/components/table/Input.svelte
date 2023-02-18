@@ -1,5 +1,5 @@
 <td>
-  <input {...$$props} on:change />
+  <input {...$$props} on:input />
 </td>
 
 <style lang="scss">
@@ -21,7 +21,13 @@
     appearance: none;
     background: $color-secondary-container;
     border: none;
+    outline: none;
     box-shadow: $inset-shadow;
+
+    &:focus-visible {
+      color: $color-on-secondary;
+      background: $color-secondary;
+    }
   }
 
   td:first-child > input {

@@ -1,7 +1,3 @@
-<script context="module">
-  export const hydrate = false
-</script>
-
 <th class="battle-star"><span class="a11y-hidden">Battle Stars</span></th>
 <th class="story-episodes"><span class="a11y-hidden">Story Episodes</span></th>
 <th class="ghost-trophy"><span class="a11y-hidden">Ghost Trophies</span></th>
