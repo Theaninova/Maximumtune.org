@@ -13,14 +13,16 @@ export async function loadStage(stage: StageInfo) {
     luaEnv.parse(`${await luaFile.text()}\nreturn {TEXTURELIST, MODELLIST}`).exec() as Table
   ).toObject() as [string[], ModelList[]]
 
-  const models = modelList.map<Promise<Model[]>>(model =>
-    loadModelFromLoadList(model, stage).catch(error => {
-      console.error(error)
-      return []
-    }),
-  )
+  const models: Model[] = []
+  for (const model of modelList) {
+    try {
+      models.push(...(await loadModelFromLoadList(model, stage)))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  return Promise.all(models).then(it => it.flat().filter(it => !!it))
+  return models.filter(it => !!it)
 }
 
 async function loadModelFromLoadList(model: ModelList, stage: StageInfo) {

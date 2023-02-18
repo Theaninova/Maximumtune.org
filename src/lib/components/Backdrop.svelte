@@ -1,22 +1,22 @@
-<div class="content">
-  <div class="backdrop" />
+<script>
+</script>
 
-  <div class="backdrop-rects" style="height: 120px; background-color:  rgb(0 0 0 / 30%)" />
-  <div class="backdrop-rects" style="height: 30px; background-color:  rgb(0 0 0 / 30%)" />
-
-  <div class="flowing-rects">
-    <div class="rect" />
-    <div class="rect" />
-    <div class="rect last-rect" />
-    <div class="rect" />
-    <div class="rect" />
-    <div class="rect last-rect" />
-  </div>
-</div>
+<div />
 
 <style lang="scss">
   @import "../assets/images";
   @import "../style/theme";
+
+  div {
+    position: absolute;
+    z-index: -100;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: url("$lib/assets/backdrop/backdrop.svg") center;
+    background-size: cover;
+  }
 
   @keyframes rects {
     from {
