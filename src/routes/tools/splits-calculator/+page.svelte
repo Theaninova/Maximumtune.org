@@ -88,18 +88,19 @@
 <section bind:this={scrollContainer} on:scroll={scroll}>
   <div class="header">
     {#each data.stages as stage}
-      <a class="slide" id={stage.key} href="/tools/splits-calculator/{stage.key}/">
+      <a class="slide" id={stage.key} href="/tools/splits-calculator/{stage.key}/" aria-label={stage.title}>
         <StageBadge {stage} />
       </a>
     {/each}
   </div>
 </section>
 
-<!--<div class="button-bar">
-    <button on:click={exportAll}>Export</button>
+<div class="button-bar">
+  <button on:click={exportAll}>Export</button>
 
-    <button on:click={importAll}>Import</button>
-  </div>-->
+  <button on:click={importAll}>Import</button>
+</div>
+
 <style lang="scss">
   @use "sass:color";
   @import "../../../lib/style/theme"; // stylelint-disable-line order/order
@@ -107,9 +108,17 @@
   $card-size: 256px;
 
   .button-bar {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+
     display: flex;
-    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+
+    width: min-content;
     height: 48px;
+    margin: 8px;
   }
 
   button {
@@ -144,7 +153,10 @@
 
   section {
     position: relative;
+
+    overflow-x: hidden;
     overflow-y: auto;
+
     width: 100%;
     margin-inline: 0;
 

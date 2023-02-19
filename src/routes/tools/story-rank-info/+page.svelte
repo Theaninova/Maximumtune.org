@@ -1,8 +1,10 @@
+<svelte:options immutable={true} />
+
 <script>
-  import {storyRank} from "$lib/tools/data/story-rank.js"
-  import transform from "../../../lib/tools/data/ranks.ts?raw"
-  import {ranks} from "$lib/tools/data/ranks.js"
-  import StoryRank from "../../../lib/components/StoryRank.svelte"
+  import {storyRank} from "$lib/tools/data/story-rank"
+  import transform from "$lib/tools/data/ranks.ts?raw"
+  import {ranks} from "$lib/tools/data/ranks"
+  import StoryRank from "$lib/components/StoryRank.svelte"
   import Meta from "$lib/components/page/Meta.svelte"
 
   $: longestList = [

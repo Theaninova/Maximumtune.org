@@ -1,25 +1,25 @@
 <script>
-  import "../../../lib/style/table.scss"
-  import "../../../lib/style/rank-themes.scss"
+  import "$lib/style/table.scss"
+  import "$lib/style/rank-themes.scss"
 
-  import CalculatorFooter from "../../../lib/components/CalculatorFooter.svelte"
-  import MedalHeader from "../../../lib/components/MedalHeader.svelte"
-  import RankTitle from "../../../lib/components/RankTitle.svelte"
+  import CalculatorFooter from "$lib/components/CalculatorFooter.svelte"
+  import MedalHeader from "$lib/components/MedalHeader.svelte"
+  import RankTitle from "$lib/components/RankTitle.svelte"
 
   import {calculateRank} from "$lib/tools/aura-calculator"
   import {medalValues} from "$lib/tools/data/medal-values"
-  import Output from "../../../lib/components/table/Output.svelte"
-  import Input from "../../../lib/components/table/Input.svelte"
-  import Lightbar from "../../../lib/components/Lightbar.svelte"
-  import HeaderPadding from "../../../lib/components/HeaderPadding.svelte"
+  import Output from "$lib/components/table/Output.svelte"
+  import Input from "$lib/components/table/Input.svelte"
+  import Lightbar from "$lib/components/Lightbar.svelte"
+  import HeaderPadding from "$lib/components/HeaderPadding.svelte"
   import Meta from "$lib/components/page/Meta.svelte"
 
-  let input = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
+  export let data
 
-  $: result = calculateRank(input)
+  $: result = calculateRank(data)
 </script>
 
-<Meta title="Battle Grade Calculator" />
+<Meta title="Battle Grade Calculator" displayTitle="Battle Grade" />
 
 <HeaderPadding />
 
@@ -34,7 +34,7 @@
       <tr>
         {#each Object.entries(medalValues) as [medalName]}
           <Input
-            on:input={event => (input = {...input, [medalName]: Number(event.target.value)})}
+            on:input={event => (data = {...data, [medalName]: Number(event.target.value)})}
             id={medalName}
             type="number"
             placeholder="0"
