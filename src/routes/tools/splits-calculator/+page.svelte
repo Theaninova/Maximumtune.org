@@ -4,6 +4,7 @@
   import StageBadge from "$lib/components/StageBadge.svelte"
   import {page} from "$app/stores"
   import {onMount} from "svelte"
+  import {browser} from "$app/environment"
 
   const exportAll = () => {
     const out = {}
@@ -47,6 +48,8 @@
   })
 
   function scroll() {
+    if (isDesktop) return
+
     const height = scrollContainer.offsetHeight
     const scrollTop = scrollContainer.scrollTop
     const halfHeight = height / 2
@@ -70,6 +73,7 @@
 
   export let data
 
+  const isDesktop = browser && window.matchMedia("(min-width: 512px)").matches
   let scrollContainer: HTMLDivElement
   $: slides = scrollContainer?.querySelectorAll(":scope > * > a")
   $: {
@@ -100,7 +104,7 @@
   @use "sass:color";
   @import "../../../lib/style/theme"; // stylelint-disable-line order/order
 
-  $card-size: 280px;
+  $card-size: 256px;
 
   .button-bar {
     display: flex;
@@ -139,29 +143,35 @@
   }
 
   section {
-    scroll-snap-type: y mandatory;
-    scroll-snap-stop: normal;
-
     position: relative;
-
     overflow-y: auto;
+    width: 100%;
+    margin-inline: 0;
 
-    perspective: 200px;
+    @media (max-width: 512px) {
+      scroll-snap-type: y mandatory;
+      scroll-snap-stop: normal;
+      perspective: 200px;
+    }
   }
 
   .header {
     transform-style: preserve-3d;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax($card-size, 1fr));
+    grid-template-columns: repeat(auto-fit, $card-size);
+    justify-content: center;
 
-    max-width: 16cm;
+    max-width: 30cm;
     height: 100%;
+    margin-inline: auto;
 
-    &::after,
-    &::before {
-      content: "";
-      height: 50vh;
+    @media (max-width: 512px) {
+      &::after,
+      &::before {
+        content: "";
+        height: 50vh;
+      }
     }
   }
 </style>
