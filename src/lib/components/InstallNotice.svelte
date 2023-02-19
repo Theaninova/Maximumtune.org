@@ -3,7 +3,7 @@
 
   const {offlineReady, needRefresh, updateServiceWorker} = useRegisterSW({
     onRegistered(serviceWorker) {
-      console.log(`ServiceWorker registered: ${serviceWorker}`)
+      console.log("ServiceWorker registered:", serviceWorker)
     },
     onRegisterError(error) {
       console.log("ServiceWorker registration error", error)

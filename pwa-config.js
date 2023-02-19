@@ -1,15 +1,7 @@
-/** @type {Partial<import("vite-plugin-pwa").VitePWAOptions>} */
+/** @type {Partial<import("@vite-pwa/sveltekit").SvelteKitPWAOptions>} */
 export const pwaConfig = {
-  registerType: "autoUpdate",
-  integration: {
-    closeBundleOrder: "pre",
-  },
-  devOptions: {
-    enabled: true,
-  },
-  includeAssets: ["fonts/*.ttf", "map_*.webp"],
-  workbox: {
-    globPatterns: ["**/*{js,css,html,webp,png,svg}"]
+  kit: {
+    trailingSlash: "always",
   },
   manifest: {
     name: "Maximumtune.org",

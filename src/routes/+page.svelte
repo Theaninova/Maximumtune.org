@@ -1,22 +1,19 @@
 <script lang="ts">
   import Posts from "$lib/components/Posts.svelte"
-  import {browser, dev} from "$app/environment"
+  import {browser} from "$app/environment"
   import CalculatorSelector from "$lib/components/CalculatorSelector.svelte"
   import Lightbar from "$lib/components/Lightbar.svelte"
-  import {onMount} from "svelte"
   import Meta from "$lib/components/page/Meta.svelte"
+  import {onMount} from "svelte"
+  import {pwaInfo} from "virtual:pwa-info"
+
+  onMount(async () => {
+    pwaInfo && (InstallNotice = (await import("../lib/components/InstallNotice.svelte")).default)
+  })
 
   export let data
   export let online = browser ? window.navigator.onLine : true
-
   let InstallNotice
-  onMount(() => {
-    if (!dev || !browser) return
-
-    import("$lib/components/InstallNotice.svelte").then(it => {
-      InstallNotice = it.default
-    })
-  })
 </script>
 
 <Meta title="Maximumtune.org" />

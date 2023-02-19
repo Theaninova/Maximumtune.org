@@ -9,6 +9,7 @@ const config = {
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
   preprocess: seqPreprocessor([
+    preprocess(),
     mdsvex({
       extension: ".svx",
       layout: {
@@ -16,7 +17,6 @@ const config = {
         _: "src/lib/components/layouts/Default.svelte",
       },
     }),
-    preprocess(),
     preprocessThrelte(),
   ]),
   extensions: [".svelte", ".svx"],

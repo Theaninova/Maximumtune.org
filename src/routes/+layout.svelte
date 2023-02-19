@@ -1,15 +1,14 @@
 <script lang="ts">
   import PageTransition from "$lib/components/PageTransition.svelte"
   import Backdrop from "$lib/components/Backdrop.svelte"
-  import {browser} from "$app/environment"
+  import {pwaInfo} from "virtual:pwa-info"
 
   export let data
+  $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ""
 </script>
 
 <svelte:head>
-  {#if browser}
-    <link rel="manifest" href="/manifest.webmanifest" />
-  {/if}
+  {@html webManifest}
 </svelte:head>
 
 <PageTransition pathname={data.pathname}>
