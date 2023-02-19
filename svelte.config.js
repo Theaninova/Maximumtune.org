@@ -12,12 +12,11 @@ const config = {
     mdsvex({
       extension: ".svx",
       layout: {
-        index: "src/lib/components/layouts/Index.svelte",
         post: "src/lib/components/layouts/Post.svelte",
         _: "src/lib/components/layouts/Default.svelte",
       },
     }),
-    preprocess({preserve: ["ld+json"]}),
+    preprocess(),
     preprocessThrelte(),
   ]),
   extensions: [".svelte", ".svx"],

@@ -1,16 +1,13 @@
 <script lang="ts">
   import Posts from "$lib/components/Posts.svelte"
   import {browser, dev} from "$app/environment"
-  import CalculatorSelector from "../CalculatorSelector.svelte"
-  import Lightbar from "../Lightbar.svelte"
+  import CalculatorSelector from "$lib/components/CalculatorSelector.svelte"
+  import Lightbar from "$lib/components/Lightbar.svelte"
   import {onMount} from "svelte"
   import Meta from "$lib/components/page/Meta.svelte"
 
   export let data
   export let online = browser ? window.navigator.onLine : true
-
-  export let title
-  export let description
 
   let InstallNotice
   onMount(() => {
@@ -22,13 +19,14 @@
   })
 </script>
 
-<Meta {title} {description} />
+<Meta title="Maximumtune.org" />
 
 <svelte:window on:offline={(online = false)} on:online={(online = true)} />
 
 <div>
   <section>
-    <slot />
+    <p>The No.1 Maximum Tune Resource <em>(sorta)</em></p>
+    <p><em>This app is a fan project and not affiliated with WMMT or Bandai Namco</em></p>
 
     {#if InstallNotice}
       <svelte:component this={InstallNotice} />
@@ -62,13 +60,6 @@
 </div>
 
 <style lang="scss">
-  h1 {
-    transform: skew(-15deg);
-    font-size: 30px;
-    font-weight: 900;
-    font-stretch: 150%;
-  }
-
   section > h2 {
     transform: skew(-10deg);
     margin-bottom: 8px;

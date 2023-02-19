@@ -1,7 +1,7 @@
 import type {PageServerLoad} from "./$types"
 
 export const load: PageServerLoad = () => {
-  const posts = import.meta.globEager("./post/**/*.svx")
+  const posts = import.meta.glob("./post/**/*.svx", {eager: true})
 
   return {
     posts: Object.entries(posts)

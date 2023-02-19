@@ -1,5 +1,3 @@
-<svelte:options immutable={true} />
-
 <script>
   import Badge from "$lib/components/Badge.svelte"
   import StoryRank from "$lib/assets/story-mode.webp"
@@ -13,32 +11,10 @@
 </div>
 
 <style lang="scss">
-  @import "../assets/images";
   @import "../style/theme";
 
   .horizontal {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-
-  a {
-    @include hover {
-      transform: scale(1.1);
-    }
-
-    all: unset;
-
-    will-change: transform;
-    cursor: pointer;
-
-    transform: scale(1);
-
-    display: grid;
-
-    aspect-ratio: 1;
-
-    background-position: center;
-
-    transition: transform 0.2s $mt-interpolation;
   }
 </style>

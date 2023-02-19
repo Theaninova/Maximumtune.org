@@ -1,5 +1,3 @@
-<svelte:options immutable={true} />
-
 <script>
   import {storyRank} from "$lib/tools/data/story-rank"
   import transform from "$lib/tools/data/ranks.ts?raw"
