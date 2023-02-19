@@ -4,12 +4,10 @@
   import transform from "../../../lib/tools/data/grades.ts?raw"
   import MedalHeader from "../../../lib/components/MedalHeader.svelte"
   import {medalValues} from "../../../lib/tools/data/medal-values"
+  import Meta from "$lib/components/page/Meta.svelte"
 </script>
 
-<svelte:head>
-  <title>Battle Grade Info</title>
-  <meta name="description" content="How to calculate Battle Grade in Wangan Midnight Maximum Tune" />
-</svelte:head>
+<Meta title="Battle Grade Info" />
 
 <div class="subtitle">
   <h1>Battle Grade Info</h1>

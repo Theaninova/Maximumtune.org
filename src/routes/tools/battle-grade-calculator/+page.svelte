@@ -12,16 +12,14 @@
   import Input from "../../../lib/components/table/Input.svelte"
   import Lightbar from "../../../lib/components/Lightbar.svelte"
   import HeaderPadding from "../../../lib/components/HeaderPadding.svelte"
+  import Meta from "$lib/components/page/Meta.svelte"
 
   let input = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
 
   $: result = calculateRank(input)
 </script>
 
-<svelte:head>
-  <title>Battle Grade Calculator</title>
-  <meta name="description" content="Battle Grade Calculator for Wangan Midnight Maximum Tune" />
-</svelte:head>
+<Meta title="Battle Grade Calculator" />
 
 <HeaderPadding />
 

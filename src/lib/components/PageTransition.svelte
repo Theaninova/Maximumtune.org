@@ -1,17 +1,20 @@
 <script lang="ts">
   import {fly} from "svelte/transition"
   import Header from "$lib/components/Header.svelte"
-  import {navigating} from "$app/stores"
+  import {afterNavigate, beforeNavigate} from "$app/navigation"
 
   export let pathname: string
-  $: isNavigating = $navigating !== null ? true : undefined
 
   const duration = 250
   const delay = 300
 
-  $: {
-    console.log(isNavigating)
-  }
+  let isNavigating = false
+  beforeNavigate(() => {
+    isNavigating = true
+  })
+  afterNavigate(() => {
+    isNavigating = false
+  })
 </script>
 
 {#key isNavigating}

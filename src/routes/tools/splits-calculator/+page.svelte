@@ -1,7 +1,9 @@
 <script lang="ts">
   import {Stages} from "$lib/tools/splits-calculator"
-  import SplitsInput from "$lib/components/table/SplitsInput.svelte"
-  import Badge from "$lib/components/Badge.svelte"
+  import Meta from "$lib/components/page/Meta.svelte"
+  import StageBadge from "$lib/components/StageBadge.svelte"
+  import {page} from "$app/stores"
+  import {onMount} from "svelte"
 
   const exportAll = () => {
     const out = {}
@@ -36,70 +38,74 @@
     })
     input.click()
   }
-</script>
 
-<svelte:head>
-  <title>Splits Calculator</title>
-  <meta name="description" content="Splits Calculator for Wangan Midnight Maximum Tune" />
-</svelte:head>
-
-<section>
-  <div class="header">
-    {#each Stages as stage, i (i)}
-      <a class="slide" id="{stage.name}-{stage.variation}" href="#{stage.name}-{stage.variation}">
-        <Badge title={stage.name} subtitle={stage.variation} cornerRadius={16} color="#342829">
-          <image x="16" y="16" width="224" height="224" href="/map_{stage.imageIndex}.webp" />
-        </Badge>
-      </a>
-      <SplitsInput {stage} />
-    {/each}
-  </div>
-
-  <div class="main">
-    {#each Stages as stage, index (index)}{/each}
-  </div>
-
-  <div class="button-bar">
-    <button on:click={exportAll}>Export</button>
-
-    <button on:click={importAll}>Import</button>
-  </div>
-</section>
-
-<style lang="scss">
-  @use "sass:color";
-  @import "../../../lib/assets/images";
-  // stylelint-disable-line order/order
-  @import "../../../lib/style/theme";
-
-  @keyframes active-animation {
-    0% {
-      opacity: 0.1;
+  onMount(() => {
+    const hash = $page.url.hash || localStorage.getItem("splits_stage")
+    if (hash) {
+      document.getElementById(hash.replace(/^#/, "")).scrollIntoView({block: "center"})
     }
+  })
 
-    100% {
-      opacity: 0.8;
+  function scroll() {
+    const height = scrollContainer.offsetHeight
+    const scrollTop = scrollContainer.scrollTop
+    const halfHeight = height / 2
+    const center = scrollTop + halfHeight
+
+    for (const slide: HTMLAnchorElement of slides) {
+      const slideHeight = slide.offsetHeight
+      const centerOffset = center - (slide.offsetTop + slideHeight / 2)
+      const centerOffsetAbs = Math.abs(centerOffset)
+      const scale = Math.max(Math.min(centerOffsetAbs / height, 1), 0) * -100
+
+      const hash = `#${slide.id}`
+      if (scale > -1 && window.location.hash !== hash) {
+        history.replaceState(undefined, undefined, hash)
+        localStorage.setItem("splits_stage", hash)
+      }
+
+      slide.style.translate = `0px 0px ${Math.round(scale)}px`
     }
   }
 
-  $card-size: min(192px, calc(100vh - 580px));
+  export let data
+
+  let scrollContainer: HTMLDivElement
+  $: slides = scrollContainer?.querySelectorAll(":scope > * > a")
+  $: {
+    if (slides) {
+      scroll()
+    }
+  }
+</script>
+
+<Meta title="Splits Calculator" />
+
+<section bind:this={scrollContainer} on:scroll={scroll}>
+  <div class="header">
+    {#each data.stages as stage}
+      <a class="slide" id={stage.key} href="/tools/splits-calculator/{stage.key}/">
+        <StageBadge {stage} />
+      </a>
+    {/each}
+  </div>
+</section>
+
+<!--<div class="button-bar">
+    <button on:click={exportAll}>Export</button>
+
+    <button on:click={importAll}>Import</button>
+  </div>-->
+<style lang="scss">
+  @use "sass:color";
+  @import "../../../lib/style/theme"; // stylelint-disable-line order/order
+
+  $card-size: 280px;
 
   .button-bar {
     display: flex;
     width: 100%;
     height: 48px;
-  }
-
-  a + :global(form) {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none !important;
-  }
-
-  a:target + :global(form) {
-    display: flex !important;
   }
 
   button {
@@ -118,88 +124,44 @@
     border-radius: 4px;
   }
 
-  section {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+  .slide {
+    all: unset;
 
-    width: 100%;
-    height: 100%;
-    margin: 0;
-  }
-
-  .container {
-    cursor: pointer;
-
-    aspect-ratio: 1;
-    width: $card-size;
-
-    background-image: url($course-select);
-    background-repeat: no-repeat;
-    background-size: contain;
-
-    text {
-      font-stretch: extra-condensed;
-      filter: drop-shadow(0 0 4px #000);
-      fill: white;
-    }
-
-    text:first-of-type {
-      font-size: 2.6rem;
-      font-weight: bold;
-    }
-
-    text:last-of-type {
-      font-size: 2.2rem;
-      font-weight: bold;
-      opacity: 0.7;
-    }
-  }
-
-  swiper-slide {
     will-change: transform;
+    cursor: pointer;
+    scroll-snap-align: center;
+
+    transform-style: preserve-3d;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  section {
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: normal;
+
+    position: relative;
+
+    overflow-y: auto;
+
+    perspective: 200px;
   }
 
   .header {
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
+    transform-style: preserve-3d;
 
-    overflow-x: auto;
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($card-size, 1fr));
 
-    height: 256px;
-    margin-block: 32px;
+    max-width: 16cm;
+    height: 100%;
 
-    -webkit-overflow-scrolling: touch;
-
-    > * {
-      all: unset;
-
-      will-change: transform;
-      scroll-snap-align: center;
-
-      display: flex;
-      grid-row: 1;
-
-      width: $card-size;
-
-      transition: transform 0.2s ease-in-out;
-
-      &:first-of-type {
-        margin-inline-start: 50vw;
-      }
-
-      &:last-of-type {
-        margin-inline-end: 50vw;
-      }
-
-      &:not(:target) {
-        transform: scale(0.8);
-      }
+    &::after,
+    &::before {
+      content: "";
+      height: 50vh;
     }
-  }
-
-  .main {
-    flex-grow: 1;
   }
 </style>

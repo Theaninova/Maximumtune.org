@@ -1,19 +1,18 @@
 <script lang="ts">
-  import Background from "$lib/assets/badge/badge.svg"
-
   export let href: string
-  export let color = "#de441a"
-  export let cornerRadius = 128
+  export let color = ""
   export let title = "Battle"
   export let subtitle = "Grade"
 </script>
 
 <a {href}>
-  <object type="image/svg+xml" data={Background} title="button">
-    <param name="color" value={color} />
-    <param name="corner-radius" value={cornerRadius} />
-  </object>
-  <svg viewBox="0 0 256 256">
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 256 256"
+    xmlns="http://www.w3.org/2000/svg"
+    class:no-color={color !== "red"}
+  >
     <defs>
       <linearGradient id="text-fill" gradientTransform="rotate(90)">
         <stop offset="0%" stop-color="#d9d9d9" />
@@ -38,10 +37,6 @@
   @import "../style/theme";
 
   a {
-    @include hover {
-      transform: scale(1.1);
-    }
-
     all: unset;
 
     will-change: transform;
@@ -49,18 +44,23 @@
 
     transform: scale(1);
 
-    display: grid;
-
     aspect-ratio: 1;
-
-    background-position: center;
 
     transition: transform 0.2s $mt-interpolation;
 
-    > * {
-      grid-column: 1;
-      grid-row: 1;
+    @include hover {
+      transform: scale(1.1);
     }
+  }
+
+  svg {
+    will-change: transform;
+    // background: url("$lib/assets/battle-grade-button.webp") no-repeat center;
+    background: url("$lib/assets/badge/badge-round.svg") no-repeat center;
+  }
+
+  svg.no-color {
+    filter: hue-rotate(12deg) contrast(120%) saturate(20%);
   }
 
   a > svg > text {

@@ -1,14 +1,12 @@
 <script>
   import HeaderPadding from "../HeaderPadding.svelte"
+  import Meta from "$lib/components/page/Meta.svelte"
 
   export let title
   export let description
 </script>
 
-<svelte:head>
-  <title>{title}</title>
-  <meta name="description" content={description} />
-</svelte:head>
+<Meta {title} {description} />
 
 <article>
   <HeaderPadding />
