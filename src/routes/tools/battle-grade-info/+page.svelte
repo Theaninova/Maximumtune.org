@@ -1,5 +1,3 @@
-<svelte:options immutable={true} />
-
 <script>
   import {GRADES} from "$lib/tools/data/grades-data"
   import {grades} from "$lib/tools/data/grades"
