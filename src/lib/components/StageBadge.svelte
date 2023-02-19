@@ -47,8 +47,5 @@
 
     background: url("$lib/assets/course-select.webp") center no-repeat;
     background-size: contain;
-
-    // background: url("$lib/assets/badge/badge-splits.svg") no-repeat local;
-    // background: url("$lib/assets/raw/course-select.png");
   }
 </style>
