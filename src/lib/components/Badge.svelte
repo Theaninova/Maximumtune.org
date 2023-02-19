@@ -1,4 +1,6 @@
 <script lang="ts">
+  import BadgeBackground from "$lib/assets/red_badge.webp"
+
   export let href: string
   export let imageHref: string
   export let color = ""
@@ -6,8 +8,13 @@
   export let subtitle = "Grade"
 </script>
 
-<a {href} class:no-color={color !== "red"} aria-label="{title} {subtitle}">
-  <div style:background-image="url('{imageHref}')">
+<a
+  {href}
+  class:no-color={color !== "red"}
+  aria-label="{title} {subtitle}"
+  style:background-image="url('{BadgeBackground}')"
+>
+  <div style:background-image={imageHref ? `url('${imageHref}')` : undefined}>
     <svg width="100%" height="100%" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="text-fill" gradientTransform="rotate(90)">
@@ -46,7 +53,6 @@
 
     aspect-ratio: 1;
 
-    background: url("$lib/assets/red_badge.webp");
     background-size: 90%;
 
     transition: transform 0.2s $mt-interpolation;

@@ -1,10 +1,17 @@
 <script lang="ts">
   import type {Stage} from "../tools/splits-calculator"
+  import Background from "$lib/assets/course-select.webp"
 
   export let stage: Stage
 </script>
 
-<svg viewBox="0 0 256 256" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<svg
+  viewBox="0 0 256 256"
+  width="100%"
+  height="100%"
+  xmlns="http://www.w3.org/2000/svg"
+  style:background-image="url('{Background}')"
+>
   <defs>
     <linearGradient id="text-fill" gradientTransform="rotate(90)">
       <stop offset="0%" stop-color="#d9d9d9" />
@@ -47,7 +54,8 @@
     aspect-ratio: 1;
     max-width: 256px;
 
-    background: url("$lib/assets/course-select.webp") center no-repeat;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: contain;
 
     transition: scale 200ms $mt-interpolation;

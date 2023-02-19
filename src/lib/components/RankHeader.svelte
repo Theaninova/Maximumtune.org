@@ -1,22 +1,14 @@
-<th class="battle-star"><span class="a11y-hidden">Battle Stars</span></th>
-<th class="story-episodes"><span class="a11y-hidden">Story Episodes</span></th>
-<th class="ghost-trophy"><span class="a11y-hidden">Ghost Trophies</span></th>
+<script>
+  import GhostTrophy from "$lib/assets/ghost_trophy_66h.webp"
+  import BattleStar from "$lib/assets/battle_star_66h.webp"
+  import StoryModeSelect from "$lib/assets/story_mode_select_66h.webp"
+</script>
+
+<th style:background-image="url('{BattleStar}')"><span class="a11y-hidden">Battle Stars</span></th>
+<th style:background-image="url('{StoryModeSelect}')"><span class="a11y-hidden">Story Episodes</span></th>
+<th style:background-image="url('{GhostTrophy}')"><span class="a11y-hidden">Ghost Trophies</span></th>
 
 <style lang="scss">
-  @import "../assets/images";
-
-  .ghost-trophy {
-    background-image: url("$lib/assets/ghost_trophy_66h.webp");
-  }
-
-  .battle-star {
-    background-image: url("$lib/assets/battle_star_66h.webp");
-  }
-
-  .story-episodes {
-    background-image: url("$lib/assets/story_mode_select_66h.webp");
-  }
-
   span {
     display: none;
   }

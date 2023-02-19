@@ -14,7 +14,7 @@
   import HeaderPadding from "$lib/components/HeaderPadding.svelte"
   import Meta from "$lib/components/page/Meta.svelte"
 
-  export let data
+  let data = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
 
   $: result = calculateRank(data)
 </script>

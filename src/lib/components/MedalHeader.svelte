@@ -1,25 +1,16 @@
-<th class="gold-medal"><span class="a11y-hidden">Gold Medal</span></th>
-<th class="silver-medal"><span class="a11y-hidden">Silver Medal</span></th>
-<th class="bronze-medal"><span class="a11y-hidden">Bronze Medal</span></th>
-<th class="black-medal"><span class="a11y-hidden">Black Medal</span></th>
+<script>
+  import GoldMedal from "$lib/assets/gold_medal.webp"
+  import SilverMedal from "$lib/assets/silver_medal.webp"
+  import BronzeMedal from "$lib/assets/bronze_medal.webp"
+  import BlackMedal from "$lib/assets/black_medal.webp"
+</script>
+
+<th style:background-image="url('{GoldMedal}')"><span class="a11y-hidden">Gold Medal</span></th>
+<th style:background-image="url('{SilverMedal}')"><span class="a11y-hidden">Silver Medal</span></th>
+<th style:background-image="url('{BronzeMedal}')"><span class="a11y-hidden">Bronze Medal</span></th>
+<th style:background-image="url('{BlackMedal}')"><span class="a11y-hidden">Black Medal</span></th>
 
 <style lang="scss">
-  .gold-medal {
-    background-image: url("$lib/assets/gold_medal.webp");
-  }
-
-  .silver-medal {
-    background-image: url("$lib/assets/silver_medal.webp");
-  }
-
-  .bronze-medal {
-    background-image: url("$lib/assets/bronze_medal.webp");
-  }
-
-  .black-medal {
-    background-image: url("$lib/assets/black_medal.webp");
-  }
-
   span {
     display: none;
   }
