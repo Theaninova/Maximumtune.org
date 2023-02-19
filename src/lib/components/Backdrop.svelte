@@ -1,5 +1,6 @@
 <div class="content">
   <div class="backdrop" />
+  <div class="backdrop-shade" />
 
   <div class="backdrop-rects" style="height: 120px; background-color:  rgb(0 0 0 / 30%)" />
   <div class="backdrop-rects" style="height: 30px; background-color:  rgb(0 0 0 / 30%)" />
@@ -17,6 +18,10 @@
 <style lang="scss">
   @import "../assets/images";
   @import "../style/theme";
+
+  * {
+    will-change: transform;
+  }
 
   @keyframes rects {
     from {
@@ -63,19 +68,16 @@
     width: 200%;
     height: 100%;
 
-    background-image: linear-gradient(
-        to bottom,
-        black,
-        #13131377,
-        #131313dd 30%,
-        #131313dd 70%,
-        #13131377,
-        black
-      ),
-      url($grid);
+    background-image: url($grid);
     background-size: 30px;
 
     animation: background 24s linear infinite;
+  }
+
+  .backdrop-shade {
+    background: linear-gradient(to bottom, black, #13131377, #131313dd 30%, #131313dd 70%, #13131377, black);
+    width: 100%;
+    height: 100%;
   }
 
   .flowing-rects {

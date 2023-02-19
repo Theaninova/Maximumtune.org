@@ -5,7 +5,7 @@
 </script>
 
 <div class="horizontal">
-  <Badge href="/tools/battle-grade-calculator" title="Battle" subtitle="Grade" color="#de441a" />
+  <Badge href="/tools/battle-grade-calculator" title="Battle" subtitle="Grade" color="red" />
   <Badge href="/tools/story-rank-calculator" title="Story" subtitle="Rank" color="#342829">
     <image x="16" y="16" width="224" height="224" href={StoryRank} />
   </Badge>

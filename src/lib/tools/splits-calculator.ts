@@ -1,5 +1,7 @@
 export interface Stage {
   name: string
+  title: string
+  area: string
   key: string
   variation?: string
   imageIndex: number
@@ -76,6 +78,8 @@ export function sumTimes(times: TimeSplit[]): TimeSplit {
 export const Stages: Stage[] = [
   {
     name: "C1",
+    title: "C1 In",
+    area: "Tokyo",
     key: "c1_in",
     variation: "Inward",
     imageIndex: 1,
@@ -83,6 +87,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "C1",
+    title: "C1 Out",
+    area: "Tokyo",
     key: "c1_out",
     variation: "Outward",
     imageIndex: 2,
@@ -90,6 +96,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "NBL",
+    title: "NBL CCW",
+    area: "Tokyo",
     key: "nbl_ccw",
     variation: "CCW",
     imageIndex: 3,
@@ -97,6 +105,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "NBL",
+    title: "NBL CW",
+    area: "Tokyo",
     key: "nbl_cw",
     variation: "CW",
     imageIndex: 4,
@@ -104,18 +114,24 @@ export const Stages: Stage[] = [
   },
   {
     name: "Shibuya",
+    title: "Shibuya",
+    area: "Shibuya",
     key: "shibuya",
     imageIndex: 5,
     sections: 4,
   },
   {
     name: "Ikebukuro",
+    title: "Ikebukuro",
+    area: "Ikebukuro",
     key: "ikebukuro",
     imageIndex: 6,
     sections: 4,
   },
   {
     name: "Wangan",
+    title: "Wangan East",
+    area: "Tokyo",
     key: "wangan_east",
     variation: "East",
     imageIndex: 7,
@@ -123,6 +139,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Wangan",
+    title: "Wangan West",
+    area: "Tokyo",
     key: "wangan_west",
     variation: "West",
     imageIndex: 8,
@@ -130,6 +148,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Yokohane",
+    title: "Yokohane Down",
+    area: "Tokyo",
     key: "yokohane_down",
     variation: "Down",
     imageIndex: 9,
@@ -137,6 +157,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Yokohane",
+    title: "Yokohane Up",
+    area: "Tokyo",
     key: "yokohane_up",
     variation: "Up",
     imageIndex: 10,
@@ -144,6 +166,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Yaesu",
+    title: "Yaesu In",
+    area: "Tokyo",
     key: "yaesu_in",
     variation: "Inward",
     imageIndex: 11,
@@ -151,6 +175,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Yaesu",
+    title: "Yaesu Out",
+    area: "Tokyo",
     key: "yaesu_out",
     variation: "Outward",
     imageIndex: 12,
@@ -158,6 +184,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Minato",
+    title: "Minato In",
+    area: "Tokyo",
     key: "minato_in",
     variation: "Inbound",
     imageIndex: 13,
@@ -165,6 +193,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Minato",
+    title: "Minato Out",
+    area: "Tokyo",
     key: "minato__out",
     variation: "Outbound",
     imageIndex: 14,
@@ -172,36 +202,48 @@ export const Stages: Stage[] = [
   },
   {
     name: "Nagoya",
+    title: "Nagoya",
+    area: "Nagoya",
     key: "nagoya",
     imageIndex: 15,
     sections: 4,
   },
   {
     name: "Osaka",
+    title: "Osaka",
+    area: "Osaka",
     key: "osaka",
     imageIndex: 16,
     sections: 4,
   },
   {
     name: "Kobe",
+    title: "Kobe",
+    area: "Kobe",
     key: "kobe",
     imageIndex: 17,
     sections: 4,
   },
   {
     name: "Hiroshima",
+    title: "Hiroshima",
+    area: "Hiroshima",
     key: "hiroshima",
     imageIndex: 25,
     sections: 4,
   },
   {
     name: "Fukuoka",
+    title: "Fukuoka",
+    area: "Fukuoka",
     key: "fukuoka",
     imageIndex: 18,
     sections: 4,
   },
   {
     name: "Hakone",
+    title: "Hakone Out",
+    area: "Hakone",
     key: "hakone_out",
     variation: "Outbound",
     imageIndex: 19,
@@ -209,6 +251,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Hakone",
+    title: "Hakone In",
+    area: "Hakone",
     key: "hakone_in",
     variation: "Inbound",
     imageIndex: 20,
@@ -216,6 +260,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Taikan",
+    title: "Taikan Up",
+    area: "Tokyo",
     key: "taikan_up",
     variation: "Up",
     imageIndex: 21,
@@ -223,6 +269,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Taikan",
+    title: "Taikan Down",
+    area: "Tokyo",
     key: "taikan_down",
     variation: "Down",
     imageIndex: 24,
@@ -230,6 +278,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Metro Hwy",
+    title: "Metro Hwy Tokyo",
+    area: "Tokyo",
     key: "metro_hwy_tokyo",
     variation: "Tokyo",
     imageIndex: 22,
@@ -237,6 +287,8 @@ export const Stages: Stage[] = [
   },
   {
     name: "Metro Hwy",
+    title: "Metro Hwy Kanagawa",
+    area: "Tokyo",
     key: "metro_hwy_kanagawa",
     variation: "Kanagawa",
     imageIndex: 23,

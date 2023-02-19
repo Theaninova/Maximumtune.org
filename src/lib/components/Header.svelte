@@ -1,27 +1,13 @@
 <script lang="ts">
   import Lightbar from "./Lightbar.svelte"
   import MtLogo from "./MtLogo.svelte"
-  import {page} from "$app/stores"
-
-  const pageTitles = {
-    "/": "Home",
-    "/about/": "About",
-    "/faq/": "FAQ",
-    "/tools/splits-calculator/": "Splits",
-    "/tools/story-rank-calculator/": "Story",
-    "/tools/battle-grade-calculator/": "Battle Grade",
-    "/forge/": "MT Forge (Alpha)",
-  }
+  import {displayTitle, title, parent} from "$lib/components/page/meta.js"
 
   export let pathname: string
-  $: showBackButton = pathname !== "/"
-  $: pageTitle = pageTitles[$page.url.pathname]
 </script>
 
 <div class="nav-items-container">
-  <div class="page-title">
-    {pageTitle || "Maximumtune.org"}
-  </div>
+  <div class="page-title">{$displayTitle || $title || ""}</div>
   <Lightbar direction="reverse" type="slide" />
 </div>
 <svg viewBox="0 0 192 92">
@@ -46,8 +32,8 @@
     fill="url(#plastic-surface)"
   />
 </svg>
-<a sveltekit:prefetch href="/" class="home">
-  <MtLogo {showBackButton} />
+<a href={$parent} class="home">
+  <MtLogo showBackButton={pathname !== "/"} />
   <span class="a11y-hidden">Home</span>
 </a>
 
@@ -61,6 +47,7 @@
     font-size: 1.4rem;
     font-weight: bolder;
     letter-spacing: 1.2px;
+    min-height: 1.4rem;
 
     filter: drop-shadow(0 0 2px black);
   }

@@ -4,6 +4,7 @@
   import CalculatorSelector from "../CalculatorSelector.svelte"
   import Lightbar from "../Lightbar.svelte"
   import {onMount} from "svelte"
+  import Meta from "$lib/components/page/Meta.svelte"
 
   export let data
   export let online = browser ? window.navigator.onLine : true
@@ -21,10 +22,7 @@
   })
 </script>
 
-<svelte:head>
-  <title>{title}</title>
-  <meta name="description" content={description} />
-</svelte:head>
+<Meta {title} {description} />
 
 <svelte:window on:offline={(online = false)} on:online={(online = true)} />
 

@@ -1,8 +1,9 @@
 <script>
-  import {storyRank} from "../../../lib/tools/data/story-rank"
+  import {storyRank} from "$lib/tools/data/story-rank.js"
   import transform from "../../../lib/tools/data/ranks.ts?raw"
-  import {ranks} from "../../../lib/tools/data/ranks"
+  import {ranks} from "$lib/tools/data/ranks.js"
   import StoryRank from "../../../lib/components/StoryRank.svelte"
+  import Meta from "$lib/components/page/Meta.svelte"
 
   $: longestList = [
     ...Object.values(storyRank)
@@ -21,10 +22,7 @@
   $: rankList = Array.from({length: 9})
 </script>
 
-<svelte:head>
-  <title>Story Rank Info</title>
-  <meta name="description" content="How to calculate Story Rank in Wangan Midnight Maximum Tune" />
-</svelte:head>
+<Meta title="Story Rank Info" />
 
 <div class="subtitle">
   <h1>Story Rank Info</h1>

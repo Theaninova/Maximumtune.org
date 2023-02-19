@@ -17,7 +17,7 @@ const config = {
         _: "src/lib/components/layouts/Default.svelte",
       },
     }),
-    preprocess(),
+    preprocess({preserve: ["ld+json"]}),
     preprocessThrelte(),
   ]),
   extensions: [".svelte", ".svx"],
