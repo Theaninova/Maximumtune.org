@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script>
   import Badge from "$lib/components/Badge.svelte"
   import StoryRank from "$lib/assets/story-mode.webp"
@@ -6,12 +8,8 @@
 
 <div class="horizontal">
   <Badge href="/tools/battle-grade-calculator" title="Battle" subtitle="Grade" color="red" />
-  <Badge href="/tools/story-rank-calculator" title="Story" subtitle="Rank" color="#342829">
-    <image x="16" y="16" width="224" height="224" href={StoryRank} />
-  </Badge>
-  <Badge href="/tools/splits-calculator" title="Time" subtitle="Splits" color="#342829">
-    <image x="16" y="16" width="224" height="224" href={TimeSplits} />
-  </Badge>
+  <Badge href="/tools/story-rank-calculator" title="Story" subtitle="Rank" imageHref={StoryRank} />
+  <Badge href="/tools/splits-calculator" title="Time" subtitle="Splits" imageHref={TimeSplits} />
 </div>
 
 <style lang="scss">

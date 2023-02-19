@@ -9,12 +9,12 @@
   import HeaderPadding from "$lib/components/HeaderPadding.svelte"
   import Meta from "$lib/components/page/Meta.svelte"
 
-  export let input = Object.fromEntries(rankNames.map(key => [key, 0]))
+  export let data
 
-  $: result = calculateStoryRank(input)
+  $: result = calculateStoryRank(data)
 </script>
 
-<Meta title=">Story Rank Calculator" />
+<Meta title=">Story Rank Calculator" displayTitle="Story Rank" />
 
 <section class="center">
   <HeaderPadding />
@@ -27,7 +27,7 @@
       <tr>
         {#each rankNames as medalName}
           <Input
-            on:input={event => (input = {...input, [medalName]: Number(event.target.value)})}
+            on:input={event => (data = {...data, [medalName]: Number(event.target.value)})}
             id={medalName}
             type="number"
             placeholder="0"

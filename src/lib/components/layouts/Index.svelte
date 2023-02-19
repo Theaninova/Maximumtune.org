@@ -28,8 +28,6 @@
 
 <div>
   <section>
-    <h1>Maximumtune.org</h1>
-
     <slot />
 
     {#if InstallNotice}

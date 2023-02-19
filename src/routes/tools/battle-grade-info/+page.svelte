@@ -1,9 +1,11 @@
+<svelte:options immutable={true} />
+
 <script>
-  import {GRADES} from "../../../lib/tools/data/grades-data"
-  import {grades} from "../../../lib/tools/data/grades"
-  import transform from "../../../lib/tools/data/grades.ts?raw"
-  import MedalHeader from "../../../lib/components/MedalHeader.svelte"
-  import {medalValues} from "../../../lib/tools/data/medal-values"
+  import {GRADES} from "$lib/tools/data/grades-data"
+  import {grades} from "$lib/tools/data/grades"
+  import transform from "$lib/tools/data/grades.ts?raw"
+  import MedalHeader from "$lib/components/MedalHeader.svelte"
+  import {medalValues} from "$lib/tools/data/medal-values"
   import Meta from "$lib/components/page/Meta.svelte"
 </script>
 

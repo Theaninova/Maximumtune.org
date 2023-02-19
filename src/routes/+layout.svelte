@@ -2,7 +2,6 @@
   import PageTransition from "$lib/components/PageTransition.svelte"
   import Backdrop from "$lib/components/Backdrop.svelte"
   import {browser} from "$app/environment"
-  import {page} from "$app/stores"
 
   export let data
 </script>

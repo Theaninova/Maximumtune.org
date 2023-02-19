@@ -1,14 +1,12 @@
-<svelte:options namespace="svg" />
+<svelte:options immutable={true} />
 
 <script lang="ts">
   import type {Stage} from "../tools/splits-calculator"
-  // import Background from "../assets/course-select.webp"
-  import Background from "../assets/badge/badge-splits.svg"
 
   export let stage: Stage
 </script>
 
-<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 256 256" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="text-fill" gradientTransform="rotate(90)">
       <stop offset="0%" stop-color="#d9d9d9" />
@@ -30,6 +28,8 @@
 </svg>
 
 <style lang="scss">
+  @import "../style/theme";
+
   text {
     font-family: "Roboto Flex", Roboto, sans-serif;
     font-weight: bolder;
@@ -38,6 +38,10 @@
   }
 
   svg {
+    @include hover {
+      scale: 1.1;
+    }
+
     will-change: transform;
 
     overflow: hidden;
@@ -47,5 +51,7 @@
 
     background: url("$lib/assets/course-select.webp") center no-repeat;
     background-size: contain;
+
+    transition: scale 200ms $mt-interpolation;
   }
 </style>

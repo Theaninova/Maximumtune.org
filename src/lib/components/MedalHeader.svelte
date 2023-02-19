@@ -4,22 +4,20 @@
 <th class="black-medal"><span class="a11y-hidden">Black Medal</span></th>
 
 <style lang="scss">
-  @import "../assets/images";
-
   .gold-medal {
-    background-image: url($gold_medal_66h);
+    background-image: url("$lib/assets/gold_medal.webp");
   }
 
   .silver-medal {
-    background-image: url($silver_medal_66h);
+    background-image: url("$lib/assets/silver_medal.webp");
   }
 
   .bronze-medal {
-    background-image: url($bronze_medal_66h);
+    background-image: url("$lib/assets/bronze_medal.webp");
   }
 
   .black-medal {
-    background-image: url($black_medal_66h);
+    background-image: url("$lib/assets/black_medal.webp");
   }
 
   span {

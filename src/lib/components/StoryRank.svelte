@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "../../lib/style/rank-themes.scss"
+  import "$lib/style/rank-themes.scss"
   import type {Rank} from "../tools/data/ranks"
 
   const themes = {
