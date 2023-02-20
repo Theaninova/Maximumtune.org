@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "title": "Battle Grade Calculator",
+    "description": "Battle Grade Calculator"
+  },
+  "title": "Battle Grade",
+  "output": {
+    "total": {
+      "title": "Total",
+      "points": "Points",
+      "medals": "Medals"
+    },
+    "points_until_next_rank": {
+      "title": "Points until next rank",
+      "total": "Total"
+    }
+  }
+}

@@ -1,13 +1,15 @@
 <script lang="ts">
   import Lightbar from "../Lightbar.svelte"
   import MtLogo from "../MtLogo.svelte"
-  import {displayTitle, title, parent} from "$lib/components/page/meta"
+  import {parent} from "$lib/components/page/meta"
+  import {fallbackLocale, locale} from "$lib/translations/translations"
+  import {t} from "$lib/translations/translations"
 
   export let pathname: string
 </script>
 
 <div class="nav-items-container">
-  <div class="page-title">{$displayTitle || $title || ""}</div>
+  <div class="page-title">{$t(`${pathname}.title`)}</div>
   <Lightbar direction="reverse" type="slide" />
 </div>
 <svg viewBox="0 0 192 92">
@@ -32,7 +34,7 @@
     fill="url(#plastic-surface)"
   />
 </svg>
-<a href={$parent} class="home">
+<a href={$locale !== fallbackLocale ? `/${$locale}${$parent}` : $parent} class="home">
   <MtLogo showBackButton={pathname !== "/"} />
   <span class="a11y-hidden">Home</span>
 </a>

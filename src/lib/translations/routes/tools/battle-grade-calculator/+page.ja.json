@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "title": "乱入段位計算機",
+    "description": "乱入段位計算機"
+  },
+  "title": "乱入段位計算機",
+  "output": {
+    "total": {
+      "title": "総計",
+      "points": "ポイント",
+      "medals": "勲章"
+    },
+    "points_until_next_rank": {
+      "title": "次のランクまでのポイント",
+      "total": "総計"
+    }
+  }
+}
