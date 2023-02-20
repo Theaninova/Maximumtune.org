@@ -3,6 +3,7 @@ export const pwaConfig = {
   kit: {
     trailingSlash: "always",
   },
+  workbox: {},
   manifest: {
     name: "Maximumtune.org",
     short_name: "Maximumtune",
