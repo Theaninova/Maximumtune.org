@@ -1,6 +1,6 @@
 <script lang="ts">
   import {fly} from "svelte/transition"
-  import Header from "$lib/components/Header.svelte"
+  import Header from "$lib/components/layout/Header.svelte"
   import {afterNavigate, beforeNavigate} from "$app/navigation"
 
   export let pathname: string

@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Maximumtune.org",
+    "description": ""
+  },
+  "title": "Maximumtune.org",
+  "slogan": "The No.1 Maximum Tune Resource (sorta)",
+  "disclaimer": "このアプリはファンプロジェクトであり、WMMTとバンダイナムコとは提携していません。",
+  "info": {
+    "title": "情報",
+    "faq": "よくある質問",
+    "about": "紹介"
+  },
+  "posts": {
+    "title": "ブログ投稿",
+    "offline": {
+      "title": "あなたはオフラインです！"
+    }
+  },
+  "calculators": {
+    "title": "計算機",
+    "battle_grade": {
+      "title": "乱入段位",
+      "subtitle": ""
+    },
+    "story_rank": {
+      "title": "ランク",
+      "subtitle": ""
+    },
+    "time_splits": {
+      "title": "セクション",
+      "subtitle": ""
+    }
+  }
+}

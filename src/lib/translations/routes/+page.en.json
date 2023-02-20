@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Maximumtune.org",
+    "description": ""
+  },
+  "title": "Maximumtune.org",
+  "slogan": "The No.1 Maximum Tune Resource (sorta)",
+  "disclaimer": "This app is a fan project and not affiliated with WMMT or Bandai Namco",
+  "info": {
+    "title": "Info",
+    "faq": "FAQ",
+    "about": "About"
+  },
+  "posts": {
+    "title": "Posts",
+    "offline": {
+      "title": "You're offline!"
+    }
+  },
+  "calculators": {
+    "title": "Calculators",
+    "battle_grade": {
+      "title": "Battle",
+      "subtitle": "Grade"
+    },
+    "story_rank": {
+      "title": "Story",
+      "subtitle": "Rank"
+    },
+    "time_splits": {
+      "title": "Time",
+      "subtitle": "Splits"
+    }
+  }
+}
