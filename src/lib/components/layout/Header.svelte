@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Lightbar from "./Lightbar.svelte"
-  import MtLogo from "./MtLogo.svelte"
-  import {displayTitle, title, parent} from "$lib/components/page/meta.js"
+  import Lightbar from "../Lightbar.svelte"
+  import MtLogo from "../MtLogo.svelte"
+  import {displayTitle, title, parent} from "$lib/components/page/meta"
 
   export let pathname: string
 </script>
@@ -38,16 +38,16 @@
 </a>
 
 <style lang="scss">
-  @import "../style/theme";
-  @import "../assets/images";
+  @import "../../style/theme";
 
   .page-title {
     transform: skew(-15deg);
 
+    min-height: 1.4rem;
+
     font-size: 1.4rem;
     font-weight: bolder;
     letter-spacing: 1.2px;
-    min-height: 1.4rem;
 
     filter: drop-shadow(0 0 2px black);
   }

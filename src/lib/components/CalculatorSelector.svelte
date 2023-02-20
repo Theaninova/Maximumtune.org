@@ -1,5 +1,5 @@
 <script>
-  import Badge from "$lib/components/Badge.svelte"
+  import Badge from "$lib/components/buttons/Badge.svelte"
   import StoryRank from "$lib/assets/story-mode.webp"
   import TimeSplits from "$lib/assets/time-trial.webp"
 </script>

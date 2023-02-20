@@ -37,7 +37,7 @@
 </a>
 
 <style lang="scss">
-  @import "../style/theme";
+  @import "../../style/theme";
 
   a {
     @include hover {

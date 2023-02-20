@@ -16,8 +16,8 @@
 </div>
 
 <style lang="scss">
-  @import "../assets/images";
-  @import "../style/theme";
+  @import "../../assets/images";
+  @import "../../style/theme";
 
   * {
     will-change: transform;
@@ -53,6 +53,9 @@
     align-items: center;
     justify-items: center;
 
+    width: 100%;
+    height: 100%;
+
     > * {
       grid-column: 1;
       grid-row: 1;
@@ -75,9 +78,9 @@
   }
 
   .backdrop-shade {
-    background: linear-gradient(to bottom, black, #13131377, #131313dd 30%, #131313dd 70%, #13131377, black);
     width: 100%;
     height: 100%;
+    background: linear-gradient(to bottom, black, #13131377, #131313dd 30%, #131313dd 70%, #13131377, black);
   }
 
   .flowing-rects {
