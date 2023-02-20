@@ -1,0 +1,129 @@
+{
+  "stages": {
+    "c1_in": {
+      "name": "C1",
+      "variation": "Inward",
+      "title": "C1 In"
+    },
+    "c1_out": {
+      "name": "C1",
+      "variation": "Outward",
+      "title": "C1 Out"
+    },
+    "nbl_ccw": {
+      "name": "NBL",
+      "variation": "CCW",
+      "title": "NBL CCW"
+    },
+    "nbl_cw": {
+      "name": "NBL",
+      "variation": "CW",
+      "title": "NBL CW"
+    },
+    "shibuya": {
+      "name": "Shibuya",
+      "variation": "",
+      "title": "Shibuya"
+    },
+    "ikebukuro": {
+      "name": "Ikebukuro",
+      "variation": "",
+      "title": "Ikebukuro"
+    },
+    "wangan_east": {
+      "name": "Wangan",
+      "variation": "East",
+      "title": "Wangan East"
+    },
+    "wangan_west": {
+      "name": "Wangan",
+      "variation": "West",
+      "title": "Wangan West"
+    },
+    "yokohane_down": {
+      "name": "Yokohane",
+      "variation": "Down",
+      "title": "Yokohane Down"
+    },
+    "yokohane_up": {
+      "name": "Yokohane",
+      "variation": "Up",
+      "title": "Yokohane Up"
+    },
+    "yaesu_in": {
+      "name": "Yaesu",
+      "variation": "Inward",
+      "title": "Yaesu In"
+    },
+    "yaesu_out": {
+      "name": "Yaesu",
+      "variation": "Outward",
+      "title": "Yaesu Out"
+    },
+    "minato_in": {
+      "name": "Minato",
+      "variation": "Inbound",
+      "title": "Minato In"
+    },
+    "minato__out": {
+      "name": "Minato",
+      "variation": "Outbound",
+      "title": "Minato Out"
+    },
+    "nagoya": {
+      "name": "Nagoya",
+      "variation": "",
+      "title": "Nagoya"
+    },
+    "osaka": {
+      "name": "Osaka",
+      "variation": "",
+      "title": "Osaka"
+    },
+    "kobe": {
+      "name": "Kobe",
+      "variation": "",
+      "title": "Kobe"
+    },
+    "hiroshima": {
+      "name": "Hiroshima",
+      "variation": "",
+      "title": "Hiroshima"
+    },
+    "fukuoka": {
+      "name": "Fukuoka",
+      "variation": "",
+      "title": "Fukuoka"
+    },
+    "hakone_out": {
+      "name": "Hakone",
+      "variation": "Outbound",
+      "title": "Hakone Out"
+    },
+    "hakone_in": {
+      "name": "Hakone",
+      "variation": "Inbound",
+      "title": "Hakone In"
+    },
+    "taikan_up": {
+      "name": "Taikan",
+      "variation": "Up",
+      "title": "Taikan Up"
+    },
+    "taikan_down": {
+      "name": "Taikan",
+      "variation": "Down",
+      "title": "Taikan Down"
+    },
+    "metro_hwy_tokyo": {
+      "name": "Metro Hwy",
+      "variation": "Tokyo",
+      "title": "Metro Hwy Tokyo"
+    },
+    "metro_hwy_kanagawa": {
+      "name": "Metro Hwy",
+      "variation": "Kanagawa",
+      "title": "Metro Hwy Kanagawa"
+    }
+  }
+}

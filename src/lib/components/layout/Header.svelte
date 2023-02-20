@@ -1,11 +1,11 @@
 <script lang="ts">
   import Lightbar from "../Lightbar.svelte"
   import MtLogo from "../MtLogo.svelte"
-  import {parent} from "$lib/components/page/meta"
   import {fallbackLocale, locale} from "$lib/translations/translations"
   import {t} from "$lib/translations/translations"
 
   export let pathname: string
+  $: backHref = $t(`${pathname}.meta.backHref`)
 </script>
 
 <div class="nav-items-container">
@@ -34,7 +34,7 @@
     fill="url(#plastic-surface)"
   />
 </svg>
-<a href={$locale !== fallbackLocale ? `/${$locale}${$parent}` : $parent} class="home">
+<a href={$locale !== fallbackLocale ? `/${$locale}${backHref}` : backHref} class="home">
   <MtLogo showBackButton={pathname !== "/"} />
   <span class="a11y-hidden">Home</span>
 </a>

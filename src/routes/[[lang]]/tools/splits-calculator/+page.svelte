@@ -1,7 +1,7 @@
 <script lang="ts">
   import {Stages} from "$lib/tools/splits-calculator"
   import Meta from "$lib/components/page/Meta.svelte"
-  import StageBadge from "$lib/components/StageBadge.svelte"
+  import StageBadge from "$lib/components/tools/splits/StageBadge.svelte"
   import {page} from "$app/stores"
   import {onMount} from "svelte"
   import {browser} from "$app/environment"

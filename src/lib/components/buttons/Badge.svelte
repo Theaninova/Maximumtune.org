@@ -2,7 +2,7 @@
   import BadgeBackground from "$lib/assets/red_badge.webp"
 
   export let href: string
-  export let imageHref: string
+  export let imageHref: string | undefined
   export let color = ""
   export let title = "Battle"
   export let subtitle = "Grade"

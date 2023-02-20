@@ -39,7 +39,7 @@
   <StoryRank rank={result} />
 </section>
 
-<div><a href="/tools/story-rank-info">See how we calculate your rank</a></div>
+<div><a href="./info">See how we calculate your rank</a></div>
 <CalculatorHeader />
 
 <style lang="scss">

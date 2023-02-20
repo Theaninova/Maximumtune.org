@@ -1,13 +1,11 @@
 <script>
-  import {GRADES} from "$lib/tools/data/grades-data.js"
-  import {grades} from "$lib/tools/data/grades.js"
+  import {GRADES} from "$lib/tools/data/grades-data"
+  import {grades} from "$lib/tools/data/grades"
   import transform from "$lib/tools/data/grades.ts?raw"
   import MedalHeader from "$lib/components/MedalHeader.svelte"
-  import {medalValues} from "$lib/tools/data/medal-values.js"
+  import {medalValues} from "$lib/tools/data/medal-values"
   import Meta from "$lib/components/page/Meta.svelte"
 </script>
-
-<Meta title="Battle Grade Info" />
 
 <div class="subtitle">
   <h1>Battle Grade Info</h1>

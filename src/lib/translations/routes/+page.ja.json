@@ -1,10 +1,12 @@
 {
   "meta": {
     "title": "Maximumtune.org",
-    "description": ""
+    "description": "ホームページ"
   },
   "title": "Maximumtune.org",
-  "slogan": "The No.1 Maximum Tune Resource (sorta)",
+  "slogan": "No.1マキシマムチューンリソース（一種）",
+  "issues": "ここで何か問題が見つかった場合は、現在 (実際には) {{email}} を監視しているか、{{github}} で問題を開いてください!",
+  "translations_info": "私たちはネイティブ スピーカーではないので、翻訳は大雑把かもしれません。 {{email}} でお気軽に間違いを指摘してください。",
   "disclaimer": "このアプリはファンプロジェクトであり、WMMTとバンダイナムコとは提携していません。",
   "info": {
     "title": "情報",

@@ -79,7 +79,7 @@
   {/if}
 </section>
 
-<div><a href="/tools/battle-grade-info">See how we calculate your rank</a></div>
+<div><a href="./info">See how we calculate your rank</a></div>
 <CalculatorFooter />
 
 <style lang="scss">

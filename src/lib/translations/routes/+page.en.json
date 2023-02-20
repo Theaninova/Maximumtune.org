@@ -1,10 +1,12 @@
 {
   "meta": {
     "title": "Maximumtune.org",
-    "description": ""
+    "description": "Home",
+    "backHref": ""
   },
   "title": "Maximumtune.org",
   "slogan": "The No.1 Maximum Tune Resource (sorta)",
+  "issues": "If you find any issues here, we're now (actually) monitoring {{email}}, or even better open an issue at {{github}}!",
   "disclaimer": "This app is a fan project and not affiliated with WMMT or Bandai Namco",
   "info": {
     "title": "Info",

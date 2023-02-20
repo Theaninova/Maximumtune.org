@@ -1,8 +1,10 @@
 <script lang="ts">
-  import type {Stage} from "../tools/splits-calculator"
+  import type {Stage} from "../../../tools/splits-calculator"
   import Background from "$lib/assets/course-select.webp"
+  import {t} from "$lib/translations/translations.js"
 
   export let stage: Stage
+  $: translationKey = `@tools/splits/StageBadge.stages.${stage.key}`
 </script>
 
 <svg
@@ -23,17 +25,17 @@
   <image x="16" y="16" width="224" height="224" href="/map_{stage.imageIndex}.webp" />
 
   <text x="128" y="60" text-anchor="middle" font-size="32" fill="url(#text-fill)">
-    {stage.name}
+    {$t(`${translationKey}.name`)}
   </text>
-  {#if stage.variation}
+  {#if $t(`${translationKey}.variation`)}
     <text x="128" y="195" dy="24" text-anchor="middle" font-size="24" fill="url(#text-fill)">
-      {stage.variation}
+      {$t(`${translationKey}.variation`)}
     </text>
   {/if}
 </svg>
 
 <style lang="scss">
-  @import "../style/theme";
+  @import "../../../style/theme";
 
   text {
     font-family: "Roboto Flex", Roboto, sans-serif;

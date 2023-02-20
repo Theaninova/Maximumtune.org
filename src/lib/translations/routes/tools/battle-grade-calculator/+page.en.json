@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "Battle Grade Calculator",
-    "description": "Battle Grade Calculator"
+    "description": "Battle Grade Calculator",
+    "backHref": "/"
   },
   "title": "Battle Grade",
   "output": {
