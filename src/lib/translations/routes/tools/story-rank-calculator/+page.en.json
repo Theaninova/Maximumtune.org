@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "Story Rank Calculator",
-    "description": "Story Rank Calculator"
+    "description": "Story Rank Calculator",
+    "backHref": "/"
   },
   "title": "Story Rank"
 }

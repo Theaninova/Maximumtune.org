@@ -1,9 +1,8 @@
 <script>
-  import {storyRank} from "$lib/tools/data/story-rank.js"
+  import {storyRank} from "$lib/tools/data/story-rank.ts"
   import transform from "$lib/tools/data/ranks.ts?raw"
-  import {ranks} from "$lib/tools/data/ranks.js"
+  import {ranks} from "$lib/tools/data/ranks.ts"
   import StoryRank from "$lib/components/tools/story-rank/StoryRank.svelte"
-  import Meta from "$lib/components/page/Meta.svelte"
 
   $: longestList = [
     ...Object.values(storyRank)
@@ -21,8 +20,6 @@
 
   $: rankList = Array.from({length: 9})
 </script>
-
-<Meta title="Story Rank Info" />
 
 <div class="subtitle">
   <h1>Story Rank Info</h1>

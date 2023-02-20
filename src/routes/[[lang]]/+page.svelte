@@ -8,6 +8,7 @@
   import Badge from "$lib/components/buttons/Badge.svelte"
   import StoryRank from "$lib/assets/story-mode.webp"
   import TimeSplits from "$lib/assets/time-trial.webp"
+  import {fallbackLocale, locale} from "$lib/translations/translations"
 
   onMount(async () => {
     pwaInfo && (InstallNotice = (await import("$lib/components/InstallNotice.svelte")).default)
@@ -22,7 +23,20 @@
 
 <div>
   <section>
-    <p>The No.1 Maximum Tune Resource <em>(sorta)</em></p>
+    <p>{$t("/.slogan")}</p>
+    <p>
+      {@html $t("/.issues", {
+        email: `<a href="mailto:ama@maximumtune.org">ama@maximumtune.org</a>`,
+        github: `<a rel="noreferrer" target="_blank" href="https://github.com/Theaninova/mmtorg/issues/new">GitHub</a>`,
+      })}
+    </p>
+    {#if $locale !== fallbackLocale}
+      <p>
+        {@html $t("/.translations_info", {
+          email: `<a href="mailto:ama@maximumtune.org">ama@maximumtune.org</a>`,
+        })}
+      </p>
+    {/if}
     <p><em>{$t("/.disclaimer")}</em></p>
 
     {#if InstallNotice}

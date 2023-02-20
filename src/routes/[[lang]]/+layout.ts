@@ -1,5 +1,5 @@
 import type {LayoutLoad} from "./$types"
-import {fallbackLocale, loadTranslations, t} from "../../lib/translations/translations"
+import {fallbackLocale, loadTranslations} from "../../lib/translations/translations"
 
 export const prerender = true
 export const trailingSlash = "always"

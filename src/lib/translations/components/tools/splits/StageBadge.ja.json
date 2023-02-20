@@ -1,0 +1,129 @@
+{
+  "stages": {
+    "c1_in": {
+      "name": "C1",
+      "variation": "内回り",
+      "title": "C1内回り"
+    },
+    "c1_out": {
+      "name": "C1",
+      "variation": "外回り",
+      "title": "C1外回り"
+    },
+    "nbl_ccw": {
+      "name": "新環状",
+      "variation": "左回り",
+      "title": "新環状左回り"
+    },
+    "nbl_cw": {
+      "name": "新環状",
+      "variation": "右回り",
+      "title": "新環状右回り"
+    },
+    "shibuya": {
+      "name": "副都心",
+      "variation": "渋谷・新宿",
+      "title": "副都心(渋谷・新宿)"
+    },
+    "ikebukuro": {
+      "name": "副都心",
+      "variation": "池袋",
+      "title": "副都心(池袋)"
+    },
+    "wangan_east": {
+      "name": "湾岸線",
+      "variation": "東行き",
+      "title": "湾岸線東行き"
+    },
+    "wangan_west": {
+      "name": "湾岸線",
+      "variation": "西行き",
+      "title": "湾岸線西行き"
+    },
+    "yokohane_down": {
+      "name": "横羽線",
+      "variation": "下り",
+      "title": "横羽線下り"
+    },
+    "yokohane_up": {
+      "name": "横羽線",
+      "variation": "上り",
+      "title": "横羽線上り"
+    },
+    "yaesu_in": {
+      "name": "八重洲線",
+      "variation": "内回り",
+      "title": "八重洲線内回り"
+    },
+    "yaesu_out": {
+      "name": "八重洲線",
+      "variation": "外回り",
+      "title": "八重洲線外回り"
+    },
+    "minato_in": {
+      "name": "横浜",
+      "variation": "内回り",
+      "title": "横浜内回り"
+    },
+    "minato__out": {
+      "name": "横浜",
+      "variation": "外回り",
+      "title": "横浜外回り"
+    },
+    "nagoya": {
+      "name": "名古屋",
+      "variation": "",
+      "title": "名古屋"
+    },
+    "osaka": {
+      "name": "大阪",
+      "variation": "",
+      "title": "大阪"
+    },
+    "kobe": {
+      "name": "神戸",
+      "variation": "",
+      "title": "神戸"
+    },
+    "hiroshima": {
+      "name": "広島",
+      "variation": "",
+      "title": "広島"
+    },
+    "fukuoka": {
+      "name": "福岡",
+      "variation": "",
+      "title": "福岡"
+    },
+    "hakone_out": {
+      "name": "箱根",
+      "variation": "往路",
+      "title": "箱根往路"
+    },
+    "hakone_in": {
+      "name": "箱根",
+      "variation": "復路",
+      "title": "箱根復路"
+    },
+    "taikan_up": {
+      "name": "大観山",
+      "variation": "上り",
+      "title": "大観山上り"
+    },
+    "taikan_down": {
+      "name": "大観山",
+      "variation": "下り",
+      "title": "大観山下り"
+    },
+    "metro_hwy_tokyo": {
+      "name": "首都高一周",
+      "variation": "東京エリア",
+      "title": "首都高一周東京エリア"
+    },
+    "metro_hwy_kanagawa": {
+      "name": "首都高一周",
+      "variation": "神奈川エリア",
+      "title": "首都高一周神奈川エリア"
+    }
+  }
+}

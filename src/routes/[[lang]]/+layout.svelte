@@ -22,9 +22,7 @@
   <title>{$t(`${data.pathname}.meta.title`)}</title>
   <meta
     name="description"
-    content="{$t(
-      `${data.pathname}.meta.description`,
-    )} - Maximumtune.org, the number one resource for Wangan Midnight Maximum Tune (WMMT)"
+    content="{$t(`${data.pathname}.meta.description`)} - {$t('meta.description_suffix')}"
   />
 </svelte:head>
 

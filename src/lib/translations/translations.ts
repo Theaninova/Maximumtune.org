@@ -33,10 +33,18 @@ const config: Config = {
         }
       },
     ),
+    ...Object.entries(import.meta.glob("./common/**/*.json", {import: "default"})).map(([path, loader]) => {
+      const locale = getLocaleFromPath(path)
+      const key = path.match(/([^/]+)\.[^.]+\.json$/)[1]
+
+      return {
+        locale,
+        key,
+        loader,
+      }
+    }),
   ],
   fallbackLocale,
 }
-
-console.log(JSON.stringify(config, null, 2))
 
 export const {t, locale, loading, loadTranslations} = new i18n(config)
