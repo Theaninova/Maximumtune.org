@@ -23,6 +23,18 @@ const config = {
 
   kit: {
     adapter: adapter(),
+    prerender: {
+      entries: [
+        "*",
+        "/ja/",
+        "/ja/file-formats/",
+        "/ja/tech/",
+        "/ja/sunrise/",
+        "/ja/tools/bin-soundbank-editor/",
+        "/ja/tools/nub-converter/",
+        "/ja/tools/nut-viewer/",
+      ],
+    },
     inlineStyleThreshold: 16_384,
   },
 }

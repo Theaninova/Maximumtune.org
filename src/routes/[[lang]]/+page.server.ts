@@ -6,7 +6,7 @@ export const load: PageServerLoad = () => {
   return {
     posts: Object.entries(posts)
       .map(([key, value]) => ({
-        path: key.replace(/\/[^/]+\.svx$/, ""),
+        path: key.replace(/\/[^/]+\.svx$/, "/"),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...(value as any).metadata,
       }))

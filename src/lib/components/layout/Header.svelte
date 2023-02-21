@@ -8,7 +8,7 @@
 
   export let pathname: string
   $: back = $t(`${$tPage}.meta.backHref`, $page.params)
-  $: backHref = back.endsWith(".meta.backHref") ? pathname.replace(/[^/]+\/$/, "") : back
+  $: backHref = back.endsWith(".meta.backHref") ? "/" : back
 </script>
 
 <div class="nav-items-container">

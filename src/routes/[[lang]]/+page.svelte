@@ -11,6 +11,7 @@
   import Vs from "$lib/assets/badge_overlay_vs.webp"
   import {fallbackLocale, locale} from "$lib/translations/translations"
   import Slider from "$lib/components/Slider.svelte"
+  import {locales} from "$lib/translations/translations.js"
 
   onMount(async () => {
     pwaInfo && (InstallNotice = (await import("$lib/components/InstallNotice.svelte")).default)
@@ -52,6 +53,9 @@
     <a href="./faq/">{$t("/.info.faq")}</a>
     <a href="./about/">{$t("/.info.about")}</a>
     <p>{$t("/.slogan")}</p>
+    <p>
+      {#each locales as locale}<a href="{locale === fallbackLocale ? '' : `/${locale}`}/">{locale}</a>{/each}
+    </p>
     <p>
       {@html $t("/.issues", {
         email: `<a href="mailto:ama@maximumtune.org">ama@maximumtune.org</a>`,
@@ -99,10 +103,5 @@
   section > :global(.light-bar) {
     width: 60px;
     margin: 0;
-  }
-
-  .calculator-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 </style>

@@ -1,6 +1,6 @@
 <script>
   import "$lib/style/table.scss"
-  import {fileFormats, tableOrder} from "./file-format-list.js"
+  import {fileFormats, tableOrder} from "./file-format-list"
   import FileFormatTableEntry from "./FileFormatTableEntry.svelte"
 </script>
 
