@@ -1,7 +1,7 @@
 <script>
-  import {readBinSoundbank} from "$lib/tools/formats/bin_soundbank/bin-soundbank.js"
+  import {readBinSoundbank} from "$lib/tools/formats/bin_soundbank/bin-soundbank"
   import "$lib/style/table.scss"
-  import {readBinToneMap} from "$lib/tools/formats/bin_soundbank/bin-tone-map.js"
+  import {readBinToneMap} from "$lib/tools/formats/bin_soundbank/bin-tone-map"
 
   async function fileChange() {
     file = await input.files.item(0).arrayBuffer()
