@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "Battle Grade Info",
-    "description": "Battle Grade & Aura Calculator info"
+    "description": "Battle Grade & Aura Calculator info",
+    "backHref": "/tools/battle-grade-calculator/"
   },
   "title": "Battle Grade Info",
   "subtitle": "How we calculate your Battle Grade",

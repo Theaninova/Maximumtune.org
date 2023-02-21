@@ -1,7 +1,7 @@
 <div />
 
-<style>
+<style lang="scss">
   div {
-    height: 32px;
+    height: 100px;
   }
 </style>

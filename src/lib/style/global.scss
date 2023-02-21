@@ -1,3 +1,64 @@
+@use "sass:color";
+@import "./font";
+@import "./theme";
+
+@import "./theme/a";
+@import "./theme/u";
+@import "./theme/headings";
+
 * {
   box-sizing: border-box;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
+
+  margin: 0;
+
+  font-family: "Roboto Flex", Roboto, sans-serif;
+  color: $color-on-background;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.a11y-hidden:not(:focus, :active) {
+  position: absolute;
+
+  overflow: hidden;
+
+  width: 1px;
+  height: 1px;
+
+  white-space: nowrap;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
 }

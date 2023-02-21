@@ -1,0 +1,18 @@
+@import "../theme";
+
+a {
+  @include hover {
+    filter: drop-shadow($color-secondary 0 0 10px);
+  }
+
+  will-change: filter;
+  color: $color-secondary;
+  filter: drop-shadow($color-secondary 0 0 0);
+  transition: filter 0.2s ease-in-out;
+
+  > h2 {
+    @include hover {
+      filter: drop-shadow($color-secondary 0 0 20px);
+    }
+  }
+}

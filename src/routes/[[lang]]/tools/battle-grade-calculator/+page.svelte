@@ -12,7 +12,6 @@
   import Lightbar from "$lib/components/Lightbar.svelte"
   import HeaderPadding from "$lib/components/HeaderPadding.svelte"
   import {t} from "$lib/translations/translations"
-  import {pt} from "$lib/translations/translations"
 
   let data = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
 
@@ -71,13 +70,13 @@
     <table>
       <caption
         >{result.nextRank.rank !== -1
-          ? $pt("output.points_until_next_rank.title", {
+          ? $t("@page=>output.points_until_next_rank.title", {
               rank: $t("aura.full_rank", {
                 rank: $t(`aura.rank.${result.nextRank.rank}`),
                 level: $t(`aura.level.${result.nextRank.level}`),
               }),
             })
-          : $pt("output.points_until_next_rank.max_rank")}</caption
+          : $t("@page=>output.points_until_next_rank.max_rank")}</caption
       >
       <thead>
         <tr>
@@ -95,8 +94,8 @@
   {/if}
 </section>
 
-<div><a href="./info">{$pt("calculator_info")}</a></div>
-<p class="disclaimer"><em>{$pt("disclaimer")}</em></p>
+<div><a href="info/">{$t("@page=>calculator_info")}</a></div>
+<p class="disclaimer"><em>{$t("@page=>disclaimer")}</em></p>
 
 <style lang="scss">
   @import "../../../../lib/style/theme";
