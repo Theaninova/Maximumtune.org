@@ -11,8 +11,11 @@
       "medals": "勲章"
     },
     "points_until_next_rank": {
-      "title": "次のランクまでのポイント",
+      "title": "次の{{rank}}までのポイント",
+      "max_rank": "最大ランクに到達しました",
       "total": "総計"
     }
-  }
+  },
+  "calculator_info": "オーラはどうやって計算するの",
+  "disclaimer": "免責事項: グリッチがブーストされている場合、計算はどれも正確ではありません"
 }

@@ -2,7 +2,6 @@
   import "$lib/style/table.scss"
   import "$lib/style/rank-themes.scss"
 
-  import CalculatorFooter from "$lib/components/CalculatorFooter.svelte"
   import MedalHeader from "$lib/components/MedalHeader.svelte"
   import RankTitle from "$lib/components/tools/story-rank/RankTitle.svelte"
 
@@ -13,6 +12,7 @@
   import Lightbar from "$lib/components/Lightbar.svelte"
   import HeaderPadding from "$lib/components/HeaderPadding.svelte"
   import {t} from "$lib/translations/translations"
+  import {pt} from "$lib/translations/translations"
 
   let data = Object.fromEntries(Object.entries(medalValues).map(([key]) => [key, 0]))
 
@@ -45,7 +45,14 @@
 
   <Lightbar />
 
-  <RankTitle class="rank-theme-gold">{result.rankName}</RankTitle>
+  <RankTitle class="rank-theme-gold"
+    >{result.currentRank.rank !== -1
+      ? $t("aura.full_rank", {
+          rank: $t(`aura.rank.${result.currentRank.rank}`),
+          level: $t(`aura.level.${result.currentRank.level}`),
+        })
+      : $t("aura.no_rank")}</RankTitle
+  >
 
   <table>
     <caption>{$t("/tools/battle-grade-calculator/.output.total.title")}</caption>
@@ -62,7 +69,16 @@
   </table>
   {#if result.nextRank}
     <table>
-      <caption>{$t("/tools/battle-grade-calculator/.output.points_until_next_rank.title")}</caption>
+      <caption
+        >{result.nextRank.rank !== -1
+          ? $pt("output.points_until_next_rank.title", {
+              rank: $t("aura.full_rank", {
+                rank: $t(`aura.rank.${result.nextRank.rank}`),
+                level: $t(`aura.level.${result.nextRank.level}`),
+              }),
+            })
+          : $pt("output.points_until_next_rank.max_rank")}</caption
+      >
       <thead>
         <tr>
           <th>{$t("/tools/battle-grade-calculator/.output.points_until_next_rank.total")}</th>
@@ -79,10 +95,16 @@
   {/if}
 </section>
 
-<div><a href="./info">See how we calculate your rank</a></div>
-<CalculatorFooter />
+<div><a href="./info">{$pt("calculator_info")}</a></div>
+<p class="disclaimer"><em>{$pt("disclaimer")}</em></p>
 
 <style lang="scss">
+  @import "../../../../lib/style/theme";
+
+  .disclaimer {
+    color: $color-outline;
+  }
+
   section {
     margin-block: auto;
 

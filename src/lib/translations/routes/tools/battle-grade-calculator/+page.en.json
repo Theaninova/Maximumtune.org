@@ -12,8 +12,11 @@
       "medals": "Medals"
     },
     "points_until_next_rank": {
-      "title": "Points until next rank",
+      "title": "Points until {{rank}}",
+      "max_rank": "You have reached the maximum rank",
       "total": "Total"
     }
-  }
+  },
+  "calculator_info": "See how we calculate your rank",
+  "disclaimer": "Disclaimer: If you have glitch boosted, none of the calculations will be accurate"
 }

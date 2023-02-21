@@ -1,0 +1,71 @@
+{
+  "full_rank": "{{level:eq; VS:{{level}} {{rank}}; default: {{rank}} {{level}}}}",
+  "no_rank": "No Rank",
+  "rank_name": "Rank",
+  "aura_name": "Aura",
+  "title_name": "Title",
+  "points": "{{points}}pt",
+  "medals": {
+    "black": "Black Medal",
+    "bronze": "Bronze Medal",
+    "silver": "Silver Medal",
+    "gold": "Gold Medal"
+  },
+  "rank": {
+    "0": "1st Grade",
+    "1": "2nd Grade",
+    "2": "3rd Grade",
+    "3": "4th Grade",
+    "4": "5th Grade",
+    "5": "6th Grade",
+    "6": "7th Grade",
+    "7": "8th Grade",
+    "8": "9th Grade",
+    "9": "10th Grade",
+    "10": "11th Grade",
+    "11": "12th Grade",
+    "12": "13th Grade",
+    "13": "14th Grade",
+    "14": "15th Grade"
+  },
+  "level": {
+    "0": "VS",
+    "1": "Ace",
+    "2": "Pro"
+  },
+  "aura": {
+    "0": "Hawk",
+    "1": "Snake",
+    "2": "Pitbull",
+    "3": "Panther",
+    "4": "Bull",
+    "5": "Gorilla",
+    "6": "Wolf",
+    "7": "Mammoth",
+    "8": "Panda",
+    "9": "Lion",
+    "10": "Nue",
+    "11": "Orchi",
+    "12": "Phoenix",
+    "13": "Dragon",
+    "14": "Ogre"
+  },
+  "title_formatted": "★{{title}}★",
+  "title": {
+    "0": "大鷹",
+    "1": "蛇竜",
+    "2": "猛犬",
+    "3": "黒豹",
+    "4": "猛牛",
+    "5": "大猿",
+    "6": "人狼",
+    "7": "猛象",
+    "8": "熊猫",
+    "9": "百獣ノ王",
+    "10": "猿虎蛇",
+    "11": "大蛇神",
+    "12": "不死鳥",
+    "13": "竜神",
+    "14": "鬼王神"
+  }
+}

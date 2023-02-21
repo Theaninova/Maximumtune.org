@@ -49,7 +49,15 @@ const config: Config = {
   fallbackLocale,
   parserOptions: {
     customModifiers: {
-      translation: ({options}) => t.get(options.find(it => it.key === "key").value),
+      translation: ({value, options}) => t.get(options.find(it => it.key === "key", {value: value}).value),
+      ordinal: ({value, locale, options, defaultValue}) => {
+        const pluralRules = new Intl.PluralRules(locale, {
+          type: "ordinal",
+        })
+        const pluralRule = pluralRules.select(Number(value))
+        console.log(pluralRule, Number(value))
+        return options.find(it => it.key === pluralRule)?.value || defaultValue
+      },
     },
   },
 }
