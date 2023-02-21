@@ -4,7 +4,6 @@
   import {t} from "$lib/translations/translations.js"
 
   export let stage: Stage
-  $: translationKey = `@tools/splits/StageBadge.stages.${stage.key}`
 </script>
 
 <svg
@@ -25,11 +24,11 @@
   <image x="16" y="16" width="224" height="224" href="/map_{stage.imageIndex}.webp" />
 
   <text x="128" y="60" text-anchor="middle" font-size="32" fill="url(#text-fill)">
-    {$t(`${translationKey}.name`)}
+    {$t(`stage.${stage.key}.name`)}
   </text>
-  {#if $t(`${translationKey}.variation`)}
+  {#if $t(`stage.${stage.key}.variation`)}
     <text x="128" y="195" dy="24" text-anchor="middle" font-size="24" fill="url(#text-fill)">
-      {$t(`${translationKey}.variation`)}
+      {$t(`stage.${stage.key}.variation`)}
     </text>
   {/if}
 </svg>

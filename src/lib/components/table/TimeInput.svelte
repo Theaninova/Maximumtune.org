@@ -92,7 +92,7 @@
   />"
   <input
     type="number"
-    placeholder="--"
+    placeholder="---"
     style="width: 40px"
     value={formatTimePart(value?.[2], 3)}
     on:keydown|preventDefault={event => onKeydown(event, 3, 999, 2)}

@@ -1,0 +1,8 @@
+{
+  "meta": {
+    "title": "{{stage:translation; key: stage.{{stage}}.title}}",
+    "description": "{{stage:translation; key: stage.{{stage}}.title}}",
+    "backHref": "/tools/splits-calculator/#{{stage}}"
+  },
+  "title": "{{stage:translation; key: stage.{{stage}}.title}}"
+}

@@ -2,14 +2,15 @@
   import Lightbar from "../Lightbar.svelte"
   import MtLogo from "../MtLogo.svelte"
   import {fallbackLocale, locale} from "$lib/translations/translations"
-  import {t} from "$lib/translations/translations"
+  import {pt} from "$lib/translations/translations"
 
   export let pathname: string
-  $: backHref = $t(`${pathname}.meta.backHref`)
+  $: back = $pt("meta.backHref")
+  $: backHref = back.endsWith(".meta.backHref") ? pathname.replace(/[^/]+\/$/, "") : back
 </script>
 
 <div class="nav-items-container">
-  <div class="page-title">{$t(`${pathname}.title`)}</div>
+  <div class="page-title">{$pt("title")}</div>
   <Lightbar direction="reverse" type="slide" />
 </div>
 <svg viewBox="0 0 192 92">
@@ -67,7 +68,7 @@
     justify-content: center;
 
     width: calc(100% - 32px);
-    height: 48px;
+    height: 68px;
     padding: 8px;
 
     background: $black-3d-panel;

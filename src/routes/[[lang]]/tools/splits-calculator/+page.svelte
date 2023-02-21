@@ -88,7 +88,7 @@
 <section bind:this={scrollContainer} on:scroll={scroll}>
   <div class="header">
     {#each data.stages as stage}
-      <a class="slide" id={stage.key} href="/tools/splits-calculator/{stage.key}/" aria-label={stage.title}>
+      <a class="slide" id={stage.key} href="./{stage.key}/" aria-label={stage.title}>
         <StageBadge {stage} />
       </a>
     {/each}
