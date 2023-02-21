@@ -8,7 +8,7 @@
   export let subtitle = "Grade"
 </script>
 
-<a {href} aria-label="{title} {subtitle}">
+<a {href} aria-label="{title} {subtitle}" id="{title.toLowerCase()}_{subtitle.toLowerCase()}">
   <div
     class="background"
     class:no-color={!color}

@@ -4,14 +4,15 @@
   import {fallbackLocale, locale} from "$lib/translations/translations"
   import {t} from "$lib/translations/translations"
   import {tPage} from "../../translations/translations"
+  import {page} from "$app/stores"
 
   export let pathname: string
-  $: back = $t(`${$tPage}.meta.backHref`)
+  $: back = $t(`${$tPage}.meta.backHref`, $page.params)
   $: backHref = back.endsWith(".meta.backHref") ? pathname.replace(/[^/]+\/$/, "") : back
 </script>
 
 <div class="nav-items-container">
-  <div class="page-title">{$t(`${$tPage}.title`)}</div>
+  <div class="page-title">{$t(`${$tPage}.title`, $page.params)}</div>
   <Lightbar direction="reverse" type="slide" />
 </div>
 <svg viewBox="0 0 192 92">

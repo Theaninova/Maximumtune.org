@@ -10,7 +10,6 @@
   import TimeSplits from "$lib/assets/badge_overlay_time_attack.webp"
   import Vs from "$lib/assets/badge_overlay_vs.webp"
   import {fallbackLocale, locale} from "$lib/translations/translations"
-  import HeaderPadding from "$lib/components/HeaderPadding.svelte"
   import Slider from "$lib/components/Slider.svelte"
 
   onMount(async () => {
@@ -24,8 +23,8 @@
 
 <svelte:window on:offline={(online = false)} on:online={(online = true)} />
 
-<div>
-  <Slider horizontal={true}>
+<div class="root">
+  <Slider horizontal={true} hashNavigation="calculator_selection">
     <Badge
       href="./tools/battle-grade-calculator/"
       title={$t("/.calculators.battle_grade.title")}
@@ -47,33 +46,11 @@
       color="blue"
     />
   </Slider>
-  <!--<section>
-    <h2>{$t("/.calculators.title")}</h2>
-    <Lightbar />
-    <div class="calculator-grid">
-      <Badge
-        href="./tools/battle-grade-calculator/"
-        title={$t("/.calculators.battle_grade.title")}
-        subtitle={$t("/.calculators.battle_grade.subtitle")}
-        imageHref={Vs}
-        color="red"
-      />
-      <Badge
-        href="./tools/story-rank-calculator/"
-        title={$t("/.calculators.story_rank.title")}
-        subtitle={$t("/.calculators.story_rank.subtitle")}
-        imageHref={StoryRank}
-      />
-      <Badge
-        href="./tools/splits-calculator/"
-        title={$t("/.calculators.time_splits.title")}
-        subtitle={$t("/.calculators.time_splits.subtitle")}
-        imageHref={TimeSplits}
-        color="blue"
-      />
-    </div>
-  </section>-->
   <section>
+    <h2>{$t("/.info.title")}</h2>
+    <Lightbar />
+    <a href="./faq/">{$t("/.info.faq")}</a>
+    <a href="./about/">{$t("/.info.about")}</a>
     <p>{$t("/.slogan")}</p>
     <p>
       {@html $t("/.issues", {
@@ -96,13 +73,6 @@
   </section>
 
   <section>
-    <h2>{$t("/.info.title")}</h2>
-    <Lightbar />
-    <a href="./faq/">{$t("/.info.faq")}</a>
-    <a href="./about/">{$t("/.info.about")}</a>
-  </section>
-
-  <section>
     {#if online}
       <h2>{$t("/.posts.title")}</h2>
       <Lightbar />
@@ -116,6 +86,11 @@
 </div>
 
 <style lang="scss">
+  .root > :global(.slider) {
+    margin-inline: -8px;
+    padding-block: 48px;
+  }
+
   section > h2 {
     transform: skew(-10deg);
     margin-bottom: 8px;

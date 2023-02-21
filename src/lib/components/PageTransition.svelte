@@ -2,16 +2,18 @@
   import {fly} from "svelte/transition"
   import Header from "$lib/components/layout/Header.svelte"
   import {afterNavigate, beforeNavigate} from "$app/navigation"
-  import {quartIn, quartOut} from "svelte/easing"
+  import {backIn, cubicIn, expoOut, quadOut, quintIn, quintOut} from "svelte/easing"
 
   export let pathname: string
 
   const duration = 250
-  const delay = 300
+  const delay = 250
 
   let direction = 1
   let isNavigating = false
+  let realDelay = delay
   beforeNavigate(navigation => {
+    realDelay = delay
     direction =
       navigation.from.url.pathname.split("/").length > navigation.to.url.pathname.split("/").length ? -1 : 1
     isNavigating = true
@@ -23,12 +25,13 @@
 
 {#key isNavigating}
   {#if !isNavigating}
-    <nav in:fly={{duration, delay, y: -128}} out:fly={{duration, y: -128}}>
+    <nav in:fly={{duration, delay, y: -128}} out:fly={{duration: duration, y: -128}}>
       <Header {pathname} />
     </nav>
     <main
-      in:fly={{duration, delay, easing: quartOut, x: direction * 150}}
-      out:fly={{duration: duration, easing: quartIn, x: direction * -150}}
+      in:fly={{duration: duration, delay, easing: quadOut, x: -50}}
+      out:fly={{duration: duration, easing: quintIn, x: -150}}
+      on:outroend={() => (realDelay = 0)}
     >
       <slot />
     </main>
