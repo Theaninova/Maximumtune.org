@@ -3,12 +3,19 @@
   import SilverMedal from "$lib/assets/silver_medal.webp"
   import BronzeMedal from "$lib/assets/bronze_medal.webp"
   import BlackMedal from "$lib/assets/black_medal.webp"
+  import {t} from "$lib/translations/translations"
 </script>
 
-<th style:background-image="url('{GoldMedal}')"><span class="a11y-hidden">Gold Medal</span></th>
-<th style:background-image="url('{SilverMedal}')"><span class="a11y-hidden">Silver Medal</span></th>
-<th style:background-image="url('{BronzeMedal}')"><span class="a11y-hidden">Bronze Medal</span></th>
-<th style:background-image="url('{BlackMedal}')"><span class="a11y-hidden">Black Medal</span></th>
+<th style:background-image="url('{GoldMedal}')"><span class="a11y-hidden">{$t("aura.medals.gold")}</span></th>
+<th style:background-image="url('{SilverMedal}')"
+  ><span class="a11y-hidden">{$t("aura.medals.silver")}</span></th
+>
+<th style:background-image="url('{BronzeMedal}')"
+  ><span class="a11y-hidden">{$t("aura.medals.bronze")}</span></th
+>
+<th style:background-image="url('{BlackMedal}')"
+  ><span class="a11y-hidden">{$t("aura.medals.black")}</span></th
+>
 
 <style lang="scss">
   span {

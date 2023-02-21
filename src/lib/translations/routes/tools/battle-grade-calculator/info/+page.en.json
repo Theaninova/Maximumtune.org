@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "title": "Battle Grade Info",
+    "description": "Battle Grade & Aura Calculator info"
+  },
+  "title": "Battle Grade Info",
+  "subtitle": "How we calculate your Battle Grade",
+  "medal_values": "Medal Values",
+  "grade_data_title": "Aura Point Table (<a href='{{source}}'>Source</a>)",
+  "github": "The full source code is available on <a href='{{link}}'>GitHub</a>"
+}
