@@ -3,20 +3,19 @@
   import MedalHeader from "$lib/components/MedalHeader.svelte"
   import {medalValues} from "$lib/tools/data/medal-values"
   import {t} from "$lib/translations/translations"
-  import {pt} from "$lib/translations/translations"
 </script>
 
-<h2>{$pt("subtitle")}</h2>
+<h2>{$t("@page=>subtitle")}</h2>
 
 <p>
-  {@html $pt("github", {
+  {@html $t("@page=>github", {
     link: "https://github.com/Theaninova/mmtorg/blob/master/src/lib/tools/aura-calculator.ts",
   })}
 </p>
 
 <section>
   <table style="border-spacing: 8px">
-    <caption>{$pt("medal_values")}</caption>
+    <caption>{$t("@page=>medal_values")}</caption>
     <thead>
       <tr>
         <MedalHeader />
@@ -31,7 +30,7 @@
 </section>
 
 <table>
-  <caption>{@html $pt("grade_data_title", {source: "https://wikiwiki.jp/wmmt"})}</caption>
+  <caption>{@html $t("@page=>grade_data_title", {source: "https://wikiwiki.jp/wmmt"})}</caption>
   <thead>
     <tr>
       <th>{$t("aura.rank_name")}</th>

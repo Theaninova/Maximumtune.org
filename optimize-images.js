@@ -13,7 +13,7 @@ function encodeImage(path) {
 }
 
 ;(async () => {
-  await imagemin([`${assetPath}/raw/*.{jpg,png}`], {
+  await imagemin([`${assetPath}/{raw,v2}/*.{jpg,png}`], {
     destination: assetPath,
     plugins: [
       imageminWebp({

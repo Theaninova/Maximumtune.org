@@ -1,0 +1,21 @@
+// noinspection CssUnknownTarget
+@font-face {
+  font-family: "Roboto Flex";
+  font-weight: 100 1000;
+  font-display: fallback;
+  font-stretch: 25% 151%;
+  src: url("/fonts/roboto-flex.min.ttf") format("woff2 supports variations"),
+  url("/fonts/roboto-flex.min.ttf") format("woff2-variations");
+  unicode-range: U+20-7E;
+}
+
+// noinspection CssUnknownTarget
+@font-face {
+  font-family: "Roboto Flex";
+  font-weight: 100 1000;
+  font-display: swap;
+  font-stretch: 25% 151%;
+  src: url("/fonts/RobotoFlex.ttf") format("woff2 supports variations"),
+  url("/fonts/RobotoFlex.ttf") format("woff2-variations");
+  unicode-range: U+00A0-FB04;
+}

@@ -1,0 +1,40 @@
+@use "sass:color";
+@import "../theme";
+
+h2,
+h3 {
+  will-change: filter;
+  color: $color-secondary;
+  filter: drop-shadow($color-secondary-container 0 0 5px);
+  transition: filter $ease-default;
+}
+
+h1 {
+  margin: 16px 0;
+
+  font-stretch: 120%;
+
+  // color: $color-tertiary;
+  background-color: #f3ec78;
+  background-image: linear-gradient(
+                  0deg,
+                  color.adjust($color-tertiary-container, $lightness: 10%),
+                  color.adjust($color-tertiary, $lightness: 0%),
+                  color.adjust($color-tertiary-container, $lightness: 10%)
+  );
+  -webkit-background-clip: text; // stylelint-disable-line property-no-vendor-prefix
+  background-clip: text;
+  background-size: 100%;
+  filter: drop-shadow($color-tertiary 0 0 20px);
+
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+h3 > a,
+h2 > a,
+h1 > a {
+  color: unset;
+  text-decoration: none;
+  transition: color $ease-default;
+}

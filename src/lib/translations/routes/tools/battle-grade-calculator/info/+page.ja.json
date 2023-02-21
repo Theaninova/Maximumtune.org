@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "乱入段位計算機情報",
-    "description": "乱入段位計算機情報"
+    "description": "乱入段位計算機情報",
+    "backHref": "/tools/battle-grade-calculator/"
   },
   "title": "乱入段位計算機情報",
   "subtitle": "オーラの計算方法",

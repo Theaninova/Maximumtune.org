@@ -6,7 +6,6 @@ export const trailingSlash = "always"
 
 export const load: LayoutLoad = async ({url: {pathname}, params, route: {id}}) => {
   const realPath = params.lang ? pathname.replace(/^\/[^/]+/, "") : pathname
-  console.log(params)
 
   await loadTranslations(params.lang || fallbackLocale, realPath)
 
