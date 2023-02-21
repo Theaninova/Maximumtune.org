@@ -1,8 +1,9 @@
 <script lang="ts">
-  import TimeInput from "./TimeInput.svelte"
-  import type {Stage, StageSaveState, TimeSplit} from "../../tools/splits-calculator"
+  import TimeInput from "../../table/TimeInput.svelte"
+  import type {Stage, StageSaveState, TimeSplit} from "../../../tools/splits-calculator"
   import {onMount} from "svelte"
-  import {formatTimeSplit, latest, sumTimes, timeDifference} from "../../tools/splits-calculator"
+  import {formatTimeSplit, latest, sumTimes, timeDifference} from "../../../tools/splits-calculator"
+  import {t} from "$lib/translations/translations.js"
 
   export let stage: Stage
   let saveState: StageSaveState | undefined
@@ -46,16 +47,16 @@
 
 <form>
   <div class="table">
-    <em class="green">Personal Best</em>
+    <span class="green">{$t("@tools/splits/SplitsInput.personal_best")}</span>
     <TimeInput value={latest(saveState?.pb)} on:submit={event => savePb(event.detail)} />
-    <em class="purple">Theory Time</em>
+    <span class="purple">{$t("@tools/splits/SplitsInput.theory_time")}</span>
     <div>{formatTimeSplit(theoryTime)}</div>
-    <em class="orange">Difference</em>
+    <span class="orange">{$t("@tools/splits/SplitsInput.difference")}</span>
     <div>{formatTimeSplit(timeDiff)}</div>
     <hr />
     <hr />
     {#each Array.from({length: stage.sections}) as _, section}
-      <div>Section {section + 1}</div>
+      <div>{$t("@tools/splits/SplitsInput.section", {number: section + 1})}</div>
       <TimeInput
         value={latest(saveState?.sections?.[section])}
         on:submit={event => saveSplit(event.detail, section)}
@@ -63,14 +64,14 @@
     {/each}
     <hr />
     <hr />
-    <em class="grey">Total Time</em>
+    <span class="grey">{$t("@tools/splits/SplitsInput.total_time")}</span>
     <div>{formatTimeSplit(theoryTime)}</div>
   </div>
 </form>
 
 <style lang="scss">
-  @import "../../assets/images";
-  @import "../../style/theme";
+  @import "../../../assets/images";
+  @import "../../../style/theme";
 
   form {
     // center
@@ -114,13 +115,16 @@
       box-shadow: unset;
     }
 
-    > em {
+    > span {
       display: flex;
       align-items: center;
       justify-content: center;
 
-      width: 192px;
+      width: 224px;
       height: 28px;
+
+      font-size: 16px;
+      text-shadow: 0 0 4px black;
 
       border-radius: 14px;
       box-shadow: 0 0 2px black inset;
@@ -132,7 +136,7 @@
   }
 
   .green {
-    background: #0a5a0c $shine-3d;
+    background: #0a5a0f $shine-3d;
   }
 
   .purple {

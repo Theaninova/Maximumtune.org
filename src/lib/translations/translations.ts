@@ -1,5 +1,7 @@
 import i18n from "sveltekit-i18n"
 import type {Config} from "sveltekit-i18n"
+import {derived} from "svelte/store"
+import {page} from "$app/stores"
 
 export const locales = ["en", "ja"]
 export const fallbackLocale = "en"
@@ -17,7 +19,7 @@ const config: Config = {
       return {
         locale,
         key: route,
-        routes: [route],
+        routes: [new RegExp(route.replace(/\[[^\]]+]/g, "[^/]+"))],
         loader,
       }
     }),
@@ -45,6 +47,18 @@ const config: Config = {
     }),
   ],
   fallbackLocale,
+  parserOptions: {
+    customModifiers: {
+      translation: ({options}) => t.get(options.find(it => it.key === "key").value),
+    },
+  },
 }
 
 export const {t, locale, loading, loadTranslations} = new i18n(config)
+
+export const pt = derived(
+  [page, t],
+  ([$page, $t]) =>
+    (key: string, params = {}) =>
+      $t(`${$page.route.id.replace(/^\/[^/]+/, "")}/.${key}`, {...$page.params, ...params}),
+)

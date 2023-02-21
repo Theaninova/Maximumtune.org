@@ -4,10 +4,11 @@ import {fallbackLocale, loadTranslations} from "../../lib/translations/translati
 export const prerender = true
 export const trailingSlash = "always"
 
-export const load: LayoutLoad = async ({url: {pathname}, params: {lang}}) => {
-  const realPath = lang ? pathname.replace(/^\/[^/]+/, "") : pathname
+export const load: LayoutLoad = async ({url: {pathname}, params, route: {id}}) => {
+  const realPath = params.lang ? pathname.replace(/^\/[^/]+/, "") : pathname
+  console.log(params)
 
-  await loadTranslations(lang || fallbackLocale, realPath)
+  await loadTranslations(params.lang || fallbackLocale, realPath)
 
-  return {pathname: realPath}
+  return {pathname: realPath, params, routeId: id}
 }

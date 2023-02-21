@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from "@storybook/svelte"
 import SplitsInput from "./SplitsInput.svelte"
-import type {Stage} from "../../tools/splits-calculator"
+import type {Stage} from "../../../tools/splits-calculator"
 
 export default {
   title: "Splits Input",
