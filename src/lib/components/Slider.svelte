@@ -71,8 +71,8 @@
 
     display: grid;
     grid-auto-flow: row;
-    // align-items: center;
-    // justify-content: center;
+    align-items: center;
+    justify-content: center;
 
     margin-inline: auto;
 
@@ -110,6 +110,8 @@
 
       > .slider-wrapper {
         grid-auto-flow: column;
+        align-items: revert;
+        justify-content: revert;
 
         @media (max-width: 512px) {
           &::after,

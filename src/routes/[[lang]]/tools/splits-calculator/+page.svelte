@@ -159,6 +159,7 @@
 
     width: 100%;
     margin-inline: 0;
+    margin-block-start: -68px;
 
     @media (max-width: 512px) {
       scroll-snap-type: y mandatory;
