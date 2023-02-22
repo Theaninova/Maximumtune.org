@@ -4,7 +4,7 @@ meta:
   title: Namco Texture Bank
   endian: be
 seq:
-  - id: signature
+  - id: magic
     type: u4
     enum: signature
     valid:
@@ -21,7 +21,7 @@ types:
   nut_body:
     meta:
       endian:
-        switch-on: _root.signature
+        switch-on: _root.magic
         cases:
           'signature::ntwd': le
           'signature::ntlx': le
@@ -55,7 +55,7 @@ types:
           - id: padding
             type: nothing
             size: 4
-          - id: data_size
+          - id: len_texture_data
             type: u4
           - id: header_size
             type: u2
@@ -74,7 +74,7 @@ types:
           texture_data:
             io: _root._io
             pos: data_offset
-            size: data_size
+            size: len_texture_data
             type: texture_data
       texture_info:
         seq:
@@ -170,9 +170,9 @@ types:
       texture_surface:
         seq:
           - id: mipmaps
-            size: _parent._parent.texture_info.surface_count == 1
-                    ? _parent._parent.data_size
-              : _parent._parent.texture_info.mipmap_sizes[_index]
+            size: '_parent._parent.texture_info.surface_count == 1
+                  ? _parent._parent.len_texture_data
+                  : _parent._parent.texture_info.mipmap_sizes[_index]'
             repeat: expr
             repeat-expr: _parent._parent.texture_info.mipmap_count
 

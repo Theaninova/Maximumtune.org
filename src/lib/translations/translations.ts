@@ -2,7 +2,6 @@ import i18n from "sveltekit-i18n"
 import type {Config} from "sveltekit-i18n"
 import {derived} from "svelte/store"
 import {page} from "$app/stores"
-import type {Page} from "@sveltejs/kit"
 
 export const locales = ["en", "ja"]
 export const fallbackLocale = "en"
@@ -64,6 +63,10 @@ const config: Config = {
 }
 
 export const {t, locale, loading, loadTranslations} = new i18n(config)
+
+export function getLanguageIndependentPath(routeId: string): string {
+  return routeId.replace(/^\/\[\[lang]]/, "/")
+}
 
 export const tPage = derived([page], ([$page]) => {
   return `${$page.route.id.replace(/^\/\[\[lang]]/, "")}/`

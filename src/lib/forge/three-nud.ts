@@ -1,6 +1,6 @@
-import Nud from "./kaitai/nud.ksy"
-import Mdl from "./kaitai/mdl.ksy"
-import Xmd from "./kaitai/xmd.ksy"
+import {Nud} from "./kaitai/compiled/nud"
+import {Mdl} from "./kaitai/compiled/mdl"
+import {Xmd} from "./kaitai/compiled/xmd"
 import {
   BufferGeometry,
   Float32BufferAttribute,
@@ -9,7 +9,6 @@ import {
   Uint8BufferAttribute,
 } from "three"
 import {inflate} from "pako"
-import type {Part} from "../../../generated/src/lib/forge/kaitai/nud.ksy"
 
 export class Model {
   readonly polysets: Polyset[]
@@ -63,7 +62,7 @@ export function halfFloatToFloat(half: number): number {
 
 export function processNud(nud: Nud, id?: number): Polyset[] {
   return nud.meshes.flatMap(it => {
-    return (it.parts as Part[]).map((part, i) => {
+    return it.parts.map((part, i) => {
       const geometry = new BufferGeometry()
 
       const indices = getRenderingVertexIndices(part.indices)

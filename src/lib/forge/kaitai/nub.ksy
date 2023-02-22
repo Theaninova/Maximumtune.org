@@ -3,8 +3,6 @@ meta:
   title: WMMT5 NUB sound bank
   file-extension: nub
   endian: le
-  imports:
-    - wav
 seq:
   - id: header
     type: header
@@ -12,7 +10,7 @@ seq:
 types:
   header:
     seq:
-      - id: signature
+      - id: magic
         contents: [0x01, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
       - id: id
         type: u4

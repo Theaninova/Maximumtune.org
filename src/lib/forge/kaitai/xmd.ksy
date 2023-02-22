@@ -22,7 +22,7 @@ seq:
 types:
   xmd_header:
     seq:
-      - id: signature
+      - id: magic
         contents: [0x58, 0x4d, 0x44, 0x00, 0x30, 0x30, 0x31, 0x00]
       - id: layout
         type: u4

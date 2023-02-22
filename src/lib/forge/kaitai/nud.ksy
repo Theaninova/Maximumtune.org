@@ -10,7 +10,7 @@ meta:
   #    ndwd: le
   #    ndp3: be
 seq:
-  - id: file_type
+  - id: magic
     type: u4le
     enum: signature
     valid:
@@ -69,14 +69,14 @@ types:
         value: vert_add_clump_start + vert_add_clump_size
   parts:
     params:
-      - id: count
+      - id: num_parts
         type: u2
     seq:
       - id: parts
         type: part
         size: 0x30
         repeat: expr
-        repeat-expr: count
+        repeat-expr: num_parts
   mesh:
     params:
       - id: i
@@ -115,7 +115,7 @@ types:
         type: u4
       - id: vert_add_offset
         type: u4
-      - id: vert_count
+      - id: num_vertices
         type: u2
       # vertex info byte
       - id: bone_size
@@ -144,7 +144,7 @@ types:
         type: u4
         repeat: expr
         repeat-expr: 4
-      - id: poly_count
+      - id: num_indices
         type: u2
       - id: poly_size
         type: u1
@@ -168,13 +168,13 @@ types:
         pos: vert_start
         type: vertex
         repeat: expr
-        repeat-expr: vert_count
+        repeat-expr: num_vertices
       indices:
         io: _root._io
         pos: indices_start
         type: u2
         repeat: expr
-        repeat-expr: poly_count
+        repeat-expr: num_indices
       materials:
         type: material_wrapper(texprop[_index])
         repeat: until
@@ -283,7 +283,7 @@ types:
         size: 4
       - id: src_factor
         type: u2
-      - id: tex_count
+      - id: num_material_textures
         type: u2
       - id: dst_factor
         type: u2
@@ -304,7 +304,7 @@ types:
       - id: material_textures
         type: material_texture
         repeat: expr
-        repeat-expr: tex_count
+        repeat-expr: num_material_textures
       - id: material_attributes
         type: material_attribute
         repeat: until
@@ -315,18 +315,18 @@ types:
         type: u4
       - id: name_offset
         type: u4
-      - id: value_count
+      - id: num_values
         type: u4be
       - id: padding
         size: 4
       - id: values
         type: f4
         repeat: expr
-        repeat-expr: value_count
+        repeat-expr: num_values
     instances:
       name:
         type: strz
-        if: value_count != 0
+        if: num_values != 0
         pos: _root.header.name_start + name_offset
         encoding: UTF-8
   material_texture:
