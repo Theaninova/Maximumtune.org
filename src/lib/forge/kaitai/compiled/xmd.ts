@@ -71,7 +71,7 @@ export namespace Xmd {
       return this._alignedCount;
     }
 
-    magic: string;
+    magic: Uint8Array;
     layout: Xmd.ListCounts;
     count: number;
   }

@@ -4,7 +4,7 @@ meta:
   title: Namco Texture Bank
   endian: be
 seq:
-  - id: magic
+  - id: signature
     type: u4
     enum: signature
     valid:
@@ -21,7 +21,7 @@ types:
   nut_body:
     meta:
       endian:
-        switch-on: _root.magic
+        switch-on: _root.signature
         cases:
           'signature::ntwd': le
           'signature::ntlx': le
@@ -32,7 +32,6 @@ types:
         size: 0xC
       - id: textures
         type: texture(_index)
-        size: 0x50
         repeat: expr
         repeat-expr: header.count
     types:
@@ -55,27 +54,52 @@ types:
           - id: padding
             type: nothing
             size: 4
-          - id: len_texture_data
+          - id: data_size
             type: u4
           - id: header_size
             type: u2
-            valid:
-              any-of:
-                - 0x50
-          - id: padding2
-            type: nothing
+          - id: texture_data
+            # very important this way we save the current header offset
+            # and we can calculate the data position properly
+            type: texture_data(_root._io.pos)
             size: 2
           - id: texture_info
             type: texture_info
-            size: header_size - 0x10
+            # total size - header - gidx
+            size: header_size - 0x10 - 0x20
+          - id: gidx
+            type: gidx
+            size: 0x20
+      texture_data:
+        params:
+          - id: offset
+            type: u4
         instances:
           data_offset:
-            value: texture_info.data_offset + 0x10 + (i * header_size)
-          texture_data:
+            value: offset + _parent.texture_info.data_offset
+          surfaces:
             io: _root._io
             pos: data_offset
-            size: len_texture_data
-            type: texture_data
+            size: _parent.data_size
+            type: surfaces
+      gidx:
+        seq:
+          - id: signature
+            contents: ['eXt', 0]
+          - id: version
+            type: u4
+          - id: version2
+            type: u4
+          - id: unknown
+            type: nothing
+            size: 4
+          - id: type
+            contents: 'GIDX'
+          - id: unknown2
+            type: nothing
+            size: 4
+          - id: hash_id
+            type: u4
       texture_info:
         seq:
           - id: padding
@@ -105,7 +129,6 @@ types:
             valid:
               any-of:
                 - texture_type::dds
-                - texture_type::gxt
           - id: cubemap
             size: 4
             type: cubemap
@@ -118,28 +141,6 @@ types:
             type: u4
             repeat: expr
             repeat-expr: mipmap_count - 1
-          - id: signature
-            contents: ['eXt', 0]
-          - id: version
-            type: u4
-            valid:
-              any-of:
-                - 32
-          - id: version2
-            type: u4
-            valid:
-              any-of:
-                - 16
-          - id: unknown
-            type: nothing
-            size: 4
-          - id: type
-            contents: 'GIDX'
-          - id: unknown2
-            type: nothing
-            size: 4
-          - id: hash_id
-            size: 4
         instances:
           surface_count:
             value: |
@@ -161,20 +162,20 @@ types:
             doc: '+x -x +y -y +z -z'
             repeat: expr
             repeat-expr: 6
-      texture_data:
+      surfaces:
         seq:
           - id: surfaces
             type: texture_surface
             repeat: expr
-            repeat-expr: _parent.texture_info.surface_count
+            repeat-expr: _parent._parent.texture_info.surface_count
       texture_surface:
         seq:
           - id: mipmaps
-            size: '_parent._parent.texture_info.surface_count == 1
-                  ? _parent._parent.len_texture_data
-                  : _parent._parent.texture_info.mipmap_sizes[_index]'
-            repeat: expr
-            repeat-expr: _parent._parent.texture_info.mipmap_count
+            size: '_parent._parent._parent.texture_info.surface_count == 1
+                    ? _parent._parent._parent.data_size
+              : _parent._parent._parent.texture_info.mipmap_sizes[_index]'
+            #repeat: expr
+            #repeat-expr: _parent._parent._parent.texture_info.mipmap_count
 
 enums:
   signature:
@@ -192,4 +193,4 @@ enums:
     0x0F: argb   # TODO...
   texture_type:
     0: dds
-    1: gxt
+    1: gxt # TODO

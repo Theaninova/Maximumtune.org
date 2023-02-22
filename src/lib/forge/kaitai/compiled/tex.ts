@@ -85,6 +85,6 @@ export namespace Tex {
     }
 
     i: number;
-    _raw_nut: string;
+    _raw_nut: Uint8Array;
   }
 }

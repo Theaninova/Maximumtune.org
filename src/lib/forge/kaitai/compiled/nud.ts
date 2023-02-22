@@ -172,13 +172,13 @@ export namespace Nud {
     }
 
     position: Array<number>;
-    padding: string | undefined;
+    padding: Uint8Array | undefined;
     normal: Array<number | undefined | number | undefined | undefined> | undefined;
 
     /**
      * no idea what this is
      */
-    r1: Array<string | undefined> | undefined;
+    r1: Array<Uint8Array | undefined> | undefined;
     tan: Array<number | undefined | number | undefined | undefined> | undefined;
     bitan: Array<number | undefined | number | undefined | undefined> | undefined;
     colors: Array<number | undefined> | undefined;
@@ -214,14 +214,14 @@ export namespace Nud {
     }
 
     hash: number;
-    unknown: string;
+    unknown: Uint8Array;
     mapMode: Nud.MapMode;
     wrapModeS: Nud.WrapMode;
     wrapModeT: Nud.WrapMode;
     minFilter: Nud.FilterMode;
     magFilter: Nud.FilterMode;
     mipDetail: Nud.MipDetail;
-    unknown2: string;
+    unknown2: Uint8Array;
   }
 }
 
@@ -299,7 +299,7 @@ export namespace Nud {
     size: number;
     nameOffset: number;
     numValues: number;
-    padding: string;
+    padding: Uint8Array;
     values: Array<number>;
   }
 }
@@ -360,7 +360,7 @@ export namespace Nud {
     /**
      * this is just for alignment
      */
-    emptyBytes: string;
+    emptyBytes: Uint8Array;
     boneFlags: number;
     boneIndex: number;
     partCount: number;
@@ -496,7 +496,7 @@ export namespace Nud {
     }
 
     flags: number;
-    padding: string;
+    padding: Uint8Array;
     srcFactor: number;
     numMaterialTextures: number;
     dstFactor: number;
@@ -504,7 +504,7 @@ export namespace Nud {
     alphaFunction: Nud.AlphaFunction;
     refAlpha: number;
     cullMode: Nud.CullMode;
-    padding2: string;
+    padding2: Uint8Array;
     zBufferOffset: number;
     materialTextures: Array<Nud.MaterialTexture>;
     materialAttributes: Array<Nud.MaterialAttribute>;
@@ -671,7 +671,7 @@ export namespace Nud {
 
     parts: Array<Nud.Part>;
     numParts: number;
-    _raw_parts: Array<string>;
+    _raw_parts: Array<Uint8Array>;
   }
 }
 export namespace Nud {
