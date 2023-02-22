@@ -65,9 +65,12 @@ const config: Config = {
 export const {t, locale, loading, loadTranslations} = new i18n(config)
 
 export function getLanguageIndependentPath(routeId: string): string {
-  return routeId.replace(/^\/\[\[lang]]/, "/")
+  return routeId
+    .trim()
+    .replace(/^\/\[\[lang]]/, "")
+    .replace(/[^/]$/, it => `${it}/`)
 }
 
 export const tPage = derived([page], ([$page]) => {
-  return `${$page.route.id.replace(/^\/\[\[lang]]/, "")}/`
+  return getLanguageIndependentPath($page.route.id)
 })

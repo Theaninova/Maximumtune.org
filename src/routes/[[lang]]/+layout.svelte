@@ -23,7 +23,7 @@
   <meta
     name="description"
     content="{$t(`${data.routeId}.meta.description`, data.params)} - {$t(
-      `${data.routeId}.meta.description_suffix`,
+      `meta.description_suffix`,
       data.params,
     )}"
   />

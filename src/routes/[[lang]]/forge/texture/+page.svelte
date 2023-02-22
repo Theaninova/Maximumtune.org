@@ -31,14 +31,13 @@
   }
   let input: HTMLInputElement
   let canvas: HTMLCanvasElement
+  let quality = 0.8
+  let mimeType = "png"
+
+  $: convertedCanvas = canvas ? canvas.toDataURL(`image/${mimeType}`, quality) : undefined
+  const head = "data:image/png;base64,"
+  $: fileSize = convertedCanvas ? Math.round(((convertedCanvas.length - head.length) * 3) / 4) : undefined
 </script>
-
-<svelte:head>
-  <title>.NUT Viewer</title>
-  <meta name="description" content="File viewer and converter for the .nut image file format" />
-</svelte:head>
-
-<h1>.NUT Viewer</h1>
 
 <form>
   <input bind:this={input} on:change={fileChange} accept=".nut" type="file" name="filename" />
@@ -49,8 +48,37 @@
         <option value={texture}>{texture.gidx.hashId}</option>
       {/each}
     </select>
+
+    {#if selected}
+      <fieldset>
+        <legend
+          >{selected.textureInfo.width}x{selected.textureInfo.height} ~{(fileSize / 1000).toFixed(
+            1,
+          )}kb</legend
+        >
+        <select bind:value={mimeType}>
+          {#each ["webp", "png", "jpeg"] as value}
+            <option {value}>{value}</option>
+          {/each}
+        </select>
+        {#if mimeType !== "png"}
+          <label><input type="range" bind:value={quality} min="0" max="1" step="0.01" />{quality} </label>
+        {/if}
+        <a href={convertedCanvas} download="{selected.gidx.hashId}.{mimeType}">download</a>
+      </fieldset>
+      <img src={convertedCanvas} alt="converted texture" />
+    {/if}
   {/if}
 </form>
 
 <!--suppress CheckEmptyScriptTag -->
 <canvas bind:this={canvas} />
+
+<style lang="scss">
+  img {
+    width: 100%;
+    height: 10vh;
+    object-fit: none;
+    object-position: center;
+  }
+</style>
