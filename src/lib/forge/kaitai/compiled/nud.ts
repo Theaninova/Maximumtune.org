@@ -488,7 +488,7 @@ export namespace Nud {
       {
         let _, _buf, i = 0;
         do {
-          let _ = new Nud.MaterialAttribute(this._io, this, this._root);
+          _ = new Nud.MaterialAttribute(this._io, this, this._root);
           this.materialAttributes.push(_);
           i++;
         } while (!(_.size == 0));
@@ -614,7 +614,7 @@ export namespace Nud {
       {
         let _, _buf, i = 0;
         do {
-          let _ = new Nud.MaterialWrapper(this._io, this, this._root, (this.texprop as any)[i]);
+          _ = new Nud.MaterialWrapper(this._io, this, this._root, (this.texprop as any)[i]);
           this._materials.push(_);
           i++;
         } while (!( ((i == 4) || ((this.texprop as any)[i] == 0)) ));
