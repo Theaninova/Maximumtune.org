@@ -22,9 +22,9 @@ types:
     instances:
       id:
         value: _root.xmd.item_ids[i]
-      size:
+      len_nut:
         value: _root.xmd.lengths[i]
-      nud:
+      nut:
         type: nut
         pos: _root.xmd.positions[i]
-        size: size
+        size: len_nut

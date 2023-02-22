@@ -5,8 +5,6 @@
   import {pwaInfo} from "virtual:pwa-info"
   import {fallbackLocale, locales} from "$lib/translations/translations"
   import {t} from "$lib/translations/translations"
-  import {tPage} from "$lib/translations/translations"
-  import {page} from "$app/stores"
 
   export let data
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ""
@@ -21,12 +19,12 @@
       href="{locale === fallbackLocale ? '' : `/${locale}`}{data.pathname}"
     />
   {/each}
-  <title>{$t(`${$tPage}.meta.title`, $page.params)}</title>
+  <title>{$t(`${data.routeId}.meta.title`, data.params)}</title>
   <meta
     name="description"
-    content="{$t(`${$tPage}.meta.description`, $page.params)} - {$t(
-      `${$tPage}.meta.description_suffix`,
-      $page.params,
+    content="{$t(`${data.routeId}.meta.description`, data.params)} - {$t(
+      `${data.routeId}.meta.description_suffix`,
+      data.params,
     )}"
   />
 </svelte:head>

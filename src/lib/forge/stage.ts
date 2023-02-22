@@ -1,9 +1,10 @@
 import {inflate} from "pako"
 import {Model} from "./three-nud"
 import type {ModelList} from "./lua/lua-parser"
-import Nud from "./kaitai/nud.ksy"
+import {Nud} from "./kaitai/compiled/nud"
 import type {StageInfo} from "./analyzer"
 import {createEnv, Table} from "lua-in-js"
+import KaitaiStream from "kaitai-struct/KaitaiStream"
 
 export async function loadStage(stage: StageInfo) {
   const luaFile = await stage.fileSystem.getFile(`model/LOADLIST_${stage.name.replace(/\//g, "_")}.lua`)
@@ -53,7 +54,8 @@ function loadInflatedModels(model: ModelList, inflated: Uint8Array) {
 
     for (let i = 0; i < addresses.length; i += 2) {
       try {
-        const model = new Model(new Nud(inflated.subarray(addresses[i], addresses[i] + addresses[i + 1])))
+        const stream = new KaitaiStream(new DataView(inflated, addresses[i], addresses[i + 1]))
+        const model = new Model(new Nud(stream))
         models.push(model)
       } catch (error) {
         errors[`0x${addresses[i].toString(16)} ~ 0x${(addresses[i] + addresses[i + 1]).toString(16)}`] = error
