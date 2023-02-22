@@ -115,8 +115,8 @@ export namespace Nut.NutBody {
   export class Cubemap {
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent?: Nut.NutBody.TextureInfo,
-      readonly _root?: Nut,
+      readonly _parent: Nut.NutBody.TextureInfo | undefined,
+      readonly _root: Nut | undefined,
       public _is_le: boolean,
     ) {
 
@@ -166,8 +166,8 @@ export namespace Nut.NutBody {
   export class Surfaces {
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent?: Nut.NutBody.TextureData,
-      readonly _root?: Nut,
+      readonly _parent: Nut.NutBody.TextureData | undefined,
+      readonly _root: Nut | undefined,
       public _is_le: boolean,
     ) {
 
@@ -207,8 +207,8 @@ export namespace Nut.NutBody {
   export class Gidx {
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent?: Nut.NutBody.Texture,
-      readonly _root?: Nut,
+      readonly _parent: Nut.NutBody.Texture | undefined,
+      readonly _root: Nut | undefined,
       public _is_le: boolean,
     ) {
 
@@ -282,8 +282,8 @@ export namespace Nut.NutBody {
   export class Header {
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent?: Nut.NutBody,
-      readonly _root?: Nut,
+      readonly _parent: Nut.NutBody | undefined,
+      readonly _root: Nut | undefined,
       public _is_le: boolean,
     ) {
 
@@ -326,8 +326,8 @@ export namespace Nut.NutBody {
   export class TextureInfo {
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent?: Nut.NutBody.Texture,
-      readonly _root?: Nut,
+      readonly _parent: Nut.NutBody.Texture | undefined,
+      readonly _root: Nut | undefined,
       public _is_le: boolean,
     ) {
 
@@ -441,8 +441,8 @@ export namespace Nut.NutBody {
   export class TextureSurface {
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent?: Nut.NutBody.Surfaces,
-      readonly _root?: Nut,
+      readonly _parent: Nut.NutBody.Surfaces | undefined,
+      readonly _root: Nut | undefined,
       public _is_le: boolean,
     ) {
 
@@ -461,11 +461,11 @@ export namespace Nut.NutBody {
     }
 
     _readLE() {
-      this.mipmaps = (this._io.readBytes(((this._parent as any)._parent._parent.textureInfo.surfaceCount == 1 ? (this._parent as any)._parent._parent.dataSize : (this._parent as any)._parent._parent.textureInfo.mipmapSizes[i]))) as any
+      this.mipmaps = (this._io.readBytes((this._parent as any)._parent._parent.dataSize)) as any
     }
 
     _readBE() {
-      this.mipmaps = (this._io.readBytes(((this._parent as any)._parent._parent.textureInfo.surfaceCount == 1 ? (this._parent as any)._parent._parent.dataSize : (this._parent as any)._parent._parent.textureInfo.mipmapSizes[i]))) as any
+      this.mipmaps = (this._io.readBytes((this._parent as any)._parent._parent.dataSize)) as any
     }
 
     mipmaps: Uint8Array;
@@ -583,7 +583,7 @@ export namespace Nut.NutBody {
     get dataOffset(): number {
       if (typeof this._dataOffset !== 'undefined')
         return this._dataOffset;
-      this._dataOffset = (((this.offset as any) + (this._parent as any).textureInfo.dataOffset)) as any
+      this._dataOffset = ((((this.offset as any) - 16) + (this._parent as any).textureInfo.dataOffset)) as any
       return this._dataOffset;
     }
 

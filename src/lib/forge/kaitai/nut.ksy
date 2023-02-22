@@ -76,7 +76,7 @@ types:
             type: u4
         instances:
           data_offset:
-            value: offset + _parent.texture_info.data_offset
+            value: offset - 0x10 + _parent.texture_info.data_offset
           surfaces:
             io: _root._io
             pos: data_offset
@@ -171,9 +171,11 @@ types:
       texture_surface:
         seq:
           - id: mipmaps
-            size: '_parent._parent._parent.texture_info.surface_count == 1
-                    ? _parent._parent._parent.data_size
-              : _parent._parent._parent.texture_info.mipmap_sizes[_index]'
+            size: _parent._parent._parent.data_size
+            # TODO: mipmaps?
+            #size: '_parent._parent._parent.texture_info.surface_count == 1
+            #  ? _parent._parent._parent.data_size
+            #  : _parent._parent._parent.texture_info.mipmap_sizes[_index]'
             #repeat: expr
             #repeat-expr: _parent._parent._parent.texture_info.mipmap_count
 
