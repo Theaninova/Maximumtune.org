@@ -2,14 +2,33 @@
   import {Nut} from "../../../../lib/forge/kaitai/compiled/nut"
   import KaitaiStream from "kaitai-struct/KaitaiStream"
   import {getImageData} from "../../../../lib/forge/nut-image-data"
+  import {inflate} from "pako"
+  import {Tex} from "../../../../lib/forge/kaitai/compiled/tex"
 
   async function fileChange() {
-    const nut = new Nut(new KaitaiStream(await input.files.item(0).arrayBuffer()))
-    console.log(nut)
-    textures = nut.body.textures
+    try {
+      let file = await input.files.item(0).arrayBuffer()
+      try {
+        file = inflate(file)
+      } catch {
+        // not a compressed file
+      }
+      if (input.files[0].name.endsWith(".tex")) {
+        const tex = new Tex(new KaitaiStream(file))
+        nuts = tex.textures.map(it => ({id: it.id, nut: it.nut}))
+      } else {
+        const nut = new Nut(new KaitaiStream(file))
+        nuts = [{id: NaN, nut: nut}]
+      }
+    } catch (error) {
+      console.error(error)
+      alert(error)
+    }
   }
 
-  let textures: Nut.NutBody.Texture[]
+  let nuts: {id: number; nut: Nut}[]
+  let nut: Nut
+  $: textures = nut ? nut.body.textures : undefined
   let selected: Nut.NutBody.Texture
   $: {
     if (selected && canvas) {
@@ -26,6 +45,7 @@
         height,
         selected.textureInfo.pixelFormat,
       )
+
       canvas.getContext("2d").putImageData(imageData, 0, 0)
     }
   }
@@ -40,8 +60,16 @@
 </script>
 
 <form>
-  <input bind:this={input} on:change={fileChange} accept=".nut" type="file" name="filename" />
+  <input bind:this={input} on:change={fileChange} accept=".nut,.tex" type="file" name="filename" />
 
+  {#if nuts}
+    <select bind:value={nut}>
+      {#each nuts as { nut, id }}
+        <option value={nut}>{id}</option>
+      {/each}
+    </select>
+    /
+  {/if}
   {#if textures}
     <select bind:value={selected}>
       {#each textures as texture}
@@ -70,6 +98,11 @@
     {/if}
   {/if}
 </form>
+{#if textures}
+  <div class="previews">
+    {#each textures as texture}{/each}
+  </div>
+{/if}
 
 <!--suppress CheckEmptyScriptTag -->
 <canvas bind:this={canvas} />
