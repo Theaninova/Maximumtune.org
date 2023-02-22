@@ -9,6 +9,7 @@ import {
   Uint8BufferAttribute,
 } from "three"
 import {inflate} from "pako"
+import KaitaiStream from "kaitai-struct/KaitaiStream"
 
 export class Model {
   readonly polysets: Polyset[]
@@ -119,13 +120,15 @@ export async function loadNud(file: File): Promise<Model[]> {
     case ".mdl": {
       const decompressed = inflate(await file.arrayBuffer()) as Uint8Array
       if (debug) {
-        const xmd = new Xmd(decompressed.buffer)
+        const stream = new KaitaiStream(new DataView(decompressed.buffer))
+        const xmd = new Xmd(stream)
         for (let i = 0; i < xmd.header.count; i++) {
           const id = xmd.itemIds[i]
           const position = xmd.positions[i]
           const size = xmd.lengths[i]
           try {
-            models.push(new Model(new Nud(decompressed.slice(position, position + size).buffer), id))
+            const stream = new KaitaiStream(new DataView(decompressed.buffer, position, size))
+            models.push(new Model(new Nud(stream), id))
           } catch (error) {
             console.error(
               "Failed to load NUD as part of an XMD archive, index",
@@ -142,13 +145,14 @@ export async function loadNud(file: File): Promise<Model[]> {
           }
         }
       } else {
-        models.push(...new Mdl(decompressed.buffer).models.map(({nud, id}) => new Model(nud, id as number)))
+        const stream = new KaitaiStream(decompressed)
+        models.push(...new Mdl(stream).models.map(({nud, id}) => new Model(nud, id as number)))
       }
       break
     }
     case ".nud": {
-      const buffer = await file.arrayBuffer()
-      models.push(new Model(new Nud(buffer)))
+      const stream = new KaitaiStream(new DataView(await file.arrayBuffer()))
+      models.push(new Model(new Nud(stream)))
       break
     }
     default: {

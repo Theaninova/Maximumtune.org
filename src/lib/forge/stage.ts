@@ -54,7 +54,7 @@ function loadInflatedModels(model: ModelList, inflated: Uint8Array) {
 
     for (let i = 0; i < addresses.length; i += 2) {
       try {
-        const stream = new KaitaiStream(new DataView(inflated, addresses[i], addresses[i + 1]))
+        const stream = new KaitaiStream(new DataView(inflated.buffer, addresses[i], addresses[i + 1]))
         const model = new Model(new Nud(stream))
         models.push(model)
       } catch (error) {
