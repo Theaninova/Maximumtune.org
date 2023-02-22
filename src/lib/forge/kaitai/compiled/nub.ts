@@ -48,7 +48,7 @@ export namespace Nub {
       this.bits = (this._io.readU4le()) as any
     }
 
-    magic: string;
+    magic: Uint8Array;
     id: number;
     count: number;
     dataOffset: number;
