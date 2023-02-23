@@ -34,7 +34,6 @@
     if (selected && canvas) {
       const width = selected.textureInfo.width
       const height = selected.textureInfo.height
-      console.log(selected)
 
       canvas.width = width
       canvas.height = height

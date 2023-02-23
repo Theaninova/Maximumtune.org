@@ -5,19 +5,35 @@ import {Nud} from "./kaitai/compiled/nud"
 import type {StageInfo} from "./analyzer"
 import {createEnv, Table} from "lua-in-js"
 import KaitaiStream from "kaitai-struct/KaitaiStream"
+import {Nut} from "./kaitai/compiled/nut"
 
 export async function loadStage(stage: StageInfo) {
   const luaFile = await stage.fileSystem.getFile(`model/LOADLIST_${stage.name.replace(/\//g, "_")}.lua`)
 
   const luaEnv = createEnv()
-  const [, modelList] = (
+  const [textureList, modelList] = (
     luaEnv.parse(`${await luaFile.text()}\nreturn {TEXTURELIST, MODELLIST}`).exec() as Table
   ).toObject() as [string[], ModelList[]]
 
+  const textures: Record<number, Nut.NutBody.Texture> = {}
+  for (const texture of textureList) {
+    const nut = await loadTextureFromLoadList(texture, stage)
+    for (const nutTexture of nut.body.textures) {
+      console.assert(
+        !textures[nutTexture.gidx.hashId],
+        "Duplicate texture identifier",
+        nutTexture.gidx.hashId,
+      )
+      textures[nutTexture.gidx.hashId] = nutTexture
+    }
+  }
+  console.log(textures)
+
   const models: Model[] = []
-  for (const model of modelList) {
+  // TODO:
+  for (const model of modelList.slice(0, 1)) {
     try {
-      models.push(...(await loadModelFromLoadList(model, stage)))
+      models.push(...(await loadModelFromLoadList(model, textures, stage)))
     } catch (error) {
       console.log(error)
     }
@@ -26,9 +42,32 @@ export async function loadStage(stage: StageInfo) {
   return models.filter(it => !!it)
 }
 
-async function loadModelFromLoadList(model: ModelList, stage: StageInfo) {
+async function loadModelFromLoadList(
+  model: ModelList,
+  textures: Record<number, Nut.NutBody.Texture>,
+  stage: StageInfo,
+) {
   const inflated = await loadAndInflate(model, stage)
-  return loadInflatedModels(model, inflated)
+  return loadInflatedModels(model, textures, inflated)
+}
+
+async function loadTextureFromLoadList(name: string, stage: StageInfo) {
+  const inflated = await loadAndInflateTexture(name, stage)
+  return new Nut(new KaitaiStream(inflated))
+}
+
+async function loadAndInflateTexture(name: string, stage: StageInfo): Promise<Uint8Array> {
+  console.log(stage)
+  const loadPath = `model/nut/${name}`
+  console.log(loadPath)
+  const file = await stage.fileSystem.getFile(loadPath)
+  const buffer = await file.arrayBuffer()
+
+  try {
+    return await inflate(buffer)
+  } catch {
+    return new Uint8Array(buffer)
+  }
 }
 
 async function loadAndInflate(model: ModelList, stage: StageInfo): Promise<Uint8Array> {
@@ -38,13 +77,17 @@ async function loadAndInflate(model: ModelList, stage: StageInfo): Promise<Uint8
   const buffer = await file.arrayBuffer()
 
   try {
-    return (await inflate(buffer)) as Uint8Array
+    return await inflate(buffer)
   } catch {
     return new Uint8Array(buffer)
   }
 }
 
-function loadInflatedModels(model: ModelList, inflated: Uint8Array) {
+function loadInflatedModels(
+  model: ModelList,
+  textures: Record<number, Nut.NutBody.Texture>,
+  inflated: Uint8Array,
+) {
   const errors: Record<string, unknown> = {}
   const models = Object.entries(model).flatMap<Model>(([key, section]) => {
     if (!key.endsWith("ADDR")) return
@@ -55,7 +98,7 @@ function loadInflatedModels(model: ModelList, inflated: Uint8Array) {
     for (let i = 0; i < addresses.length; i += 2) {
       try {
         const stream = new KaitaiStream(new DataView(inflated.buffer, addresses[i], addresses[i + 1]))
-        const model = new Model(new Nud(stream))
+        const model = new Model(new Nud(stream), undefined, textures)
         models.push(model)
       } catch (error) {
         errors[`0x${addresses[i].toString(16)} ~ 0x${(addresses[i] + addresses[i + 1]).toString(16)}`] = error
