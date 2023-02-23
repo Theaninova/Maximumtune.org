@@ -4,24 +4,33 @@ import {Xmd} from "./kaitai/compiled/xmd"
 import {
   BufferGeometry,
   Float32BufferAttribute,
-  MeshStandardMaterial,
+  Material,
+  MeshBasicMaterial,
+  RepeatWrapping,
+  Texture,
   Uint16BufferAttribute,
   Uint8BufferAttribute,
 } from "three"
 import {inflate} from "pako"
 import KaitaiStream from "kaitai-struct/KaitaiStream"
+import type {Nut} from "./kaitai/compiled/nut"
+import {getImageData} from "./nut-image-data"
 
 export class Model {
   readonly polysets: Polyset[]
 
-  constructor(readonly nud: Nud, readonly id?: number) {
-    this.polysets = processNud(this.nud, this.id)
+  constructor(
+    readonly nud: Nud,
+    readonly id?: number,
+    readonly textures?: Record<number, Nut.NutBody.Texture>,
+  ) {
+    this.polysets = processNud(this.nud, this.id, this.textures)
   }
 }
 
 export interface Polyset {
   geometry: BufferGeometry
-  material: MeshStandardMaterial
+  material: Material
 }
 
 function getRenderingVertexIndices(vertexIndices: number[]): number[] {
@@ -57,11 +66,14 @@ function getRenderingVertexIndices(vertexIndices: number[]): number[] {
   return renderingIndices
 }
 
-export function halfFloatToFloat(half: number): number {
-  return ((half & 0x80_00) << 16) | (((half & 0x7c_00) + 0x1_c0_00) << 13) | ((half & 0x03_ff) << 13)
+export function convertFloat16(raw: number): number {
+  const uint32 = new Uint32Array(1)
+  uint32[0] = ((raw & 0x8000) << 16) | (((raw & 0x7c00) + 0x1c000) << 13) | ((raw & 0x03ff) << 13)
+  const float32 = new Float32Array(uint32.buffer)
+  return float32[0]
 }
 
-export function processNud(nud: Nud, id?: number): Polyset[] {
+export function processNud(nud: Nud, id?: number, textures?: Record<number, Nut.NutBody.Texture>): Polyset[] {
   return nud.meshes.flatMap(it => {
     return it.parts.map((part, i) => {
       const geometry = new BufferGeometry()
@@ -73,11 +85,8 @@ export function processNud(nud: Nud, id?: number): Polyset[] {
 
       if (part.vertices[0].uv) {
         // TODO: more uv channels
-        const uvs = part.vertices.map(it => [it.uv[0], it.uv[1]])
-        geometry.setAttribute(
-          "uv",
-          new Float32BufferAttribute(uvs.flat().map(halfFloatToFloat), uvs[0].length),
-        )
+        const uvs = part.vertices.map(it => [convertFloat16(it.uv[0]), convertFloat16(it.uv[1])])
+        geometry.setAttribute("uv", new Float32BufferAttribute(uvs.flat(), uvs[0].length))
       }
       if (part.vertices[0].colors) {
         const colors = part.vertices.map(it => it.colors)
@@ -96,15 +105,30 @@ export function processNud(nud: Nud, id?: number): Polyset[] {
 
       console.assert(part.boneSize == 0, "Bones are not implemented yet:", "Model", id, "Polyset", i)
       console.assert(part.materials.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
-      const material = new MeshStandardMaterial()
+      const material = new MeshBasicMaterial()
       if (part.materials[0].material.alphaTest) {
         material.transparent = true
         material.opacity = 0.4
       }
-      material.color.setHex(Math.random() * 0xff_ff_ff)
-      // for (const texture of materialData[0].material.materialTextures) {
-      //   console.log("Requesting texture", texture.hash)
-      // }
+      // material.color.setHex(Math.random() * 0xff_ff_ff)
+      if (textures) {
+        for (const texture of part.materials[0].material.materialTextures.slice(0, 1)) {
+          const nutTexture = textures[texture.hash]
+          console.assert(!!nutTexture, "Texture not found:", texture.hash)
+          if (!nutTexture) continue
+          material.map = new Texture(
+            getImageData(
+              nutTexture.textureData.surfaces.surfaces[0],
+              nutTexture.textureInfo.width,
+              nutTexture.textureInfo.height,
+              nutTexture.textureInfo.pixelFormat,
+            ),
+          )
+          material.map.wrapT = RepeatWrapping
+          material.map.wrapS = RepeatWrapping
+          material.map.needsUpdate = true
+        }
+      }
 
       return {geometry, material}
     })
