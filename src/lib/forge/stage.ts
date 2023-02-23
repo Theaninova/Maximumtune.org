@@ -27,7 +27,6 @@ export async function loadStage(stage: StageInfo) {
       textures[nutTexture.gidx.hashId] = nutTexture
     }
   }
-  console.log(textures)
 
   const models: Model[] = []
   // TODO:
@@ -57,7 +56,6 @@ async function loadTextureFromLoadList(name: string, stage: StageInfo) {
 }
 
 async function loadAndInflateTexture(name: string, stage: StageInfo): Promise<Uint8Array> {
-  console.log(stage)
   const loadPath = `model/nut/${name}`
   console.log(loadPath)
   const file = await stage.fileSystem.getFile(loadPath)

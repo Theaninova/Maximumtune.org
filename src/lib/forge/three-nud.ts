@@ -3,14 +3,22 @@ import {Mdl} from "./kaitai/compiled/mdl"
 import {Xmd} from "./kaitai/compiled/xmd"
 import {
   BufferGeometry,
+  ClampToEdgeWrapping,
   Float32BufferAttribute,
+  LinearFilter,
+  LinearMipMapLinearFilter,
   Material,
-  MeshBasicMaterial,
+  MeshStandardMaterial,
+  MirroredRepeatWrapping,
+  NearestFilter,
+  NearestMipmapLinearFilter,
   RepeatWrapping,
   Texture,
   Uint16BufferAttribute,
   Uint8BufferAttribute,
+  UVMapping,
 } from "three"
+import type {TextureFilter, Wrapping} from "three"
 import {inflate} from "pako"
 import KaitaiStream from "kaitai-struct/KaitaiStream"
 import type {Nut} from "./kaitai/compiled/nut"
@@ -87,6 +95,7 @@ export function processNud(nud: Nud, id?: number, textures?: Record<number, Nut.
         // TODO: more uv channels
         const uvs = part.vertices.map(it => [convertFloat16(it.uv[0]), convertFloat16(it.uv[1])])
         geometry.setAttribute("uv", new Float32BufferAttribute(uvs.flat(), uvs[0].length))
+        geometry.attributes.uv.needsUpdate = true
       }
       if (part.vertices[0].colors) {
         const colors = part.vertices.map(it => it.colors)
@@ -105,28 +114,33 @@ export function processNud(nud: Nud, id?: number, textures?: Record<number, Nut.
 
       console.assert(part.boneSize == 0, "Bones are not implemented yet:", "Model", id, "Polyset", i)
       console.assert(part.materials.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
-      const material = new MeshBasicMaterial()
-      if (part.materials[0].material.alphaTest) {
-        material.transparent = true
-        material.opacity = 0.4
-      }
-      // material.color.setHex(Math.random() * 0xff_ff_ff)
+      const nudMaterial = part.materials[0].material
+      const material = new MeshStandardMaterial()
+      material.transparent = nudMaterial.refAlpha !== 0
       if (textures) {
-        for (const texture of part.materials[0].material.materialTextures.slice(0, 1)) {
+        console.assert(nudMaterial.materialTextures.length <= 1, nudMaterial.materialTextures)
+        for (const texture of nudMaterial.materialTextures.slice(0, 1)) {
           const nutTexture = textures[texture.hash]
           console.assert(!!nutTexture, "Texture not found:", texture.hash)
           if (!nutTexture) continue
-          material.map = new Texture(
+
+          const nativeTexture = new Texture(
             getImageData(
               nutTexture.textureData.surfaces.surfaces[0],
               nutTexture.textureInfo.width,
               nutTexture.textureInfo.height,
               nutTexture.textureInfo.pixelFormat,
             ),
+            UVMapping,
+            convertWrapMode(texture.wrapModeT),
+            convertWrapMode(texture.wrapModeS),
+            convertFilterMode(texture.magFilter),
+            convertFilterMode(texture.minFilter),
           )
-          material.map.wrapT = RepeatWrapping
-          material.map.wrapS = RepeatWrapping
-          material.map.needsUpdate = true
+          nativeTexture.flipY = false
+          nativeTexture.needsUpdate = true
+
+          material.map = nativeTexture
         }
       }
 
@@ -136,6 +150,23 @@ export function processNud(nud: Nud, id?: number, textures?: Record<number, Nut.
 }
 
 const debug = true
+
+function convertFilterMode(filter: Nud.FilterMode): TextureFilter {
+  return {
+    [Nud.FilterMode.LINEAR]: LinearFilter,
+    [Nud.FilterMode.NEAREST]: NearestFilter,
+    [Nud.FilterMode.LINEAR_MIPMAP_LINEAR]: LinearMipMapLinearFilter,
+    [Nud.FilterMode.NEAREST_MIPMAP_LINEAR]: NearestMipmapLinearFilter,
+  }[filter]
+}
+
+function convertWrapMode(wrapMode: Nud.WrapMode): Wrapping {
+  return {
+    [Nud.WrapMode.REPEAT]: RepeatWrapping,
+    [Nud.WrapMode.CLAMP_TO_EDGE]: ClampToEdgeWrapping,
+    [Nud.WrapMode.MIRRORED_REPEAT]: MirroredRepeatWrapping,
+  }[wrapMode]
+}
 
 export async function loadNud(file: File): Promise<Model[]> {
   const models: Model[] = []
