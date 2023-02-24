@@ -1,9 +1,10 @@
 <script lang="ts">
-  import {T, Canvas, OrbitControls, Three} from "@threlte/core"
+  import {T, Canvas, OrbitControls, Three, Pass} from "@threlte/core"
   import type {ThrelteContext} from "@threlte/core"
-  import {DoubleSide, PerspectiveCamera} from "three"
+  import {DoubleSide, PerspectiveCamera, Vector2} from "three"
   import {FlyControls} from "three/examples/jsm/controls/FlyControls"
   import type {Model} from "./three-nud"
+  import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
 
   let camera: PerspectiveCamera
   let controls: OrbitControls
@@ -61,6 +62,7 @@
 {/if}
 
 <Canvas bind:ctx>
+  <Pass pass={new UnrealBloomPass(new Vector2(1024, 1024), 1.5, 0, 1)} />
   <T.PerspectiveCamera bind:ref={camera} makeDefault {fov} position={cameraPosition} far={1_000_000}>
     {#if !fpsControls}
       <OrbitControls bind:this={controls} {autoRotate} autoRotateSpeed={0.5} {target} />
@@ -81,7 +83,6 @@
               geometry={polyset.geometry}
               material={polyset.material}
               material.wireframe={wireframe}
-              material.side={DoubleSide}
               frustumCulled={false}
               receiveShadow
             />
@@ -137,14 +138,14 @@
 
   .controls {
     position: absolute;
+    z-index: 100;
     top: 0;
     right: 0;
     left: 0;
 
     display: flex;
-    justify-content: center;
     gap: 4px;
-    z-index: 100;
+    justify-content: center;
 
     width: 100vw;
     margin-inline: 0;

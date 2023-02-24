@@ -2,17 +2,24 @@ import {Nud} from "./kaitai/compiled/nud"
 import {Mdl} from "./kaitai/compiled/mdl"
 import {Xmd} from "./kaitai/compiled/xmd"
 import {
+  AlwaysDepth,
   BufferGeometry,
   ClampToEdgeWrapping,
+  DoubleSide,
   Float32BufferAttribute,
+  FrontSide,
+  GreaterDepth,
+  LessDepth,
   LinearFilter,
   LinearMipMapLinearFilter,
   Material,
+  MeshPhongMaterial,
   MeshStandardMaterial,
   MirroredRepeatWrapping,
   NearestFilter,
   NearestMipmapLinearFilter,
   RepeatWrapping,
+  RGBAFormat,
   Texture,
   Uint16BufferAttribute,
   Uint8BufferAttribute,
@@ -21,8 +28,9 @@ import {
 import type {TextureFilter, Wrapping} from "three"
 import {inflate} from "pako"
 import KaitaiStream from "kaitai-struct/KaitaiStream"
-import type {Nut} from "./kaitai/compiled/nut"
+import {Nut} from "./kaitai/compiled/nut"
 import {getImageData} from "./nut-image-data"
+import {filterCar, indexCar} from "./car"
 
 export class Model {
   readonly polysets: Polyset[]
@@ -82,8 +90,8 @@ export function convertFloat16(raw: number): number {
 }
 
 export function processNud(nud: Nud, id?: number, textures?: Record<number, Nut.NutBody.Texture>): Polyset[] {
-  return nud.meshes.flatMap(it => {
-    return it.parts.map((part, i) => {
+  return nud.meshes.flatMap(mesh => {
+    return mesh.parts.map((part, i) => {
       const geometry = new BufferGeometry()
 
       const indices = getRenderingVertexIndices(part.indices)
@@ -113,15 +121,41 @@ export function processNud(nud: Nud, id?: number, textures?: Record<number, Nut.
       }
 
       console.assert(part.boneSize == 0, "Bones are not implemented yet:", "Model", id, "Polyset", i)
-      console.assert(part.materials.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
+      //console.assert(part.materials.length <= 1, "Multiple materials: ", "Model", id, "Polyset", i)
       const nudMaterial = part.materials[0].material
-      const material = new MeshStandardMaterial()
-      material.transparent = nudMaterial.refAlpha !== 0
-      if (textures) {
-        console.assert(nudMaterial.materialTextures.length <= 1, nudMaterial.materialTextures)
+      const material = new MeshPhongMaterial()
+      const noTextures = false
+      if (noTextures) {
+        material.side = DoubleSide
+      }
+
+      if (!noTextures) {
+        if (mesh.name.includes("NO_SORT")) {
+          material.depthWrite = false
+          material.depthTest = false
+        }
+        if (mesh.name.includes("polySurface")) {
+          material.transparent = true // nudMaterial.refAlpha !== 0
+          material.opacity = 0.05
+        }
+      }
+
+      // if (!nudMaterial.flags.diffuseMap) {
+      //   material.opacity = 0.9
+      // }
+      // if (nudMaterial.flags.shadow) {
+      //   material.opacity = 0
+      // }
+      if (!noTextures && textures) {
+        // console.assert(
+        //   nudMaterial.materialTextures.length <= 1,
+        //   nudMaterial.materialTextures,
+        //   nudMaterial,
+        //   mesh.name,
+        // )
         for (const texture of nudMaterial.materialTextures.slice(0, 1)) {
           const nutTexture = textures[texture.hash]
-          console.assert(!!nutTexture, "Texture not found:", texture.hash)
+          console.assert(!!nutTexture, "Texture not found:", texture.hash, "in", id)
           if (!nutTexture) continue
 
           const nativeTexture = new Texture(
@@ -140,7 +174,27 @@ export function processNud(nud: Nud, id?: number, textures?: Record<number, Nut.
           nativeTexture.flipY = false
           nativeTexture.needsUpdate = true
 
-          material.map = nativeTexture
+          if (!material.map) {
+            material.map = nativeTexture
+          } else if (!material.bumpMap) {
+            material.bumpMap = nativeTexture
+          } else if (!material.specularMap) {
+            material.specularMap = nativeTexture
+          }
+          // if (nudMaterial.flags.diffuseMap && !material.map) {
+          //   // TODO
+          // } else if (nudMaterial.flags.sphereMap && !material.envMap) {
+          //   material.envMap = nativeTexture
+          // } else if (nudMaterial.flags.normalMap && !material.normalMap) {
+          //   material.bumpMap = nativeTexture
+          //   material.bumpScale = 10
+          //   console.log("normal", nutTexture.textureInfo)
+          // } else if (nudMaterial.flags.dummyRamp && !material.roughnessMap) {
+          //   material.roughnessMap = nativeTexture
+          // } else if (nudMaterial.flags.glow && !material.emissiveMap) {
+          //   material.emissiveMap = nativeTexture
+          //   material.emissiveIntensity = 1000
+          // }
         }
       }
 
@@ -168,22 +222,73 @@ function convertWrapMode(wrapMode: Nud.WrapMode): Wrapping {
   }[wrapMode]
 }
 
-export async function loadNud(file: File): Promise<Model[]> {
+export async function loadTex(file: File, pick?: number): Promise<Record<number, Nut.NutBody.Texture>> {
+  const decompressed = inflate(await file.arrayBuffer()) as Uint8Array
+  const stream = new KaitaiStream(new DataView(decompressed.buffer))
+  const xmd = new Xmd(stream)
+
+  const out = {}
+  for (let i = 0; i < xmd.header.count; i++) {
+    const id = xmd.itemIds[i]
+    if (typeof pick !== "undefined" && id !== pick) continue
+
+    const position = xmd.positions[i]
+    const size = xmd.lengths[i]
+    out[id] = {}
+
+    try {
+      const stream = new KaitaiStream(new DataView(decompressed.buffer, position, size))
+      const nut = new Nut(stream)
+
+      for (const texture of nut.body.textures) {
+        console.assert(!out[id][texture.gidx.hashId], "Duplicate identifier", texture.gidx.hashId)
+        out[texture.gidx.hashId] = texture
+      }
+    } catch (error) {
+      console.error(
+        "Failed to load NUT as part of an XMD archive, index",
+        i,
+        "id",
+        id,
+        "start",
+        position,
+        "size",
+        size,
+        "-",
+        error,
+      )
+    }
+  }
+
+  return out
+}
+
+export async function loadNud(file: File, textureFile?: {tex: File; pick: number}[]): Promise<Model[]> {
   const models: Model[] = []
 
   switch (file.name.replace(/^[^.]+/, "")) {
     case ".mdl": {
+      const textures = textureFile
+        ? await Promise.all(textureFile.map(it => loadTex(it.tex, it.pick))).then(it =>
+            it.reduce((acc, curr) => {
+              Object.assign(acc, curr)
+              return acc
+            }),
+          )
+        : undefined
       const decompressed = inflate(await file.arrayBuffer()) as Uint8Array
       if (debug) {
         const stream = new KaitaiStream(new DataView(decompressed.buffer))
         const xmd = new Xmd(stream)
+        const nuds: Nud[] = []
         for (let i = 0; i < xmd.header.count; i++) {
           const id = xmd.itemIds[i]
           const position = xmd.positions[i]
           const size = xmd.lengths[i]
+
           try {
             const stream = new KaitaiStream(new DataView(decompressed.buffer, position, size))
-            models.push(new Model(new Nud(stream), id))
+            nuds.push(new Nud(stream))
           } catch (error) {
             console.error(
               "Failed to load NUD as part of an XMD archive, index",
@@ -199,6 +304,9 @@ export async function loadNud(file: File): Promise<Model[]> {
             )
           }
         }
+
+        models.push(...filterCar(nuds).map(nud => new Model(nud, undefined, textures)))
+        indexCar(nuds)
       } else {
         const stream = new KaitaiStream(decompressed)
         models.push(...new Mdl(stream).models.map(({nud, id}) => new Model(nud, id as number)))

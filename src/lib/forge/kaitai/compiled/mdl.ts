@@ -85,6 +85,6 @@ export namespace Mdl {
     }
 
     i: number;
-    _raw_nud: string;
+    _raw_nud: Uint8Array;
   }
 }
