@@ -468,7 +468,10 @@ export namespace Nud {
     }
 
     _read() {
-      this.flags = (this._io.readU4le()) as any
+      this.flags = (new Nud.Material.TextureFlags(this._io, this, this._root)) as any
+      this.unknownByte1 = (this._io.readU1()) as any
+      this.unknownByte2 = (this._io.readU1()) as any
+      this.materialType = (this._io.readU1()) as any
       this.padding = (this._io.readBytes(4)) as any
       this.srcFactor = (this._io.readU2le()) as any
       this.numMaterialTextures = (this._io.readU2le()) as any
@@ -495,7 +498,10 @@ export namespace Nud {
       }
     }
 
-    flags: number;
+    flags: Nud.Material.TextureFlags;
+    unknownByte1: number;
+    unknownByte2: number;
+    materialType: number;
     padding: Uint8Array;
     srcFactor: number;
     numMaterialTextures: number;
@@ -508,6 +514,41 @@ export namespace Nud {
     zBufferOffset: number;
     materialTextures: Array<Nud.MaterialTexture>;
     materialAttributes: Array<Nud.MaterialAttribute>;
+  }
+}
+
+export namespace Nud.Material {
+  export class TextureFlags {
+    _is_le?: boolean;
+
+    constructor(
+      readonly _io: KaitaiStream,
+      readonly _parent?: Nud.Material,
+      readonly _root?: Nud,
+    ) {
+
+      this._read();
+    }
+
+    _read() {
+      this.glow = (this._io.readBitsIntBe(1) != 0) as any
+      this.shadow = (this._io.readBitsIntBe(1) != 0) as any
+      this.dummyRamp = (this._io.readBitsIntBe(1) != 0) as any
+      this.sphereMap = (this._io.readBitsIntBe(1) != 0) as any
+      this.stageAoMap = (this._io.readBitsIntBe(1) != 0) as any
+      this.rampCubeMap = (this._io.readBitsIntBe(1) != 0) as any
+      this.normalMap = (this._io.readBitsIntBe(1) != 0) as any
+      this.diffuseMap = (this._io.readBitsIntBe(1) != 0) as any
+    }
+
+    glow: boolean;
+    shadow: boolean;
+    dummyRamp: boolean;
+    sphereMap: boolean;
+    stageAoMap: boolean;
+    rampCubeMap: boolean;
+    normalMap: boolean;
+    diffuseMap: boolean;
   }
 }
 
@@ -723,18 +764,6 @@ export namespace Nud {
 export namespace Nud {
   export const enum Version {
     V2 = 2,
-  }
-}
-export namespace Nud {
-  export const enum TextureFlag {
-    DIFFUSE_MAP = 1,
-    NORMAL_MAP = 2,
-    RAMP_CUBE_MAP = 4,
-    STAGE_AO_MAP = 8,
-    SPHERE_MAP = 16,
-    DUMMY_RAMP = 32,
-    SHADOW = 64,
-    GLOW = 128,
   }
 }
 export namespace Nud {

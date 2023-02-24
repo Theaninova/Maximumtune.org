@@ -277,8 +277,21 @@ types:
         pos: position
   material:
     seq:
+      # TODO
+      #0001 0000 0000 0000 0000 0010 0000 0001
+      #0001 0000 0000 0000 0000 0010 1100 0010
+      #0001 0000 0000 0000 0000 0010 1011 0010
+      #0001 0000 0000 0000 0000 0010 0000 0000
+      #0010 0000 0000 0000 0000 0010 0001 0101
+      #0001 0000 0000 0000 0000 0010 1001 0001
       - id: flags
-        type: u4
+        type: texture_flags
+      - id: unknown_byte1
+        type: u1
+      - id: unknown_byte2
+        type: u1
+      - id: material_type
+        type: u1
       - id: padding
         size: 4
       - id: src_factor
@@ -309,6 +322,25 @@ types:
         type: material_attribute
         repeat: until
         repeat-until: _.size == 0
+    types:
+      texture_flags:
+        seq:
+          - id: glow
+            type: b1
+          - id: shadow
+            type: b1
+          - id: dummy_ramp
+            type: b1
+          - id: sphere_map
+            type: b1
+          - id: stage_ao_map
+            type: b1
+          - id: ramp_cube_map
+            type: b1
+          - id: normal_map
+            type: b1
+          - id: diffuse_map
+            type: b1
   material_attribute:
     seq:
       - id: size
@@ -414,12 +446,3 @@ enums:
     4: level_4_anisotropic
     5: level_4_trilinear
     6: level_4_trilinear_anisotripic
-  texture_flag:
-    0x00000080: glow
-    0x00000040: shadow
-    0x00000020: dummy_ramp
-    0x00000010: sphere_map
-    0x00000008: stage_ao_map
-    0x00000004: ramp_cube_map
-    0x00000002: normal_map
-    0x00000001: diffuse_map

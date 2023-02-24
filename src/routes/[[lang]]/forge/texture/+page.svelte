@@ -71,7 +71,7 @@
   {/if}
   {#if textures}
     <select bind:value={selected}>
-      {#each textures as texture}
+      {#each textures.sort((a, b) => a.gidx.hashId - b.gidx.hashId) as texture}
         <option value={texture}>{texture.gidx.hashId}</option>
       {/each}
     </select>
