@@ -43,7 +43,7 @@
   onMount(() => {
     const hash = $page.url.hash || localStorage.getItem("splits_stage")
     if (hash) {
-      document.getElementById(hash.replace(/^#/, "")).scrollIntoView({block: "center"})
+      document.getElementById(hash.replace(/^#/, ""))?.scrollIntoView({block: "center"})
     }
   })
 
@@ -56,18 +56,19 @@
     const center = scrollTop + halfHeight
 
     for (const slide: HTMLAnchorElement of slides) {
+      const slideChild = slide.firstChild as HTMLElement
       const slideHeight = slide.offsetHeight
       const centerOffset = center - (slide.offsetTop + slideHeight / 2)
       const centerOffsetAbs = Math.abs(centerOffset)
       const scale = Math.max(Math.min(centerOffsetAbs / height, 1), 0) * -100
 
-      const hash = `#${slide.id}`
+      const hash = `#${slideChild.id}`
       if (scale > -1 && window.location.hash !== hash) {
         history.replaceState(undefined, undefined, hash)
         localStorage.setItem("splits_stage", hash)
       }
 
-      slide.style.translate = `0px 0px ${Math.round(scale)}px`
+      slideChild.style.translate = `0px 0px ${Math.round(scale)}px`
     }
   }
 
@@ -75,7 +76,7 @@
 
   const isDesktop = browser && window.matchMedia("(min-width: 512px)").matches
   let scrollContainer: HTMLDivElement
-  $: slides = scrollContainer?.querySelectorAll(":scope > * > a")
+  $: slides = scrollContainer?.querySelectorAll(":scope > * > *")
   $: {
     if (slides) {
       scroll()
@@ -88,9 +89,11 @@
 <section bind:this={scrollContainer} on:scroll={scroll}>
   <div class="header">
     {#each data.stages as stage}
-      <a class="slide" id={stage.key} href="./{stage.key}/" aria-label={stage.title}>
-        <StageBadge {stage} />
-      </a>
+      <div class="slide">
+        <a id={stage.key} href="./{stage.key}/" aria-label={stage.title}>
+          <StageBadge {stage} />
+        </a>
+      </div>
     {/each}
   </div>
 </section>
@@ -138,17 +141,18 @@
   }
 
   .slide {
-    all: unset;
-
-    will-change: transform;
     cursor: pointer;
     scroll-snap-align: center;
 
     transform-style: preserve-3d;
 
+    contain: size layout;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    width: $card-size;
+    height: $card-size;
   }
 
   section {
@@ -158,8 +162,8 @@
     overflow-y: auto;
 
     width: 100%;
-    margin-inline: 0;
     margin-block-start: -68px;
+    margin-inline: 0;
 
     @media (max-width: 512px) {
       scroll-snap-type: y mandatory;
