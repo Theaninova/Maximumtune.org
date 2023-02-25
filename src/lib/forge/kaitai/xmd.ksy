@@ -22,14 +22,14 @@ seq:
 types:
   xmd_header:
     seq:
-      - id: magic
-        contents: [0x58, 0x4d, 0x44, 0x00, 0x30, 0x30, 0x31, 0x00]
+      - id: signature
+        contents: "XMD\0001\0"
       - id: layout
         type: u4
         enum: list_counts
-        valid:
-          any-of:
-            - list_counts::pos_len_id
+        #valid:
+        #  any-of:
+        #    - list_counts::pos_len_id
       - id: count
         type: u4
     instances:
