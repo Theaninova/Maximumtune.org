@@ -80,6 +80,7 @@
       will-change: transform;
       scroll-snap-align: center;
 
+      contain: size layout;
       display: flex;
       align-items: center;
       justify-content: center;

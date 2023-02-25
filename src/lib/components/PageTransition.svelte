@@ -42,10 +42,7 @@
   @import "../style/theme";
 
   main {
-    will-change: transform, opacity;
-
-    position: relative;
-
+    contain: strict;
     overflow-y: auto;
     display: flex;
     grid-column: 1;

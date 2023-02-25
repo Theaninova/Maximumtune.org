@@ -55,13 +55,15 @@ export const fileFormats: FileFormat[] = [
     export: "yes",
   },
   {
-    title: "Flash-based Menus",
+    title: "Namco Lumen UI",
     extension: ".lmd",
     category: "menus",
-    solved: "no",
-    import: "no",
+    solved: "yes",
+    import: "wip",
     export: "no",
     binary: true,
+    compressed: "yes",
+    kaitai: "/file-formats/kaitai/lmd.ksy",
   },
   {
     title: "Excel Translation Map",
