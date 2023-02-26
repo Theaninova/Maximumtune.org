@@ -874,7 +874,7 @@ export namespace Lmd {
       this.unknown = (this._io.readBytes((3 * 4))) as any
       this.maxCharacterId = (this._io.readU4le()) as any
       this.unknown2 = (this._io.readU4le()) as any
-      this.maxCharacterId2 = (this._io.readU4le()) as any
+      this.entryCharacterId = (this._io.readU4le()) as any
       this.maxDepth = (this._io.readU2le()) as any
       this.unknown3 = (this._io.readU2le()) as any
       this.framerate = (this._io.readF4le()) as any
@@ -886,7 +886,7 @@ export namespace Lmd {
     unknown: Uint8Array;
     maxCharacterId: number;
     unknown2: number;
-    maxCharacterId2: number;
+    entryCharacterId: number;
     maxDepth: number;
     unknown3: number;
     framerate: number;

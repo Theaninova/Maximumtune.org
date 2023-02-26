@@ -382,7 +382,7 @@ types:
         type: u4
       - id: unknown2
         type: u4
-      - id: max_character_id_2
+      - id: entry_character_id
         type: u4
       - id: max_depth
         type: u2
