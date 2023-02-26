@@ -716,14 +716,14 @@ export namespace Nud {
   }
 }
 export namespace Nud {
-  export const enum BoneFlags {
+  export enum BoneFlags {
     UNBOUND = 0,
     WEIGHTED = 4,
     SINGLE_BOUND = 8,
   }
 }
 export namespace Nud {
-  export const enum FilterMode {
+  export enum FilterMode {
     LINEAR_MIPMAP_LINEAR = 0,
     NEAREST = 1,
     LINEAR = 2,
@@ -731,14 +731,14 @@ export namespace Nud {
   }
 }
 export namespace Nud {
-  export const enum AlphaFunction {
+  export enum AlphaFunction {
     NO_ALPHA = 0,
     ALPHA_1 = 4,
     ALPHA_2 = 6,
   }
 }
 export namespace Nud {
-  export const enum MipDetail {
+  export enum MipDetail {
     LEVEL_1 = 1,
     LEVEL_1_OFF = 2,
     LEVEL_4 = 3,
@@ -748,7 +748,7 @@ export namespace Nud {
   }
 }
 export namespace Nud {
-  export const enum BoneSize {
+  export enum BoneSize {
     NO_BONES = 0,
     FLOAT = 1,
     HALF_FLOAT = 2,
@@ -756,25 +756,25 @@ export namespace Nud {
   }
 }
 export namespace Nud {
-  export const enum Signature {
+  export enum Signature {
     NDWD = 1146569806,
     NDP3 = 1313099827,
   }
 }
 export namespace Nud {
-  export const enum Version {
+  export enum Version {
     V2 = 2,
   }
 }
 export namespace Nud {
-  export const enum WrapMode {
+  export enum WrapMode {
     REPEAT = 1,
     MIRRORED_REPEAT = 2,
     CLAMP_TO_EDGE = 3,
   }
 }
 export namespace Nud {
-  export const enum MapMode {
+  export enum MapMode {
     TEX_COORD = 0,
     ENV_CAMERA = 7424,
     PROJECTION = 7680,
@@ -783,7 +783,7 @@ export namespace Nud {
   }
 }
 export namespace Nud {
-  export const enum CullMode {
+  export enum CullMode {
     NONE = 0,
     INSIDE_POKKEN = 2,
     OUTSIDE = 1028,
@@ -791,20 +791,20 @@ export namespace Nud {
   }
 }
 export namespace Nud {
-  export const enum VertexColorSize {
+  export enum VertexColorSize {
     NO_VERTEX_COLORS = 0,
     BYTE = 1,
     HALF_FLOAT = 2,
   }
 }
 export namespace Nud {
-  export const enum NormalSize {
+  export enum NormalSize {
     FLOAT = 0,
     HALF_FLOAT = 1,
   }
 }
 export namespace Nud {
-  export const enum NormalType {
+  export enum NormalType {
     NO_NORMALS = 0,
     NORMALS_FLOAT = 1,
     NORMALS_R1 = 2,

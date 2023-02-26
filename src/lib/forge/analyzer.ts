@@ -89,6 +89,10 @@ export interface StageInfo extends Info<"stage"> {
   night: boolean
 }
 
+export interface LumenInfo extends Info<"lumen"> {
+  path: string
+}
+
 export interface CarInfo extends Info<"car"> {
   carType: "player" | "character" | "other"
 }

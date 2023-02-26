@@ -7,6 +7,7 @@ export function getImageData(
   height: number,
   format: Nut.PixelFormat,
 ): ImageData {
+  if (!surface) return
   const flags = {
     [Nut.PixelFormat.DXT1]: dxt.flags.DXT1,
     [Nut.PixelFormat.DXT3]: dxt.flags.DXT3,

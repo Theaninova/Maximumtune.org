@@ -2,18 +2,26 @@
 <script lang="ts">
   /* eslint-disable no-undef */
   let dragging = false
-  export let folder: FileSystemDirectoryEntry
+  export let folder: FileSystemDirectoryEntry | undefined
+  export let files: File[] | undefined
 
   function fileChange(itemList: DataTransferItemList) {
-    const webkitEntry = itemList[0].webkitGetAsEntry()
-    if (!webkitEntry) {
-      window.alert("Could not find anything here :(")
-      return
+    if (itemList.length > 0) {
+      files = []
+      for (const entry of itemList) {
+        files.push(entry.getAsFile())
+      }
+    } else {
+      const webkitEntry = itemList[0].webkitGetAsEntry()
+      if (!webkitEntry) {
+        window.alert("Could not find anything here :(")
+        return
+      }
+
+      folder = webkitEntry as FileSystemDirectoryEntry
     }
 
     dragging = false
-
-    folder = webkitEntry as FileSystemDirectoryEntry
   }
 </script>
 
@@ -24,7 +32,7 @@
   on:drop|preventDefault={event => fileChange(event.dataTransfer.items)}
   on:dragover|preventDefault={() => (dragging = true)}
 />
-<div class="file-box" class:dragging class:has-content={!!folder}>
+<div class="file-box" class:dragging class:has-content={!!folder || !!files}>
   <span><slot /></span>
 </div>
 

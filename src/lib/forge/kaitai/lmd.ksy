@@ -38,7 +38,7 @@ types:
       - id: xmd_padding
         size: 4
         type: nothing
-      - id: padding_len
+      - id: num_padding
         type: u4
       - id: unknown4
         type: u4
@@ -49,7 +49,7 @@ types:
       - id: padding
         size: 0x10
         repeat: expr
-        repeat-expr: padding_len
+        repeat-expr: num_padding
       - id: tags
         type: tag(_index)
         repeat: eos
@@ -90,6 +90,7 @@ types:
             'tag_type::remove_object': remove_object
             'tag_type::do_action': do_action
             'tag_type::place_object': place_object
+            'tag_type::action_script': action_script
             _: nothing
         size: data_len * 4
     enums:
@@ -118,7 +119,7 @@ types:
         0xf00b: unknown_f00b
 
         0x0025: dynamic_text
-        0x0027: define_sprite
+        0x0027: define_sprite # aka movie clip
 
         0x002b: frame_label
         0x0001: show_frame
@@ -128,6 +129,22 @@ types:
         0x000c: do_action
 
         0xff00: end
+  action_script:
+    seq:
+      - id: num_actions
+        type: u4
+      #- id: actions
+      #  type: action
+      #  repeat: expr
+      #  repeat-expr: 3
+    types:
+      action:
+        seq:
+          - id: size
+            type: u2
+          - id: action_data
+            type: nothing
+            size: 2 * size
   defines:
     seq:
       - id: num_shapes

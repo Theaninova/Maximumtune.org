@@ -612,7 +612,7 @@ export namespace Nut.NutBody {
   }
 }
 export namespace Nut {
-  export const enum Signature {
+  export enum Signature {
     NTLX = 1314147416,
     NTP3 = 1314148403,
     NTWD = 1314150212,
@@ -620,7 +620,7 @@ export namespace Nut {
   }
 }
 export namespace Nut {
-  export const enum PixelFormat {
+  export enum PixelFormat {
     DXT1 = 0,
     DXT3 = 1,
     DXT5 = 2,
@@ -631,7 +631,7 @@ export namespace Nut {
   }
 }
 export namespace Nut {
-  export const enum TextureType {
+  export enum TextureType {
     DDS = 0,
     GXT = 1,
   }
