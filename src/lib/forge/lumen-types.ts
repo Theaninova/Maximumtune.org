@@ -84,4 +84,5 @@ export type LumenKeyframe = LumenType<"keyframe">
 export interface LumenSprite extends LumenType<"sprite">, LumenPlaceable {
   keyframes: LumenKeyframe[]
   frames: LumenFrame[]
+  placedObjects: LumenPlaceableTypes[]
 }

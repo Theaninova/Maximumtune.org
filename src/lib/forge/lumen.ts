@@ -14,6 +14,7 @@ import type {
   LumenPosition,
   LumenRemoveObjectAction,
   LumenShape,
+  LumenSprite,
   LumenTexture,
 } from "./lumen-types"
 import {graphicToImage} from "./lumen-util"
@@ -176,12 +177,26 @@ export class Lumen {
     }
   }
 
-  private readSprite(sprite: Lmd.DefineSprite, children: Array<Lazy<LumenKeyframe | LumenFrame>>) {
+  private readSprite(
+    sprite: Lmd.DefineSprite,
+    children: Array<Lazy<LumenKeyframe | LumenFrame>>,
+  ): LumenSprite {
     const processed = children.map(it => it())
+    const keyframes = processed.filter(it => it.type === "keyframe") as LumenKeyframe[]
+    console.assert(keyframes.length === 0, "Keyframes are not implemented yet")
+    const frames = processed.filter(it => it.type === "frame") as LumenFrame[]
     return {
       id: sprite.characterId,
-      keyframes: processed.filter(it => it.type === "keyframe") as LumenKeyframe[],
-      frames: processed.filter(it => it.type === "frame") as LumenFrame[],
+      keyframes,
+      frames,
+      placedObjects: [
+        ...new Set(
+          frames
+            .flatMap(it => it.actions)
+            .filter(it => it.type === "place object")
+            .map(it => (it as LumenPlaceObjectAction).object),
+        ),
+      ],
       // TODO labels
       type: "sprite",
     }
