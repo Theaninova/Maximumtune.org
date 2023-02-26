@@ -52,14 +52,11 @@ export namespace Xmd {
     }
 
     _read() {
-      this.magic = (this._io.readBytes(8)) as any
-      if (!((KaitaiStream.byteArrayCompare((this.magic as any), [88, 77, 68, 0, 48, 48, 49, 0]) == 0))) {
-        throw new KaitaiStream.ValidationNotEqualError([88, 77, 68, 0, 48, 48, 49, 0], (this.magic as any), (this._io as any), "/types/xmd_header/seq/0");
+      this.signature = (this._io.readBytes(8)) as any
+      if (!((KaitaiStream.byteArrayCompare((this.signature as any), [88, 77, 68, 0, 48, 48, 49, 0]) == 0))) {
+        throw new KaitaiStream.ValidationNotEqualError([88, 77, 68, 0, 48, 48, 49, 0], (this.signature as any), (this._io as any), "/types/xmd_header/seq/0");
       }
       this.layout = (this._io.readU4le()) as any
-      if (!( (((this.layout as any) == Xmd.ListCounts.POS_LEN_ID)) )) {
-        throw new KaitaiStream.ValidationNotAnyOfError((this.layout as any), (this._io as any), "/types/xmd_header/seq/1");
-      }
       this.count = (this._io.readU4le()) as any
     }
 
@@ -71,13 +68,13 @@ export namespace Xmd {
       return this._alignedCount;
     }
 
-    magic: Uint8Array;
+    signature: Uint8Array;
     layout: Xmd.ListCounts;
     count: number;
   }
 }
 export namespace Xmd {
-  export const enum ListCounts {
+  export enum ListCounts {
     POS_LEN_ID = 3,
   }
 }

@@ -48,4 +48,16 @@ export class FileSystem {
       ),
     )
   }
+
+  // TODO
+  // async glob(pattern: string): Promise<File[]> {
+  //   const minimatch = new Minimatch(pattern);
+  //   const out: File[] = []
+  //
+  //   let currentDir = this.native as FileSystemDirectoryEntry
+  //   currentDir.createReader().readEntries((entries) => {
+  //
+  //   })
+  //   minimatch.match()
+  // }
 }
