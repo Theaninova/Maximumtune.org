@@ -1,6 +1,6 @@
 <script>
-  import {loadLumen} from "./lumen"
-  import LumenCanvas from "$lib/forge/LumenCanvas.svelte"
+  import {loadLumen} from "./lumen-util.ts"
+  import LumenCanvas from "./LumenCanvas.svelte"
 
   export let lumenFile
   export let textureFile

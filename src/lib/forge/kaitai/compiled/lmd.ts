@@ -89,6 +89,27 @@ export namespace Lmd {
 }
 
 export namespace Lmd {
+  export class Fonts {
+    _is_le?: boolean;
+
+    constructor(
+      readonly _io: KaitaiStream,
+      readonly _parent?: Lmd.Tag,
+      readonly _root?: Lmd,
+    ) {
+
+      this._read();
+    }
+
+    _read() {
+      this.unknown = (this._io.readU4le()) as any
+    }
+
+    unknown: number;
+  }
+}
+
+export namespace Lmd {
   export class DynamicText {
     _is_le?: boolean;
 
@@ -215,11 +236,9 @@ export namespace Lmd {
 
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent: Lmd.Lmb | undefined,
-      readonly _root: Lmd | undefined,
-      index: number,
+      readonly _parent?: unknown,
+      readonly _root?: Lmd,
     ) {
-      this.index = index;
 
       this._read();
     }
@@ -304,6 +323,12 @@ export namespace Lmd {
           this.data = (new Lmd.Graphic(_io__raw_data, this, this._root)) as any
           break;
         }
+        case Lmd.Tag.TagType.FONTS: {
+          this._raw_data = (this._io.readBytes(((this.dataLen as any) * 4))) as any
+          let _io__raw_data = new KaitaiStream(this._raw_data);
+          this.data = (new Lmd.Fonts(_io__raw_data, this, this._root)) as any
+          break;
+        }
         case Lmd.Tag.TagType.SHOW_FRAME: {
           this._raw_data = (this._io.readBytes(((this.dataLen as any) * 4))) as any
           let _io__raw_data = new KaitaiStream(this._raw_data);
@@ -349,17 +374,21 @@ export namespace Lmd {
         default: {
           this._raw_data = (this._io.readBytes(((this.dataLen as any) * 4))) as any
           let _io__raw_data = new KaitaiStream(this._raw_data);
-          this.data = (new Lmd.Nothing(_io__raw_data, this, this._root)) as any
+          this.data = (new Lmd.UnknownTagData(_io__raw_data, this, this._root)) as any
           break;
         }
+      }
+      this.children = [];
+      for (let i = 0; i < (this.data as any).numChildren; i++) {
+        this.children.push(new Lmd.Tag(this._io, this, this._root));
       }
     }
 
     tagType: Lmd.Tag.TagType;
     offset: number;
     dataLen: number;
-    data: Lmd.Properties | Lmd.Defines | Lmd.Frame | Lmd.ActionScript | Lmd.DynamicText | Lmd.Colors | Lmd.Transforms | Lmd.Shape | Lmd.Bounds | Lmd.DoAction | Lmd.TextureAtlases | Lmd.Graphic | Lmd.Frame | Lmd.Nothing | Lmd.FrameLabel | Lmd.Positions | Lmd.PlaceObject | Lmd.Symbols | Lmd.RemoveObject | Lmd.DefineSprite;
-    index: number;
+    data: Lmd.Properties | Lmd.Defines | Lmd.Frame | Lmd.ActionScript | Lmd.DynamicText | Lmd.Colors | Lmd.Transforms | Lmd.Shape | Lmd.Bounds | Lmd.DoAction | Lmd.TextureAtlases | Lmd.Graphic | Lmd.Fonts | Lmd.Frame | Lmd.UnknownTagData | Lmd.FrameLabel | Lmd.Positions | Lmd.PlaceObject | Lmd.Symbols | Lmd.RemoveObject | Lmd.DefineSprite;
+    children: Array<Lmd.Tag>;
     _raw_data: Uint8Array;
   }
 }
@@ -444,6 +473,33 @@ export namespace Lmd.ActionScript {
 }
 
 export namespace Lmd {
+  export class UnknownTagData {
+    _is_le?: boolean;
+
+    constructor(
+      readonly _io: KaitaiStream,
+      readonly _parent?: Lmd.Tag,
+      readonly _root?: Lmd,
+    ) {
+
+      this._read();
+    }
+
+    _read() {
+    }
+
+    private _numChildren: number;
+    get numChildren(): number {
+      if (typeof this._numChildren !== 'undefined')
+        return this._numChildren;
+      this._numChildren = (0) as any
+      return this._numChildren;
+    }
+
+  }
+}
+
+export namespace Lmd {
   export class DoAction {
     _is_le?: boolean;
 
@@ -500,7 +556,7 @@ export namespace Lmd {
       this.tags = [];
       let i = 0;
       while (!this._io.isEof()) {
-        this.tags.push(new Lmd.Tag(this._io, this, this._root, i));
+        this.tags.push(new Lmd.Tag(this._io, this, this._root));
         i++;
       }
     }
@@ -915,6 +971,14 @@ export namespace Lmd {
       this.unknown2 = (this._io.readU4le()) as any
     }
 
+    private _numChildren: number;
+    get numChildren(): number {
+      if (typeof this._numChildren !== 'undefined')
+        return this._numChildren;
+      this._numChildren = ((((this.numFrameLabels as any) + (this.numFrames as any)) + (this.numKeyframes as any))) as any
+      return this._numChildren;
+    }
+
     characterId: number;
     unknown1: Uint8Array;
 
@@ -951,6 +1015,14 @@ export namespace Lmd {
       this.boundsId = (this._io.readU4le()) as any
       this.unknown2 = (this._io.readU4le()) as any
       this.numGraphics = (this._io.readU4le()) as any
+    }
+
+    private _numChildren: number;
+    get numChildren(): number {
+      if (typeof this._numChildren !== 'undefined')
+        return this._numChildren;
+      this._numChildren = ((this.numGraphics as any)) as any
+      return this._numChildren;
     }
 
     characterId: number;
@@ -1145,6 +1217,14 @@ export namespace Lmd {
       for (let i = 0; i < 3; i++) {
         this.unknown3.push(this._io.readU4le());
       }
+    }
+
+    private _numChildren: number;
+    get numChildren(): number {
+      if (typeof this._numChildren !== 'undefined')
+        return this._numChildren;
+      this._numChildren = ((((this.numSprites as any) + (this.numTexts as any)) + (this.numShapes as any))) as any
+      return this._numChildren;
     }
 
     numShapes: number;

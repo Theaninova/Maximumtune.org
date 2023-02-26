@@ -51,12 +51,9 @@ types:
         repeat: expr
         repeat-expr: num_padding
       - id: tags
-        type: tag(_index)
+        type: tag
         repeat: eos
   tag:
-    params:
-      - id: index
-        type: u4
     seq:
       - id: tag_type
         type: u2
@@ -91,8 +88,14 @@ types:
             'tag_type::do_action': do_action
             'tag_type::place_object': place_object
             'tag_type::action_script': action_script
-            _: nothing
+            'tag_type::fonts': fonts
+            _: unknown_tag_data
         size: data_len * 4
+      - id: children
+        type: tag
+        repeat: expr
+        # I don't know how well this is gonna work non-dynamic languages...
+        repeat-expr: data.as<unknown_tag_data>.num_children
     enums:
       tag_type:
         0x0000: invalid
@@ -129,6 +132,14 @@ types:
         0x000c: do_action
 
         0xff00: end
+  unknown_tag_data:
+    instances:
+      num_children:
+        value: 0
+  fonts:
+    seq:
+      - id: unknown
+        type: u4
   action_script:
     seq:
       - id: num_actions
@@ -161,6 +172,9 @@ types:
         type: u4
         repeat: expr
         repeat-expr: 3
+    instances:
+      num_children:
+        value: num_sprites + num_texts + num_shapes
   place_object:
     seq:
       - id: character_id
@@ -257,6 +271,9 @@ types:
         type: u4
       - id: unknown2
         type: u4
+    instances:
+      num_children:
+        value: num_frame_labels + num_frames + num_keyframes
   dynamic_text:
     seq:
       - id: character_id
@@ -306,6 +323,9 @@ types:
       - id: num_graphics
         doc: 'graphics are the following tags'
         type: u4
+    instances:
+      num_children:
+        value: num_graphics
   graphic:
     seq:
       - id: atlas_id
