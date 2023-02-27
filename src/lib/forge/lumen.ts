@@ -16,8 +16,9 @@ import type {
   LumenShape,
   LumenSprite,
   LumenTexture,
+  LumenTransform,
 } from "./lumen-types"
-import {graphicToImage} from "./lumen-util"
+import {decomposeMatrix, framesToLumenAnimation, graphicToImage} from "./lumen-util"
 
 type Lazy<T> = () => T
 
@@ -30,7 +31,7 @@ export class Lumen {
 
   readonly colors: string[] = []
 
-  readonly transforms: string[] = []
+  readonly transforms: LumenTransform[] = []
 
   readonly bounds: LumenBounds[] = []
 
@@ -39,6 +40,11 @@ export class Lumen {
   height: number
 
   framerate: number
+
+  readonly entry: LumenPlaceableTypes
+
+  // this only gets relevant later, so we need to postpone reading the entry
+  private entryCharacterId: number
 
   readonly defines: Record<number, LumenPlaceableTypes> = {}
 
@@ -49,6 +55,7 @@ export class Lumen {
         console.error("Unexpected top level return", value)
       }
     }
+    this.entry = this.defines[this.entryCharacterId]
     console.log(this)
   }
 
@@ -183,20 +190,35 @@ export class Lumen {
   ): LumenSprite {
     const processed = children.map(it => it())
     const keyframes = processed.filter(it => it.type === "keyframe") as LumenKeyframe[]
-    console.assert(keyframes.length === 0, "Keyframes are not implemented yet")
     const frames = processed.filter(it => it.type === "frame") as LumenFrame[]
+
+    const placedObjects = [
+      ...new Set(frames.flatMap(it => it.actions).filter(it => it.type === "place object")),
+    ] as LumenPlaceObjectAction[]
+
     return {
       id: sprite.characterId,
       keyframes,
       frames,
-      placedObjects: [
-        ...new Set(
-          frames
-            .flatMap(it => it.actions)
-            .filter(it => it.type === "place object")
-            .map(it => (it as LumenPlaceObjectAction).object),
-        ),
-      ],
+      placedObjects: placedObjects.map(placement => ({
+        object: placement.object,
+        animations: [
+          ...framesToLumenAnimation(
+            frames.map(({actions}) =>
+              actions.find(it => it.type === "move object" && it.depth === placement.depth),
+            ) as LumenMoveObjectAction[],
+            "discrete",
+            this.framerate,
+          ),
+          ...framesToLumenAnimation(
+            keyframes.map(({actions}) =>
+              actions.find(it => it.type === "move object" && it.depth === placement.depth),
+            ) as LumenMoveObjectAction[],
+            "linear",
+            this.framerate,
+          ),
+        ],
+      })),
       // TODO labels
       type: "sprite",
     }
@@ -232,12 +254,11 @@ export class Lumen {
     this.width = properties.width
     this.height = properties.height
     this.framerate = properties.framerate
+    this.entryCharacterId = properties.entryCharacterId
   }
 
   private readTransforms(transforms: Lmd.Transforms) {
-    this.transforms.push(
-      ...transforms.values.map(({a, b, c, d, x, y}) => `matrix(${a}, ${b}, ${c}, ${d}, ${x}, ${y})`),
-    )
+    this.transforms.push(...transforms.values.map(decomposeMatrix))
   }
 
   private readPositions(positions: Lmd.Positions) {

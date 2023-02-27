@@ -1,3 +1,4 @@
+<!-- @hmr:keep-all -->
 <script lang="ts">
   import Lumen from "$lib/forge/Lumen.svelte"
   import DropTarget from "$lib/components/util/DropTarget.svelte"
@@ -10,4 +11,6 @@
 
 <DropTarget bind:files />
 
-<Lumen {lumenFile} {textureFile} />
+{#if files}
+  <Lumen {lumenFile} {textureFile} />
+{/if}

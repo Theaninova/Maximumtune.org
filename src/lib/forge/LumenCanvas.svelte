@@ -1,3 +1,4 @@
+<!-- @hmr:keep-all -->
 <script lang="ts">
   import type {Lumen} from "./lumen.ts"
   import {Lmd} from "./kaitai/compiled/lmd"
@@ -12,7 +13,7 @@
   onMount(() => {
     lumen.renderTextures(renderCanvas)
     ready = true
-    play()
+    // play()
   })
 
   export function play() {
@@ -86,21 +87,41 @@
 
 <div {...$$restProps} class="lumen-canvas">
   {#if ready}
-    <svg bind:this={lumenCanvas} viewBox="0 0 {lumen.width} {lumen.height}">
+    <svg bind:this={lumenCanvas} viewBox="{-lumen.width / 2} 0 {lumen.width} {lumen.height}">
       <defs>
-        {#each lumen.defines as define}
+        {#each Object.values(lumen.defines) as define}
           {#if define.type === "shape"}
-            <g id={define.shape.characterId}>
-              {#each define.graphics as { x, y, width, height, atlasId }}
-                <image href={lumen.textures[atlasId].dataUrl} {x} {y} {width} {height} />
+            <g id={define.id}>
+              {#each define.graphics as { x, y, width, height, texture }}
+                <image href={texture.dataUrl} {x} {y} {width} {height} />
+              {/each}
+            </g>
+          {:else if define.type === "sprite"}
+            <g id={define.id}>
+              {#each define.placedObjects as { object, animations }}
+                {#if object}
+                  <use href="#{object.id}">
+                    {#each animations as animation}
+                      <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type={animation.key === "position" ? "translate" : animation.key}
+                        calcMode={animation.interpolation}
+                        dur="{animation.duration}s"
+                        keyTimes={animation.keyTimes.join(";")}
+                        values={animation.values.join(";")}
+                        repeatCount="indefinite"
+                        additive="sum"
+                      />
+                    {/each}
+                  </use>
+                {/if}
               {/each}
             </g>
           {/if}
         {/each}
       </defs>
-      {#each items as { refId, transform }}
-        <use href="url(#{refId})" {transform} />
-      {/each}
+      <use href="#{lumen.entry.id}" />
     </svg>
   {/if}
   <canvas bind:this={renderCanvas} class="render-canvas" />
@@ -108,8 +129,18 @@
 
 <style lang="scss">
   .lumen-canvas {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
+
+    svg {
+      border: 2px solid black;
+      overflow: visible;
+
+      * {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+    }
   }
 
   .render-canvas {
