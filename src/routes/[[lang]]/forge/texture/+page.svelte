@@ -28,7 +28,7 @@
 
   let nuts: {id: number; nut: Nut}[]
   let nut: Nut
-  $: textureFile = nut ? nut.body.textures : undefined
+  $: textures = nut ? nut.body.textures : undefined
   let selected: Nut.NutBody.Texture
   $: {
     if (selected && canvas) {

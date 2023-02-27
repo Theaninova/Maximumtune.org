@@ -129,21 +129,28 @@ export class Lumen {
   }
 
   private readPlaceObject(placeObject: Lmd.PlaceObject): LumenPlaceObjectAction | LumenMoveObjectAction {
+    const position =
+      placeObject.positionFlags === Lmd.PlaceObject.PositionFlags.POSITION
+        ? this.positions[placeObject.positionId]
+        : undefined
+    const transform =
+      placeObject.placementId === 0x0000 ? this.transforms[placeObject.positionFlags] : undefined
+
     if (placeObject.placementMode === Lmd.PlaceObject.PlacementMode.PLACE) {
       return {
         id: placeObject.placementId,
         depth: placeObject.depth,
         name: this.symbols[placeObject.nameId],
         object: this.defines[placeObject.characterId],
-        position: this.positions[placeObject.positionId],
-        transform: this.transforms[placeObject.positionFlags],
+        position,
+        transform,
         type: "place object",
       }
     } else {
       return {
         depth: placeObject.depth,
-        position: this.positions[placeObject.positionId],
-        transform: this.transforms[placeObject.positionFlags],
+        position,
+        transform,
         type: "move object",
       }
     }
@@ -205,14 +212,20 @@ export class Lumen {
         animations: [
           ...framesToLumenAnimation(
             frames.map(({actions}) =>
-              actions.find(it => it.type === "move object" && it.depth === placement.depth),
+              actions.find(
+                it =>
+                  (it.type === "move object" || it.type === "place object") && it.depth === placement.depth,
+              ),
             ) as LumenMoveObjectAction[],
             "discrete",
             this.framerate,
           ),
           ...framesToLumenAnimation(
             keyframes.map(({actions}) =>
-              actions.find(it => it.type === "move object" && it.depth === placement.depth),
+              actions.find(
+                it =>
+                  (it.type === "move object" || it.type === "place object") && it.depth === placement.depth,
+              ),
             ) as LumenMoveObjectAction[],
             "linear",
             this.framerate,

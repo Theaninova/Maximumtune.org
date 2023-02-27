@@ -98,8 +98,8 @@ export interface LumenKeyframe extends LumenType<"keyframe"> {
   actions: LumenActionTypes[]
 }
 
-export interface LumenPlacedObject {
-  object: LumenPlaceableTypes
+export interface LumenPlacedObject<T extends LumenPlaceableTypes = LumenPlaceableTypes> {
+  object: T
   animations: LumenAnimation[]
 }
 
