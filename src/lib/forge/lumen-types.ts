@@ -54,13 +54,20 @@ export interface LumenPlaceObjectAction extends LumenType<"place object"> {
   name: string
   depth: number
   position?: LumenPosition
-  transform?: string
+  transform?: LumenTransform
+}
+
+export interface LumenTransform {
+  scale: [number, number]
+  rotate: number
+  skewY: number
+  translate: [number, number]
 }
 
 export interface LumenMoveObjectAction extends LumenType<"move object"> {
   depth: number
   position?: LumenPosition
-  transform?: string
+  transform?: LumenTransform
   // TODO:
   // - Blend mode
   // - color mix
@@ -79,10 +86,25 @@ export interface LumenFrame extends LumenType<"frame">, LumenPlaceable {
   actions: LumenActionTypes[]
 }
 
-export type LumenKeyframe = LumenType<"keyframe">
+export interface LumenAnimation extends LumenType<"animation"> {
+  duration: number
+  interpolation: "linear" | "discrete"
+  keyTimes: string[]
+  values: string[]
+  key: keyof LumenTransform | "position"
+}
+
+export interface LumenKeyframe extends LumenType<"keyframe"> {
+  actions: LumenActionTypes[]
+}
+
+export interface LumenPlacedObject {
+  object: LumenPlaceableTypes
+  animations: LumenAnimation[]
+}
 
 export interface LumenSprite extends LumenType<"sprite">, LumenPlaceable {
   keyframes: LumenKeyframe[]
   frames: LumenFrame[]
-  placedObjects: LumenPlaceableTypes[]
+  placedObjects: LumenPlacedObject[]
 }
