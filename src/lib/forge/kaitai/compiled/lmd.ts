@@ -230,6 +230,15 @@ export namespace Lmd.Graphic {
   }
 }
 
+/**
+ * tags are read from top to bottom
+ * BE CAREFUL:
+ * Any tag can depend on any other tag that comes before it.
+ * So while resolving references keep that in mind.
+ * However also by spect, a tag cannot depend on tags that
+ * come after it.
+ */
+
 export namespace Lmd {
   export class Tag {
     _is_le?: boolean;
@@ -1141,12 +1150,11 @@ export namespace Lmd {
       this.placementMode = (this._io.readU2le()) as any
       this.blendMode = (this._io.readU2le()) as any
       this.depth = (this._io.readU2le()) as any
-      this.unknown2 = [];
-      for (let i = 0; i < 3; i++) {
-        this.unknown2.push(this._io.readU2le());
-      }
-      this.positionFlags = (this._io.readU2le()) as any
+      this.unknown2 = (this._io.readU2le()) as any
+      this.unknown3 = (this._io.readU2le()) as any
+      this.unknown4 = (this._io.readU2le()) as any
       this.positionId = (this._io.readU2le()) as any
+      this.positionFlags = (this._io.readU2le()) as any
       this.colorMultId = (this._io.readU4le()) as any
       this.colorAddId = (this._io.readU4le()) as any
       this.hasColorMatrix = (this._io.readU4le()) as any
@@ -1160,13 +1168,22 @@ export namespace Lmd {
     placementMode: Lmd.PlaceObject.PlacementMode;
     blendMode: Lmd.PlaceObject.BlendMode;
     depth: number;
-    unknown2: Array<number>;
-    positionFlags: number;
+    unknown2: number;
+    unknown3: number;
+    unknown4: number;
     positionId: number;
+    positionFlags: Lmd.PlaceObject.PositionFlags;
     colorMultId: number;
     colorAddId: number;
     hasColorMatrix: number;
     hasUnknownF014: number;
+  }
+}
+export namespace Lmd.PlaceObject {
+  export enum PositionFlags {
+    TRANSFORM = 0,
+    POSITION = 32768,
+    NO_TRANSFORM = 65535,
   }
 }
 export namespace Lmd.PlaceObject {

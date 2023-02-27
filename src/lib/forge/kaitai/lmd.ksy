@@ -54,6 +54,13 @@ types:
         type: tag
         repeat: eos
   tag:
+    doc: |
+      tags are read from top to bottom
+      BE CAREFUL:
+      Any tag can depend on any other tag that comes before it.
+      So while resolving references keep that in mind.
+      However also by spect, a tag cannot depend on tags that
+      come after it.
     seq:
       - id: tag_type
         type: u2
@@ -195,12 +202,15 @@ types:
         type: u2
       - id: unknown2
         type: u2
-        repeat: expr
-        repeat-expr: 3
-      - id: position_flags
+      - id: unknown3
+        type: u2
+      - id: unknown4
         type: u2
       - id: position_id
         type: u2
+      - id: position_flags
+        type: u2
+        enum: position_flags
       - id: color_mult_id
         type: u4
       - id: color_add_id
@@ -210,6 +220,10 @@ types:
       - id: has_unknown_f014
         type: u4
     enums:
+      position_flags:
+        0x0000: transform
+        0x8000: position
+        0xffff: no_transform
       placement_mode:
         0x01: place
         0x02: move

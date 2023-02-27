@@ -3,6 +3,7 @@
   import type {Lumen} from "./lumen.ts"
   import {Lmd} from "./kaitai/compiled/lmd"
   import {onMount} from "svelte"
+  import LumenSprite from "$lib/forge/LumenSprite.svelte"
 
   export let lumen: Lumen
 
@@ -87,41 +88,11 @@
 
 <div {...$$restProps} class="lumen-canvas">
   {#if ready}
-    <svg bind:this={lumenCanvas} viewBox="{-lumen.width / 2} 0 {lumen.width} {lumen.height}">
-      <defs>
-        {#each Object.values(lumen.defines) as define}
-          {#if define.type === "shape"}
-            <g id={define.id}>
-              {#each define.graphics as { x, y, width, height, texture }}
-                <image href={texture.dataUrl} {x} {y} {width} {height} />
-              {/each}
-            </g>
-          {:else if define.type === "sprite"}
-            <g id={define.id}>
-              {#each define.placedObjects as { object, animations }}
-                {#if object}
-                  <use href="#{object.id}">
-                    {#each animations as animation}
-                      <animateTransform
-                        attributeName="transform"
-                        attributeType="XML"
-                        type={animation.key === "position" ? "translate" : animation.key}
-                        calcMode={animation.interpolation}
-                        dur="{animation.duration}s"
-                        keyTimes={animation.keyTimes.join(";")}
-                        values={animation.values.join(";")}
-                        repeatCount="indefinite"
-                        additive="sum"
-                      />
-                    {/each}
-                  </use>
-                {/if}
-              {/each}
-            </g>
-          {/if}
-        {/each}
-      </defs>
-      <use href="#{lumen.entry.id}" />
+    <svg
+      bind:this={lumenCanvas}
+      viewBox="{(0 * -lumen.width) / 2} {(0 * -lumen.height) / 2} {lumen.width} {lumen.height}"
+    >
+      <LumenSprite object={lumen.entry} />
     </svg>
   {/if}
   <canvas bind:this={renderCanvas} class="render-canvas" />

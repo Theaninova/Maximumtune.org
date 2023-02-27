@@ -11,19 +11,18 @@ export function graphicToImage(graphic: Lmd.Graphic) {
     "Unsupported non-rectangular graphic!",
   )
 
-  const v1 = graphic.vertices[0]
-  const v2 = graphic.vertices[3]
+  const [v1, v2, v3, v4] = graphic.vertices
 
-  const x1 = Math.min(v1.x, v2.x)
-  const x2 = Math.max(v1.x, v1.x)
-  const y1 = Math.min(v1.y, v2.y)
-  const y2 = Math.max(v1.y, v1.y)
+  const x1 = Math.min(v1.x, v2.x, v3.x, v4.x)
+  const x2 = Math.max(v1.x, v2.x, v3.x, v4.x)
+  const y1 = Math.min(v1.y, v2.y, v3.y, v4.y)
+  const y2 = Math.max(v1.y, v2.y, v3.y, v4.y)
 
   return {
     x: x1,
     y: y1,
-    width: Math.abs(x2),
-    height: Math.abs(y2),
+    width: Math.abs(x2 - x1),
+    height: Math.abs(y2 - y1),
   }
 }
 
@@ -80,19 +79,10 @@ export function framesToLumenAnimation(
     )
     .filter(([it]) => !!it)
   if (keys[0] && keys[0][1] !== 0) {
-    keys = [
-      [
-        {
-          rotate: 0,
-          scale: [0, 0],
-          skewY: 0,
-          translate: [0, 0],
-          position: [0, 0],
-        },
-        0,
-      ],
-      ...keys,
-    ]
+    keys = [[keys[0][0], 0], ...keys]
+  }
+  if (keys[keys.length - 1] && keys[keys.length - 1][1] !== 1) {
+    keys.push([keys[keys.length - 1][0], 1] as const)
   }
   const keyTimes = keys.map(([, i]) => i.toFixed(precision))
 
@@ -103,7 +93,7 @@ export function framesToLumenAnimation(
         acc[name] ||= []
         acc[name].push(
           name === "rotate"
-            ? `0 0 ${value.toFixed(precision)}`
+            ? `${value.toFixed(precision)} 0 0`
             : Array.isArray(value)
             ? value.map(it => it.toFixed(precision)).join(" ")
             : value.toFixed(precision),
