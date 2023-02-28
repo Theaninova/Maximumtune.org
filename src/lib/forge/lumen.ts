@@ -19,6 +19,8 @@ import type {
   LumenTransform,
 } from "./lumen-types"
 import {decomposeMatrix, framesToLumenAnimation, graphicToImage} from "./lumen-util"
+import {toAasm} from "avm1-asm/to-aasm"
+import {parseCfg} from "avm1-parser/cfg"
 
 type Lazy<T> = () => T
 
@@ -99,8 +101,9 @@ export class Lumen {
         return this.readRemoveObject(tag.data as Lmd.RemoveObject)
       case Lmd.Tag.TagType.DO_ACTION:
         return this.readDoAction(tag.data as Lmd.DoAction)
-      case Lmd.Tag.TagType.FRAME_LABEL:
       case Lmd.Tag.TagType.ACTION_SCRIPT:
+        return this.readActionScript(tag.data as Lmd.ActionScript)
+      case Lmd.Tag.TagType.FRAME_LABEL:
       case Lmd.Tag.TagType.ACTION_SCRIPT_2:
       case Lmd.Tag.TagType.COLOR_MATRIX:
       case Lmd.Tag.TagType.FONTS:
@@ -112,6 +115,13 @@ export class Lumen {
       default:
         console.error("Unhandled tag", Lmd.Tag.TagType[tag.tagType] || tag.tagType)
     }
+  }
+
+  private readActionScript(actionScript: Lmd.ActionScript) {
+    const parsedActions = actionScript.actions.map(({bytecode}) => parseCfg(bytecode))
+
+    console.log(parsedActions)
+    console.log(parsedActions.map(toAasm).join("\n--------\n"))
   }
 
   private readDoAction(doAction: Lmd.DoAction): LumenDoAction {

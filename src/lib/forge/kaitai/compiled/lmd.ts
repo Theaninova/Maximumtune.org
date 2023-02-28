@@ -449,35 +449,51 @@ export namespace Lmd {
 
     _read() {
       this.numActions = (this._io.readU4le()) as any
+      this.actions = [];
+      for (let i = 0; i < (this.numActions as any); i++) {
+        this.actions.push(new Lmd.ActionScript.Avm1Bytecode(this._io, this, this._root, i));
+      }
     }
 
     numActions: number;
+    actions: Array<Lmd.ActionScript.Avm1Bytecode>;
   }
 }
 
 export namespace Lmd.ActionScript {
-  export class Action {
+  export class Avm1Bytecode {
     _is_le?: boolean;
 
     constructor(
       readonly _io: KaitaiStream,
-      readonly _parent?: unknown,
-      readonly _root?: Lmd,
+      readonly _parent: Lmd.ActionScript | undefined,
+      readonly _root: Lmd | undefined,
+      i: number,
     ) {
+      this.i = i;
 
       this._read();
     }
 
     _read() {
-      this.size = (this._io.readU2le()) as any
-      this._raw_actionData = (this._io.readBytes((2 * (this.size as any)))) as any
-      let _io__raw_actionData = new KaitaiStream(this._raw_actionData);
-      this.actionData = (new Lmd.Nothing(_io__raw_actionData, this, this._root)) as any
+      this.lenBytecode = (this._io.readU4le()) as any
+      this.bytecode = (this._io.readBytes((this.lenBytecode as any))) as any
+      if ((this.i as any) != ((this._parent as any).numActions - 1)) {
+        this._raw_padding = (this._io.readBytes((4 - KaitaiStream.mod((this.lenBytecode as any), 4)))) as any
+        let _io__raw_padding = new KaitaiStream(this._raw_padding);
+        this.padding = (new Lmd.Nothing(_io__raw_padding, this, this._root)) as any
+      }
     }
 
-    size: number;
-    actionData: Lmd.Nothing;
-    _raw_actionData: Uint8Array;
+    lenBytecode: number;
+
+    /**
+     * This bytecode is for *AVM1*, not AVM2. Refer to projects such as OpenFlash for more info.
+     */
+    bytecode: Uint8Array;
+    padding: Lmd.Nothing | undefined;
+    i: number;
+    _raw_padding: Uint8Array | undefined;
   }
 }
 
@@ -1171,6 +1187,10 @@ export namespace Lmd {
     unknown2: number;
     unknown3: number;
     unknown4: number;
+
+    /**
+     * This is conditionally a position id, transform id, or nothing (0xffff) depending on position_flags
+     */
     positionId: number;
     positionFlags: Lmd.PlaceObject.PositionFlags;
     colorMultId: number;
