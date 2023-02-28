@@ -67,14 +67,14 @@ export function framesToLumenAnimation(
   precision = 3,
 ): LumenAnimation[] {
   const length = frames.length + delayBefore + delayAfter
-  const duration = length / framerate
-  const delay = delayBefore / length
+  const duration = length / framerate || 0
+  const delay = delayBefore / length || 0
 
   return [
     frames.map(it => (it?.position ? {position: [it.position.x, it.position.y]} : undefined)),
     frames.map(it => it?.transform),
   ].flatMap(frames => {
-    let keys = frames.map((it, i) => [it, (i + delay) / length] as const).filter(([it]) => !!it)
+    let keys = frames.map((it, i) => [it, (i + delay) / length || 0] as const).filter(([it]) => !!it)
     if (keys.length === 0) return []
 
     if (keys[0] && keys[0][1] !== 0) {
