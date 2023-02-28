@@ -62,52 +62,53 @@ export function framesToLumenAnimation(
   frames: Array<LumenMoveObjectAction | undefined>,
   type: LumenAnimation["interpolation"],
   framerate: number,
+  delayBefore: number,
+  delayAfter: number,
   precision = 3,
 ): LumenAnimation[] {
-  const duration = frames.length / framerate
-  let keys = frames
-    .map(
-      (it, i) =>
-        [
-          it?.position && it?.transform
-            ? {...it.transform, position: [it.position.x, it.position.y]}
-            : it?.position
-            ? {position: [it.position.x, it.position.y]}
-            : it?.transform,
-          i / frames.length,
-        ] as const,
-    )
-    .filter(([it]) => !!it)
-  if (keys[0] && keys[0][1] !== 0) {
-    keys = [[keys[0][0], 0], ...keys]
-  }
-  if (keys[keys.length - 1] && keys[keys.length - 1][1] !== 1) {
-    keys.push([keys[keys.length - 1][0], 1] as const)
-  }
-  const keyTimes = keys.map(([, i]) => i.toFixed(precision))
+  const length = frames.length + delayBefore + delayAfter
+  const duration = length / framerate
+  const delay = delayBefore / length
 
-  const keyframes = keys
-    .map(([it]) => it)
-    .reduce<Record<string, string[]>>((acc, curr) => {
-      for (const [name, value] of Object.entries(curr)) {
-        acc[name] ||= []
-        acc[name].push(
-          name === "rotate"
-            ? `${value.toFixed(precision)} 0 0`
-            : Array.isArray(value)
-            ? value.map(it => it.toFixed(precision)).join(" ")
-            : value.toFixed(precision),
-        )
-      }
-      return acc
-    }, {})
+  return [
+    frames.map(it => (it?.position ? {position: [it.position.x, it.position.y]} : undefined)),
+    frames.map(it => it?.transform),
+  ].flatMap(frames => {
+    let keys = frames.map((it, i) => [it, (i + delay) / length] as const).filter(([it]) => !!it)
+    if (keys.length === 0) return []
 
-  return Object.entries(keyframes).map(([name, values]) => ({
-    duration,
-    key: name as keyof LumenTransform,
-    interpolation: type,
-    keyTimes: keyTimes,
-    values,
-    type: "animation",
-  }))
+    if (keys[0] && keys[0][1] !== 0) {
+      keys = [[keys[0][0], 0], ...keys]
+    }
+    if (keys[keys.length - 1] && keys[keys.length - 1][1] !== 1) {
+      keys.push([keys[keys.length - 1][0], 1] as const)
+    }
+
+    const keyTimes = keys.map(([, i]) => i.toFixed(precision))
+
+    const keyframes = keys
+      .map(([it]) => it)
+      .reduce<Record<string, string[]>>((acc, curr) => {
+        for (const [name, value] of Object.entries(curr)) {
+          acc[name] ||= []
+          acc[name].push(
+            name === "rotate"
+              ? `${(value as number).toFixed(precision)} 0 0`
+              : Array.isArray(value)
+              ? value.map(it => it.toFixed(precision)).join(" ")
+              : (value as number).toFixed(precision),
+          )
+        }
+        return acc
+      }, {})
+
+    return Object.entries(keyframes).map(([name, values]) => ({
+      duration,
+      key: name as keyof LumenTransform,
+      interpolation: type,
+      keyTimes: keyTimes,
+      values,
+      type: "animation",
+    }))
+  })
 }

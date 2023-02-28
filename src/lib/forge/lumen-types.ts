@@ -66,6 +66,7 @@ export interface LumenTransform {
 
 export interface LumenMoveObjectAction extends LumenType<"move object"> {
   depth: number
+  object: LumenPlaceableTypes
   position?: LumenPosition
   transform?: LumenTransform
   // TODO:
