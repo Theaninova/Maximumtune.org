@@ -225,6 +225,7 @@ export class Lumen {
             frame.actions.find(it => it.type === "remove object" && it.depth === placement.depth),
           )
         const slicedFrames = frames.slice(i, removal)
+        const slidedKeyframes = keyframes.slice(i, removal)
 
         return {
           object: placement.object,
@@ -241,14 +242,14 @@ export class Lumen {
             ...framesToLumenAnimation(
               [
                 placement,
-                ...keyframes.map(({actions}) =>
+                ...slidedKeyframes.map(({actions}) =>
                   actions.find(it => it.type === "move object" && it.depth === placement.depth),
                 ),
               ] as LumenMoveObjectAction[],
               "linear",
               this.framerate,
-              0,
-              0,
+              i,
+              removal,
             ),
           ],
         }
