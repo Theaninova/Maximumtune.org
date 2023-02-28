@@ -151,18 +151,25 @@ types:
     seq:
       - id: num_actions
         type: u4
-      #- id: actions
-      #  type: action
-      #  repeat: expr
-      #  repeat-expr: 3
+      - id: actions
+        type: avm1_bytecode(_index)
+        repeat: expr
+        repeat-expr: num_actions
     types:
-      action:
+      avm1_bytecode:
+        params:
+          - id: i
+            type: u4
         seq:
-          - id: size
-            type: u2
-          - id: action_data
+          - id: len_bytecode
+            type: u4
+          - id: bytecode
+            doc: 'This bytecode is for *AVM1*, not AVM2. Refer to projects such as OpenFlash for more info.'
+            size: len_bytecode
+          - id: padding
             type: nothing
-            size: 2 * size
+            size: 4 - len_bytecode % 4
+            if: i != _parent.num_actions - 1
   defines:
     seq:
       - id: num_shapes
@@ -207,6 +214,7 @@ types:
       - id: unknown4
         type: u2
       - id: position_id
+        doc: 'This is conditionally a position id, transform id, or nothing (0xffff) depending on position_flags'
         type: u2
       - id: position_flags
         type: u2
