@@ -134,7 +134,9 @@ export class Lumen {
         ? this.positions[placeObject.positionId]
         : undefined
     const transform =
-      placeObject.placementId === 0x0000 ? this.transforms[placeObject.positionFlags] : undefined
+      placeObject.positionFlags === Lmd.PlaceObject.PositionFlags.TRANSFORM
+        ? this.transforms[placeObject.positionId]
+        : undefined
 
     if (placeObject.placementMode === Lmd.PlaceObject.PlacementMode.PLACE) {
       return {
@@ -149,6 +151,7 @@ export class Lumen {
     } else {
       return {
         depth: placeObject.depth,
+        object: this.defines[placeObject.characterId],
         position,
         transform,
         type: "move object",
@@ -199,39 +202,57 @@ export class Lumen {
     const keyframes = processed.filter(it => it.type === "keyframe") as LumenKeyframe[]
     const frames = processed.filter(it => it.type === "frame") as LumenFrame[]
 
-    const placedObjects = [
-      ...new Set(frames.flatMap(it => it.actions).filter(it => it.type === "place object")),
-    ] as LumenPlaceObjectAction[]
+    const placedObjects = frames
+      .map(it => it.actions)
+      .map((frame, i) =>
+        frame
+          .filter(it => it.type === "place object")
+          .map(it => ({
+            placement: it as LumenPlaceObjectAction,
+            i,
+          })),
+      )
+      .flat()
 
     return {
       id: sprite.characterId,
       keyframes,
       frames,
-      placedObjects: placedObjects.map(placement => ({
-        object: placement.object,
-        animations: [
-          ...framesToLumenAnimation(
-            frames.map(({actions}) =>
-              actions.find(
-                it =>
-                  (it.type === "move object" || it.type === "place object") && it.depth === placement.depth,
-              ),
-            ) as LumenMoveObjectAction[],
-            "discrete",
-            this.framerate,
-          ),
-          ...framesToLumenAnimation(
-            keyframes.map(({actions}) =>
-              actions.find(
-                it =>
-                  (it.type === "move object" || it.type === "place object") && it.depth === placement.depth,
-              ),
-            ) as LumenMoveObjectAction[],
-            "linear",
-            this.framerate,
-          ),
-        ],
-      })),
+      placedObjects: placedObjects.map(({placement, i}) => {
+        const removal = frames
+          .slice(i)
+          .findIndex(frame =>
+            frame.actions.find(it => it.type === "remove object" && it.depth === placement.depth),
+          )
+        const slicedFrames = frames.slice(i, removal)
+
+        return {
+          object: placement.object,
+          animations: [
+            ...framesToLumenAnimation(
+              slicedFrames.map(({actions}) =>
+                actions.find(it => it.type === "move object" && it.depth === placement.depth),
+              ) as LumenMoveObjectAction[],
+              "discrete",
+              this.framerate,
+              i,
+              removal,
+            ),
+            ...framesToLumenAnimation(
+              [
+                placement,
+                ...keyframes.map(({actions}) =>
+                  actions.find(it => it.type === "move object" && it.depth === placement.depth),
+                ),
+              ] as LumenMoveObjectAction[],
+              "linear",
+              this.framerate,
+              0,
+              0,
+            ),
+          ],
+        }
+      }),
       // TODO labels
       type: "sprite",
     }
