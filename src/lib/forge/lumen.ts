@@ -338,7 +338,8 @@ export class Lumen {
       canvas.width = texture.imageData.width
       canvas.height = texture.imageData.height
       canvas.getContext("2d").putImageData(texture.imageData, 0, 0)
-      texture.dataUrl = canvas.toDataURL("image/png")
+
+      texture.dataUrl = canvas.toDataURL().replace(/^data:image\//, "")
     }
   }
 }

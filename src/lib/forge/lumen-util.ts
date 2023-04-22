@@ -26,7 +26,7 @@ export function graphicToImage(graphic: Lmd.Graphic) {
   }
 }
 
-export async function loadLumen(lumen: File, textures?: File): Promise<Lumen> {
+export async function loadLumen(lumen: File, textures?: File, canvas?: HTMLCanvasElement): Promise<Lumen> {
   if (!lumen) return
   let lumenFile = await lumen.arrayBuffer()
   try {
@@ -45,7 +45,13 @@ export async function loadLumen(lumen: File, textures?: File): Promise<Lumen> {
     }
     nut = new Nut(new KaitaiStream(textureFile))
   }
-  return new Lumen(lmd, nut)
+  const lumenObject = new Lumen(lmd, nut)
+
+  if (canvas) {
+    lumenObject.renderTextures(canvas)
+  }
+
+  return lumenObject
 }
 
 export function decomposeMatrix(matrix: Lmd.Transforms.Matrix): LumenTransform {
