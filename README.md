@@ -7,8 +7,8 @@
 The preview site includes [experimental Japanese language support](https://preview.maximumtune.org/ja/).
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 500px">
-<a href="https://maximumtune.org/tools/battle-grade-calculator/" target="_blank"><img src="static/screenshots/narrow/grade.png"></a>
-<a href="https://maximumtune.org/tools/splits-calculator/" target="_blank"><img src="static/screenshots/narrow/splits.png"></a>
+<a href="https://maximumtune.org/tools/battle-grade-calculator/" target="_blank"><img src="./static/screenshots/narrow/grade.png"></a>
+<a href="https://maximumtune.org/tools/splits-calculator/" target="_blank"><img src="./static/screenshots/narrow/splits.png"></a>
 </div>
 
 ## Features
