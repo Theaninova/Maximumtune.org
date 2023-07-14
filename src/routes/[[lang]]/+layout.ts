@@ -3,7 +3,7 @@ import {
   fallbackLocale,
   getLanguageIndependentPath,
   loadTranslations,
-} from "../../lib/translations/translations"
+} from "$lib/translations/translations"
 
 export const prerender = true
 export const trailingSlash = "always"

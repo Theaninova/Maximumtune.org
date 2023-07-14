@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import "$lib/style/global.scss"
   import PageTransition from "$lib/components/PageTransition.svelte"
   import Backdrop from "$lib/components/art/Backdrop.svelte"
@@ -6,6 +6,7 @@
   import {fallbackLocale, locales} from "$lib/translations/translations"
   import {t} from "$lib/translations/translations"
 
+  /** @type {import('./$types').PageData} */
   export let data
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ""
 </script>
