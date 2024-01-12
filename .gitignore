@@ -9,6 +9,7 @@ node_modules
 .idea
 /dev-dist
 generated
+.direnv/
 
 # special files
 ## blogs
