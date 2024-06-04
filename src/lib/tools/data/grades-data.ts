@@ -13,5 +13,5 @@ export const GRADES: Record<string, [number, number, number]> = {
   Orchi: [45_000, 55_000, 65_000],
   Phoenix: [85_000, 105_000, 125_000],
   Dragon: [155_000, 185_000, 215_000],
-  Ogre: [255_000, 395_000, 340_000],
+  Ogre: [255_000, 295_000, 335_000],
 }
